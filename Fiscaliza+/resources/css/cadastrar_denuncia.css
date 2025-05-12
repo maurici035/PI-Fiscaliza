@@ -1,0 +1,214 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ececec;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 70px;
+  background-color: #0489CA;
+  border-right: 1px solid;
+  height: 100vh;
+  width: 89px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px 30px 30px 0px;
+}
+
+.menu-item {
+  width: -350px;
+  height: 50px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.menu-item img {
+  width: 26px;
+  height: 50px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.logo-item img {
+  filter: none !important; /* Remove o filtro para o logo */
+}
+
+.bottom-icon {
+  position: absolute;
+  bottom: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom-icon img {
+  width: 26px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+
+.sidebar .logo {
+  margin-bottom: 70px;
+}
+
+.sidebar .nav-button {
+  margin: 15px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -350px;
+  height: 70px;
+}
+
+.sidebar .nav-button img {
+  width: 28px;
+  height: 28px;
+}
+
+.sidebar .logout {
+  margin-top: auto;
+  margin-bottom: 30px;
+}
+
+.main-content {
+  margin-left: 90px;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 50px;
+}
+
+.brand-name {
+  position: absolute;
+  position: absolute;  /* Posicionamento absoluto para controle preciso */
+  top: 4px;           /* Distância do topo - AJUSTE ESTE VALOR */
+  left: 40px;         /* Distância da esquerda - AJUSTE ESTE VALOR */
+  width: 132px;        /* Largura do contêiner */
+  height: 12px;        /* Altura do contêiner */
+}
+
+.brand-name img {
+  width: 100%;
+  height: auto;
+}
+
+.chat-container {
+  width: 821px;
+  height: 333px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+.chat-input {
+  width: 769px;
+  height: 197px;
+  background-color: #f0f0f0;
+  color: #666;
+  font-size: 18px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.chat-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 20px 15px 20px; /* aumentei o padding-top */
+  background-color: white;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button img {
+  width: 48px;
+  height: 48px;
+}
+
+.send-button {
+  background-color: #17e979;
+  color: #17e979;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.location-icon {
+  color: #D32F2F;
+}
+
+/* Estilo para posicionar a foto de perfil no canto superior direito */
+.header {
+  width: 100%;
+  position: relative;
+  height: 60px;
+}
+
+.profile {
+    position: relative;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+.top-right-image {
+  position: absolute;
+  top: -1px;
+  right: -20px;
+  padding-right: 10px;
+  z-index: 100;
+}
+
+.fixed-profile img {
+  width: 45px;
+  height: 45px;
+  border-radius: 45%;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Opcional: adiciona uma sombra sutil */
+}
