@@ -2,80 +2,154 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
   }
   
   body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #0c1c26;
-    color: white;
+    display: flex;
+    background-color: #D1DCE8;
+    color: black;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 70px;
+    background-color: #0489CA;
+    border-right: 1px solid #1c222b;
+    height: 100vh;
+    width: 89px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px 30px 30px 0px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  .sidebar-icon {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
+    padding: 20px 0;
+    color: #8b949e;
   }
   
-  .container {
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
+  .sidebar-icon:hover {
+    background-color: #2a2823;
+    color: white;
   }
   
-  .app-title {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #00bfff;
+  .sidebar-icon:nth-child(2) {
+    border-top: 1px solid #7B7B79;
+    margin-top: 10px;
+  }
+
+  .sidebar-icon:last-child {
+    margin-top: auto;
+    margin-bottom: 30px;
+  }
+
+  .logo img {
+    width: 64px;
+    height: 60px;
+    margin-left: 5px;
+    justify-content: center;
+    margin-top: 30px;
+    cursor: default;
   }
   
-  .plus {
-    color: #ffe600;
+  .brand-name {
+    position: absolute;
+    top: 21px;
+    left: 141px;
   }
   
-  .profile-section {
-    background-color: #151e25;
-    border-radius: 15px;
-    padding: 20px;
+  .main-content {
+    margin-left: 70px;
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   
-  .profile-img {
-    width: 120px;
-    height: 120px;
+  .profile-container {
+    background-color: white;
+    border-radius: 30px;
+    width: 1033px;
+    padding: 30px;
+  }
+  
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-pic {
+    width: 210px;
+    height: 210px;
     border-radius: 50%;
+    margin-bottom: 20px;
     object-fit: cover;
-    margin-bottom: 10px;
   }
   
   .profile-title {
-    font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   
-  .info-box {
-    background-color: #2b343c;
-    padding: 15px;
+  .profile-field {
+    background-color: #D9D9D9;
     border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0px 20px #D9D9D9;
+    border: 1px  solid #D9D9D9;
   }
-  
-  .info-item {
-    background-color: #3c464f;
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: left;
-    font-weight: 600;
+
+  input {
+    padding: 0px;
+    color: black;
+    background-color: #D9D9D9;
+    border: none;
+    width: 500px;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(180deg);
+    width: 370px;
   }
   
   .btn-alterar {
-    margin-top: 15px;
-    background-color: #009dff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
+    background-color: #17E979;
     color: white;
-    font-weight: bold;
+    border: 0.1px  solid #B4B4B420;
+    border-radius: 10px;
+    padding: 12px 25px;
     cursor: pointer;
-    transition: background 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 0px 20px #BADEE133;
+    width: 176px;
+    height: 50px;
   }
   
   .btn-alterar:hover {
-    background-color: #007acc;
+    background-color: #17E979;
   }
-  
