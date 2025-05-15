@@ -1,4 +1,4 @@
-body {
+fbody {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -20,7 +20,7 @@ body {
 }
 
 .brand-logo {
-    height: 40px;
+    height: 200px;
     margin-left: 80px; /* Adicionado para afastar o logo para a direita */
 }
 
