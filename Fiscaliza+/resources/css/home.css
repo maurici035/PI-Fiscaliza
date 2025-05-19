@@ -7,13 +7,14 @@ fbody {
 
 .top-header {
     height: 70px;
-    background-color: #051119;
+    background-color: #ffffff;
     color: white;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem;
+    padding: 0 20px;
+    padding-right: 50px;
     position: fixed;
     top: 0;
     z-index: 1000;

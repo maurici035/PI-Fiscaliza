@@ -5,18 +5,21 @@
     font-family: Arial, sans-serif;
 }
 body {
-    background-image: url(img/Imagem\ do\ WhatsApp\ de\ 2025-04-03\ à\(s\)\ 18.34.22_7ac83b4b.jpg);
+    min-height: 100vh;
+    background-image: url(../assets/WhatsApp\ Image\ 2025-04-03\ at\ 18.34.22\ \(1\).jpeg);
     background-size: cover;
+    height: 100vh;
     color: white;
     position: relative;
+    overflow: hidden;
 }
 body::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5); /* Escurece a imagem de fundo */
     z-index: -1;
 }
@@ -57,11 +60,11 @@ body::before {
     border-radius: 5px;
 }
 .btn-create {
-    background: #007bff;
+    background: #444;
     color: white;
 }
 .btn-login {
-    background: #444;
+    background: #007bff;
     color: white;
 }
 .content-container {
