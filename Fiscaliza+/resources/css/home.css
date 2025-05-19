@@ -59,7 +59,7 @@ fbody {
 .sidebar {
     width: 70px;
     height: 100vh; /* Modificado para ocupar toda a altura da tela */
-    background-color: #121212;
+    background-color: #0489CA;
     position: fixed;
     left: 0;
     top: 0; /* Modificado para começar do topo da página */
@@ -81,7 +81,7 @@ fbody {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #6c757d;
+    color: #fff;
     font-size: 1.5rem;
     width: 42px;
     height: 42px;
@@ -90,8 +90,7 @@ fbody {
 }
 
 .nav-link:hover, .nav-link.active {
-    color: #ffffff;
-    background-color: #1e1e1e;
+    color: #c6c6c6;
 }
 
 .nav-link.active.highlight {
