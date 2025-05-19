@@ -1,13 +1,13 @@
-fbody {
+body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #051119;
+    background-color: #D1DCE8;
 }
 
 .top-header {
     height: 70px;
-    background-color: #051119;
+    background-color: #D1DCE8;
     color: white;
     width: 100%;
     display: flex;
@@ -20,7 +20,7 @@ fbody {
 }
 
 .brand-logo {
-    height: 200px;
+    height: 40px;
     margin-left: 80px; /* Adicionado para afastar o logo para a direita */
 }
 
@@ -59,7 +59,7 @@ fbody {
 .sidebar {
     width: 70px;
     height: 100vh; /* Modificado para ocupar toda a altura da tela */
-    background-color: #121212;
+    background-color: #0489CA;
     position: fixed;
     left: 0;
     top: 0; /* Modificado para começar do topo da página */
@@ -81,7 +81,7 @@ fbody {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #6c757d;
+    color: white;
     font-size: 1.5rem;
     width: 42px;
     height: 42px;
@@ -95,7 +95,7 @@ fbody {
 }
 
 .nav-link.active.highlight {
-    color: #10b981;
+    color: #17E979;
 }
 
 .divider {
@@ -267,7 +267,7 @@ fbody {
 }
 
 .primary-btn {
-    background-color: #26B99A;
+    background-color: #17E979;
     color: white;
 }
 
