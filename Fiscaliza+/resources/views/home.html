@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
     <script src="../js/sidebar-loader.js"></script>
     <link rel="stylesheet" href="../css/home.css">
+
 </head>
+
 <body>
+
     <!-- Top Header Bar -->
     <header class="top-header">
         <div>
@@ -26,7 +33,7 @@
             </div>
         </div>
     </header>
-    
+
 
     <!-- Sidebar -->
     <div id="sidebar-container"></div>
@@ -42,94 +49,154 @@
                 </div>
                 <input type="text" class="input-field" placeholder="Comece uma denúncia">
             </div>
-            
+
             <!-- Report Options -->
             <div class="report-options">
                 <button class="option-btn video">
                     <i class="bi bi-play-circle-fill"></i>
                     Vídeo
                 </button>
-                
+
                 <button class="option-btn photo">
                     <i class="bi bi-image"></i>
                     Foto
                 </button>
-                
+
                 <button class="option-btn location">
                     <i class="bi bi-geo-alt-fill"></i>
                     Localização
                 </button>
             </div>
+            <input type="file" id="videoInput" accept="video/*" style="display: none;">
+            <input type="file" id="photoInput" accept="image/*" style="display: none;">
+            <input type="hidden" id="locationInput">
         </div>
-        
+
         <!-- Complaint Card 1 -->
         <div class="complaint-card">
             <div class="complaint-header">
                 <div class="complaint-avatar">
-                    <img src="../assets/WhatsApp Image 2025-04-03 at 18.34.22 (1).jpeg" alt="User avatar">
+                    <img src="../assets/Captura_de_tela_2025-04-09_151332-removebg-preview.png" alt="User avatar">
                 </div>
                 <div>
-                    <h2 class="complaint-title">Reclamação sobre a falta de água no bairro Tiradentes – Juazeiro do Norte</h2>
+                    <h2 class="complaint-title">Reclamação sobre a falta de água no bairro Tiradentes – Juazeiro do
+                        Norte</h2>
                     <p class="complaint-location">Juazeiro do Norte</p>
                 </div>
             </div>
-            
+
             <p class="complaint-text">
-                Gostaria de registrar minha insatisfação com a constante falta de água no bairro Tiradentes, em Juazeiro do Norte. 
-                O problema tem ocorrido com frequência, prejudicando os moradores. É inaceitável que um serviço essencial 
-                apresente tantas falhas sem uma solução definitiva. Pedimos providências urgentes das autoridades 
+                Gostaria de registrar minha insatisfação com a constante falta de água no bairro Tiradentes, em Juazeiro
+                do Norte.
+                O problema tem ocorrido com frequência, prejudicando os moradores. É inaceitável que um serviço
+                essencial
+                apresente tantas falhas sem uma solução definitiva. Pedimos providências urgentes das autoridades
                 competentes para resolver essa situação o quanto antes.
             </p>
-            
+
             <div class="complaint-actions">
-                <button class="action-btn primary-btn">Abrir conteúdo</button>
-                
-                <div class="complaint-reactions">
-                    <button class="reaction-btn like">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                    </button>
-                    <button class="reaction-btn comment">
-                        <i class="bi bi-chat-dots"></i>
-                    </button>
-                    <button class="reaction-btn share">
-                        <i class="bi bi-share"></i>
-                    </button>
+                <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
+
+                <button class="reaction-btn like" onclick="curtirDenuncia(this)">
+                    <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">0</span>
+                </button>
+                <button class="reaction-btn comment" onclick="comentarDenuncia(this)">
+                    <i class="bi bi-chat-dots"></i>
+                </button>
+                <button class="reaction-btn share" onclick="compartilharDenuncia(this)">
+                    <i class="bi bi-share"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Card 2 -->
+    <div class="complaint-card">
+        <div class="complaint-header">
+            <div class="complaint-avatar">
+                <img src="../assets/Captura_de_tela_2025-04-09_151332-removebg-preview.png" alt="User avatar">
+            </div>
+            <div>
+                <h2 class="complaint-title">Iluminação pública inadequada na Avenida Principal – Centro</h2>
+                <p class="complaint-location">Crato</p>
+            </div>
+        </div>
+
+        <p class="complaint-text">
+            Venho por meio desta denúncia informar sobre a precariedade da iluminação pública na Avenida Principal
+            do Centro
+            de Crato. Várias lâmpadas estão queimadas há mais de dois meses, o que tem causado insegurança para
+            pedestres e
+            motoristas durante a noite. Já foram registrados diversos pequenos acidentes e relatos de assaltos neste
+            trecho.
+            Solicito urgentemente a manutenção e substituição das lâmpadas defeituosas.
+        </p>
+
+        <div class="complaint-actions">
+            <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
+
+            <button class="reaction-btn like" onclick="curtirDenuncia(this)">
+                <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">0</span>
+            </button>
+            <button class="reaction-btn comment" onclick="comentarDenuncia(this)">
+                <i class="bi bi-chat-dots"></i>
+            </button>
+            <button class="reaction-btn share" onclick="compartilharDenuncia(this)">
+                <i class="bi bi-share"></i>
+            </button>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="modalConteudo" tabindex="-1" aria-labelledby="modalConteudoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConteudoLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="modalConteudoBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
-        
-        <!-- Complaint Card 2 -->
-        <div class="complaint-card">
-            <div class="complaint-header">
-                <div class="complaint-avatar">
-                    <img src="../assets/WhatsApp Image 2025-04-03 at 18.34.22 (1).jpeg" alt="User avatar">
+    </div>
+
+    <!-- Modal Comentário -->
+    <div class="modal fade" id="modalComentario" tabindex="-1" aria-labelledby="modalComentarioLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formComentario" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalComentarioLabel">Adicionar Comentário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
-                <div>
-                    <h2 class="complaint-title">Iluminação pública inadequada na Avenida Principal – Centro</h2>
-                    <p class="complaint-location">Crato</p>
+                <div class="modal-body">
+                    <textarea class="form-control" id="inputComentario" rows="4"
+                        placeholder="Digite seu comentário aqui..."></textarea>
                 </div>
-            </div>
-            
-            <p class="complaint-text">
-                Venho por meio desta denúncia informar sobre a precariedade da iluminação pública na Avenida Principal do Centro
-                de Crato. Várias lâmpadas estão queimadas há mais de dois meses, o que tem causado insegurança para pedestres e
-                motoristas durante a noite. Já foram registrados diversos pequenos acidentes e relatos de assaltos neste trecho.
-                Solicito urgentemente a manutenção e substituição das lâmpadas defeituosas.
-            </p>
-            
-            <div class="complaint-actions">
-                <button class="action-btn primary-btn">Abrir conteúdo</button>
-                
-                <div class="complaint-reactions">
-                    <button class="reaction-btn like">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                    </button>
-                    <button class="reaction-btn comment">
-                        <i class="bi bi-chat-dots"></i>
-                    </button>
-                    <button class="reaction-btn share">
-                        <i class="bi bi-share"></i>
-                    </button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Compartilhar -->
+    <div class="modal fade" id="modalCompartilhar" tabindex="-1" aria-labelledby="modalCompartilharLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCompartilharLabel">Compartilhar Denúncia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="modalCompartilharBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -137,5 +204,10 @@
 
     <!-- Bootstrap JS (optional) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/home.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

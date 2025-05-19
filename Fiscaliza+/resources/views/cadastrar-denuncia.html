@@ -1,44 +1,66 @@
-<!DOCTYPE html> 
-<html lang="pt-BR"> 
-<head>     
-    <meta charset="UTF-8">     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-    <title>Fiscaliza+ | Cadastrar Denúncia</title>    
-    <script src="../js/sidebar-loader.js"></script> 
-    <link rel="stylesheet" href="../css/cadastrar-denuncia.css">   
-</head>   
-<body>       
-    <!-- Substitua a sidebar existente em teste_2.html por esta: -->
-    <div id="sidebar-container"></div>
-    
-    <div class="main-content">           
-    <div class="header">               
-        <div class="brand-name">
-            <img src="../assets/fiscaliza+-name.png" alt="Fiscaliza+">
-        </div>               
-        <div class="top-right-image">                   
-            <img src="../assets/WhatsApp Image 2025-04-03 at 18.34.22 (1).jpeg" alt="Perfil" class="profile-image">               
-        </div>           
-    </div>                      
-        
-        <div class="chat-container">               
-            <div class="chat-input">                   
-                Sobre o que você quer falar?               
-            </div>                              
-            
-            <div class="chat-actions" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-                <div class="action-buttons" style="display: flex; gap: 10px;">
-                  <button class="action-button" style="background: none; border: none;">
-                    <img src="../assets/e906385ecf48d76d46f22c0e10a5f6123da5c261.png" alt="Imagem" width="24" height="24">
-                  </button>
-                  <button class="action-button" style="background: none; border: none;">
-                    <img src="../assets/e72ac55fd6da01123e3acff5cacc052b270bf51e.png" alt="Vídeo" width="24" height="24">
-                  </button>
-                  <button class="action-button" style="background: none; border: none;">
-                    <img src="../assets/8c4832b8235a70f0331e30396e4e61e84e4daa60.png" alt="Localização" width="24" height="24">
-                  </button>
-                </div>
-                <button class="send-button" style="padding: 10px 20px; background-color: #17e979; color: white; border: none; border-radius: 4px;">Enviar</button>
-              </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-              
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiscaliza+ | Cadastrar Denúncia</title>
+  <script src="../js/sidebar-loader.js"></script>
+  <link rel="stylesheet" href="../css/cadastrar-denuncia.css">
+  <script src="../js/cadastrar-denuncia.js"></script>
+</head>
+
+<body>
+  <!-- Substitua a sidebar existente em teste_2.html por esta: -->
+  <div id="sidebar-container"></div>
+
+  <div class="main-content">
+    <div class="header">
+      <div class="brand-name">
+        <img src="../assets/fiscaliza+-name.png" alt="Fiscaliza+">
+      </div>
+      <div class="top-right-image">
+        <img src="../assets/WhatsApp Image 2025-04-03 at 18.34.22 (1).jpeg" alt="Perfil" class="profile-image">
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <textarea id="textMessage" class="chat-input" placeholder="Sobre o que você quer falar?"
+        style="width: 100%; min-height: 80px; padding: 10px;"></textarea>
+      <div id="feedbackMessage" style="color: red; margin-top: 8px; min-height: 20px;"></div>
+
+      <div class="chat-actions"
+        style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <div class="action-buttons" style="display: flex; gap: 10px;">
+          <!-- Botão Foto -->
+          <button class="action-button photo" style="background: none; border: none;">
+            <img src="../assets/e906385ecf48d76d46f22c0e10a5f6123da5c261.png" alt="Imagem" width="24" height="24" />
+          </button>
+
+          <!-- Botão Vídeo -->
+          <button class="action-button video" style="background: none; border: none;">
+            <img src="../assets/e72ac55fd6da01123e3acff5cacc052b270bf51e.png" alt="Vídeo" width="24" height="24" />
+          </button>
+
+          <!-- Botão Localização -->
+          <button class="action-button location" style="background: none; border: none;">
+            <img src="../assets/8c4832b8235a70f0331e30396e4e61e84e4daa60.png" alt="Localização" width="24"
+              height="24" />
+          </button>
+        </div>
+
+        <button class="send-button"
+          style="padding: 10px 20px; background-color: #17e979; color: white; border: none; border-radius: 4px;">
+          Enviar
+        </button>
+      </div>
+
+      <!-- Inputs escondidos para arquivos e localização -->
+      <input type="file" id="photoInput" accept="image/*" style="display: none;" />
+      <input type="file" id="videoInput" accept="video/*" style="display: none;" />
+      <input type="hidden" id="locationInput" />
+    </div>
+  </div>
+</body>
+
+</html>

@@ -121,6 +121,8 @@ body {
   font-size: 18px;
   padding: 20px;
   box-sizing: border-box;
+  margin-left: 20px;  /* Já estava para mover para a direita */
+  margin-top: 20px;
 }
 
 .chat-actions {
