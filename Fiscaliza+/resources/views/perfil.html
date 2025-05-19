@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Perfil do Usuário - Fiscaliza+</title>
+  <title>Fiscaliza+ | Perfil do Usuário</title>
   <style>
     * {
       margin: 0;
@@ -17,23 +17,6 @@
       color: black;
       display: flex;
       height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 60px;
-      background-color: #0489CA;
-      padding-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .sidebar i {
-      font-size: 20px;
-      color: #aaa;
-      cursor: pointer;
     }
 
     /* Main content */
@@ -112,16 +95,10 @@
     }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="../js/sidebar-loader.js"></script>
 </head>
 <body>
-  <div class="sidebar">
-    <i class="fas fa-file-alt"></i>
-    <i class="fas fa-home"></i>
-    <i class="fas fa-comment"></i>
-    <i class="fas fa-file"></i>
-    <i class="fas fa-user-circle"></i>
-    <i class="fas fa-sync-alt"></i>
-  </div>
+  <div id="sidebar-container"></div>
 
   <div class="main">
     <h1 class="title">Fiscaliza<span>+</span></h1>
