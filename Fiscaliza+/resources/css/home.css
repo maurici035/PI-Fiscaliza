@@ -56,46 +56,6 @@ fbody {
     object-fit: cover;
 }
 
-.sidebar {
-    width: 70px;
-    height: 100vh; /* Modificado para ocupar toda a altura da tela */
-    background-color: #0489CA;
-    position: fixed;
-    left: 0;
-    top: 0; /* Modificado para começar do topo da página */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;/* Adicionado espaço para não sobrepor o header */
-    z-index: 1100;
-}
-
-.nav-item {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.nav-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1.5rem;
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
-    transition: all 0.3s;
-}
-
-.nav-link:hover, .nav-link.active {
-    color: #c6c6c6;
-}
-
-.nav-link.active.highlight {
-    color: #10b981;
-}
 
 .divider {
     width: 40px;
