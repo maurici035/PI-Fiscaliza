@@ -30,6 +30,7 @@ function validarFormulario() {
       // Simula envio bem-sucedido
       alert("Cadastro realizado com sucesso!");
       // Aqui você pode adicionar uma chamada AJAX ou redirecionamento
+      window.location.href = "../views/home.html";
     }
 
     function validarEmail(email) {

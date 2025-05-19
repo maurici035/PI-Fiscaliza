@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiscaliza+</title>
     <link rel="stylesheet" href="../css/cadastro.css">
+    <script src="../js/cadastro.js"></script>
 </head>
 <body>
     
     <div class="register-container">
         <img src="../assets/freepik__create-a-logo-for-fiscaliza-featuring-a-stylized-m__94104 3.png" alt="">
         <h2>Cadastre-se</h2>
-        <input type="text" class="input-field" placeholder="Nome">
-        <input type="email" class="input-field" placeholder="E-mail">
-        <input type="password" class="input-field" placeholder="Senha">
-        <input type="password" class="input-field" placeholder="Repita a Senha">
-        <input type="date" class="input-field" placeholder="Data de Nascimento">
+        <input type="text" class="input-field" id="nome" placeholder="Nome">
+        <input type="email" class="input-field" id="email" placeholder="E-mail">
+        <input type="password" class="input-field" id="senha" placeholder="Senha">
+        <input type="password" class="input-field" id="repitaSenha" placeholder="Repita a Senha">
+        <input type="date" class="input-field" id="dataNascimento" placeholder="Data de Nascimento">
         <div class="checkbox-container">
             <input type="checkbox" id="terms">
             <label for="terms">Concordo com os Termos da Plataforma</label>
         </div>
-        <button class="register-btn">CADASTRAR</button>
+        <button class="register-btn" onclick="validarFormulario()">CADASTRAR</button>
     </div>
     <script src="../js/cadastro.js"></script>
 </body>
