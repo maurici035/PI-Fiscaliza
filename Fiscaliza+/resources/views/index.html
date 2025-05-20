@@ -12,8 +12,8 @@
             <img src="../assets/freepik__create-a-logo-for-fiscaliza-featuring-a-stylized-m__94104 3.png" alt="Fiscaliza+ Logo">
         </div>
         <div class="buttons">
-            <button class="btn-create">CADASTRAR</button>
-            <button class="btn-login">ENTRAR</button>
+            <button class="btn-create" onclick="irParaCadastro()">CADASTRAR</button>
+            <button class="btn-login" onclick="irParaLogin()">ENTRAR</button>
         </div>
     </div>
     <div class="container">
@@ -28,5 +28,14 @@
             </div>
         </div>
     </div>
+    <script>
+    function irParaLogin() {
+      window.location.href = "login.html"; // redireciona para a página de login
+    }
+
+    function irParaCadastro() {
+      window.location.href = "cadastro.html"; // redireciona para a página de cadastro
+    }
+  </script>
 </body>
 </html>
