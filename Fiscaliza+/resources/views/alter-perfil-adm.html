@@ -18,28 +18,6 @@
       display: flex;
     }
 
-    aside {
-      width: 75px;
-      background-color: #0489CA;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-    }
-
-    aside img {
-      width: 40px;
-      margin-bottom: 30px;
-    }
-
-    aside nav a {
-      display: block;
-      margin: 20px 0;
-      text-decoration: none;
-      color: #ccc;
-    }
-
     .logo {
       font-size: 24px;
       font-weight: bold;
@@ -125,16 +103,11 @@
       margin-top: 20px;
     }
   </style>
+  <script src="../js/sidebar-loader.js"></script>
 </head>
 <body>
-  <aside>
-    <img src="img/freepik__create-a-logo-for-fiscaliza-featuring-a-stylized-m__94104 3.png" alt="Ícone fiscaliza" />
-    <nav>
-      <a href="#"><img src="" width="25"></a>
-      <a href="#"><img src="" width="25"></a>
-      <a href="#"><img src="" width="25"></a>
-    </nav>
-  </aside>
+  <div id="sidebar-container"></div>
+  
   <div class="main-container">
     <div class="logo">Fiscaliza<span style="color:#00d4ff">+</span></div>
     <div class="card">

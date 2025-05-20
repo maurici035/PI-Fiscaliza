@@ -1,26 +1,28 @@
-body {
+
+fbody {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: #D1DCE8;
+    background-color: #051119;
 }
 
 .top-header {
     height: 70px;
-    background-color: #D1DCE8;
+    background-color: #ffffff;
     color: white;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem;
+    padding: 0 20px;
+    padding-right: 50px;
     position: fixed;
     top: 0;
     z-index: 1000;
 }
 
 .brand-logo {
-    height: 40px;
+    height: 200px;
     margin-left: 80px; /* Adicionado para afastar o logo para a direita */
 }
 
@@ -56,47 +58,6 @@ body {
     object-fit: cover;
 }
 
-.sidebar {
-    width: 70px;
-    height: 100vh; /* Modificado para ocupar toda a altura da tela */
-    background-color: #0489CA;
-    position: fixed;
-    left: 0;
-    top: 0; /* Modificado para começar do topo da página */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;/* Adicionado espaço para não sobrepor o header */
-    z-index: 1100;
-}
-
-.nav-item {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.nav-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 1.5rem;
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
-    transition: all 0.3s;
-}
-
-.nav-link:hover, .nav-link.active {
-    color: #ffffff;
-    background-color: #1e1e1e;
-}
-
-.nav-link.active.highlight {
-    color: #17E979;
-}
 
 .divider {
     width: 40px;
@@ -267,7 +228,7 @@ body {
 }
 
 .primary-btn {
-    background-color: #17E979;
+    background-color: #26B99A;
     color: white;
 }
 
