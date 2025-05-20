@@ -1,15 +1,12 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Função para carregar a sidebar
+document.addEventListener('DOMContentLoaded', function () {
     function loadSidebar() {
         const sidebarContainer = document.getElementById('sidebar-container');
-        
-        // Verificar se o elemento existe
+
         if (!sidebarContainer) {
             console.error('Elemento com ID "sidebar-container" não encontrado');
             return;
         }
-        
-        // Usar fetch para carregar o conteúdo do arquivo sidebar.html
+
         fetch('../templates/sidebar.html')
             .then(response => {
                 if (!response.ok) {
@@ -19,13 +16,44 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 sidebarContainer.innerHTML = html;
+
+                const navLinks = sidebarContainer.querySelectorAll('.nav-link');
+
+                navLinks.forEach((link, index) => {
+                    // Garante que o primeiro link (logo) esteja sempre inativo
+                    if (index === 0) {
+                        link.classList.remove('active');
+                        return; // pula o resto da lógica para o logo
+                    }
+
+                    // Ativa automaticamente o ícone da página atual
+                    const currentPage = window.location.pathname.split('/').pop();
+                    if (
+                        link.getAttribute('href') &&
+                        link.getAttribute('href').includes(currentPage)
+                    ) {
+                        link.classList.add('active');
+                    }
+
+                    // Evento de clique
+                    link.addEventListener('click', function (e) {
+                        navLinks.forEach((item, idx) => {
+                            item.classList.remove('active');
+                            // Garante que o logo continue inativo
+                            if (idx === 0) {
+                                item.classList.remove('active');
+                            }
+                        });
+
+                        this.classList.add('active');
+                    });
+                });
             })
             .catch(error => {
                 console.error('Erro ao carregar a sidebar:', error);
                 sidebarContainer.innerHTML = '<p>Erro ao carregar a barra lateral</p>';
             });
     }
-    
-    // Chamar a função para carregar a sidebar
+
     loadSidebar();
 });

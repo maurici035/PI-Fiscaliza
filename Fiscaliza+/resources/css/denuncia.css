@@ -8,52 +8,8 @@
 body {
     display: flex;
     min-height: 100vh;
-    background-color: #D1DCE8;
+    background-color: #ececec;
     color: black;
-}
-
-.sidebar {
-    width: 60px;
-    height: 100vh;
-    background-color: #0489ca;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    position: relative;
-    border-right: 1px solid #0489ca;
-}
-
-.logo {
-    margin-bottom: 30px;
-}
-
-.nav-items {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
-    width: 100%;
-}
-
-.nav-item {
-    color: white;
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    transition: color 0.3s ease;
-}
-
-.nav-item:hover {
-    color: #58a6ff;
-}
-
-.logout-container {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 /* Main Content Styles */
@@ -62,6 +18,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    padding-left: 100px;
 }
 
 .header {
@@ -92,6 +49,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 25px;
+    margin: 0 auto 0 auto;
 }
 
 .message {

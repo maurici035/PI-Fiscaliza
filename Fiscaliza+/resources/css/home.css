@@ -6,9 +6,13 @@ fbody {
     background-color: #051119;
 }
 
+body {
+    background-color: #ececec;
+}
+
 .top-header {
     height: 70px;
-    background-color: #ffffff;
+    background-color: #ececec;
     color: white;
     width: 100%;
     display: flex;
@@ -22,8 +26,7 @@ fbody {
 }
 
 .brand-logo {
-    height: 200px;
-    margin-left: 80px; /* Adicionado para afastar o logo para a direita */
+    margin-left: 100px; /* Adicionado para afastar o logo para a direita */
 }
 
 .header-right {
