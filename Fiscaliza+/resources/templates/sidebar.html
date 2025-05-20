@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template de Sidebar Fiscaliza+</title>
     <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
         /* Estilos da Sidebar */
         .sidebar {
@@ -37,7 +37,7 @@
             font-size: 1.5rem !important;
             width: 42px;
             height: 42px;
-            border-radius: 8px;
+            border-radius: 0;
             transition: all 0.3s;
             text-decoration: none;
         }
@@ -47,8 +47,13 @@
             margin-top: 10px;
         }
 
-        .nav-link:hover, .nav-link.active {
-            color: #c6c6c6;
+        .nav-link.active {
+            color: #00ff1e;
+            border-left: 2px solid #00ff1e;
+        }
+
+        .nav-link:hover {
+            color: #00ff1e;
         }
 
         .nav-link.active.highlight {
