@@ -1,14 +1,20 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Impede envio padrão
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('form');
+  const emailInput = document.getElementById('email');
+  const senhaInput = document.getElementById('senha');
 
-      const email = document.getElementById('email').value.trim();
-      const senha = document.getElementById('senha').value.trim();
+  form.addEventListener('submit', function (event) {
+    event.preventDefault(); // Impede o envio padrão do formulário
 
-      if (!email || !senha) {
-        alert('Por favor, preencha todos os campos.');
-        return;
-      }
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value.trim();
 
-      // Aqui você pode adicionar lógica para autenticação (ex: fetch para API)
-      alert(`Login com:\nEmail: ${email}\nSenha: ${senha}`);
-    });
+    if (email === '' || senha === '') {
+      alert('Por favor, preencha o email e a senha.');
+      return;
+    }
+
+    // Redireciona se os campos estiverem preenchidos
+    window.location.href = '../views/home.html';
+  });
+});
