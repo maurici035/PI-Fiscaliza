@@ -26,20 +26,23 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'senha' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'senha' => 'required|string',
+    ]);
 
-        $usuario = Usuario::where('email', $request->email)->first();
+    $usuario = Usuario::where('email', $request->email)->first();
 
-        if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
-            return back()->withErrors(['email' => 'Usuário ou senha incorretos']);
-        }
-
-        auth()->login($usuario);
-
-        return redirect('/home');
+    if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
+        // Login falhou: volta com mensagem de erro
+        return back()->withErrors(['login' => 'Usuário ou senha incorretos'])->withInput();
     }
+
+    // Login OK: autentica e redireciona com mensagem de sucesso
+    auth()->login($usuario);
+
+    return redirect()->route('home')->with('success', 'Login realizado com sucesso!');
+}
+
 }

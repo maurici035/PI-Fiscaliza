@@ -17,8 +17,24 @@
       <h2>Faça seu login</h2>
       <form method="POST" action="{{ route('login') }}">
         @csrf
-        <input type="email" placeholder="Email" id="email" required />
-        <input type="password" placeholder="Senha" id="senha" required /> 
+
+        @if(session('success'))
+        <div class="message success">
+          {{ session('success') }}
+        </div>
+      @endif
+
+      @if($errors->any())
+        <div class="message error">
+          @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+          @endforeach
+        </div>
+      @endif
+
+      <input type="email" name="email" placeholder="Email" id="email" required />
+      <input type="password" name="senha" placeholder="Senha" id="senha" required />
+
         <a href="telaRecuperarSenha.html" class="forgot-password">Esqueci minha senha </a>
         <button type="submit"><span>&rarr;</span></button>
       </form>
