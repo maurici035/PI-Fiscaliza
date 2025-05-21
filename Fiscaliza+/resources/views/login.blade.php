@@ -15,7 +15,8 @@
     <div class="login-box">
       <img src="../assets/Captura_de_tela_2025-04-09_151332-removebg-preview.png" alt="Ícone de login" class="icon" />
       <h2>Faça seu login</h2>
-      <form>
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
         <input type="email" placeholder="Email" id="email" required />
         <input type="password" placeholder="Senha" id="senha" required /> 
         <a href="telaRecuperarSenha.html" class="forgot-password">Esqueci minha senha </a>

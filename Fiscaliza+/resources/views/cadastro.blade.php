@@ -10,7 +10,7 @@
 </head>
 <body>
     
-    <div class="register-container">
+    <!-- <div class="register-container">
         <img src="../assets/freepik__create-a-logo-for-fiscaliza-featuring-a-stylized-m__94104 3.png" alt="">
         <h2>Cadastre-se</h2>
         <input type="text" class="input-field" id="nome" placeholder="Nome">
@@ -23,7 +23,34 @@
             <label for="terms">Concordo com os Termos da Plataforma</label>
         </div>
         <button class="register-btn" onclick="validarFormulario()">CADASTRAR</button>
-    </div>
+    </div> -->
+
+
+   <div class="register-container">
+    <form action="/register" method="POST">
+         @csrf
+        <!-- CSRF token necessário no Laravel -->
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+        <img src="../assets/freepik__create-a-logo-for-fiscaliza-featuring-a-stylized-m__94104 3.png" alt="">
+        <h2>Cadastre-se</h2>
+
+        <input type="text" class="input-field" name="nome" placeholder="Nome" required>
+        <input type="email" class="input-field" name="email" placeholder="E-mail" required>
+        <input type="password" class="input-field" name="senha" placeholder="Senha" required>
+        <input type="password" class="input-field" name="repitaSenha" placeholder="Repita a Senha" required>
+        <input type="date" class="input-field" name="dataNascimento" placeholder="Data de Nascimento" required>
+
+        <div class="checkbox-container">
+            <input type="checkbox" name="terms" required>
+            <label for="terms">Concordo com os Termos da Plataforma</label>
+        </div>
+
+        <button type="submit" class="register-btn">CADASTRAR</button>
+    </form>
+</div>
+
+
     <script src="../js/cadastro.js"></script>
 </body>
-</html>
+</html> 
