@@ -14,40 +14,57 @@
 
   <!-- Topbar com a logo do nome Fiscaliza+ -->
   <div class="topbar">
-    <img src="fiscaliza+-name.png" alt="Logo Fiscaliza+">
+    <img src="../assets/fiscaliza+-name.png" alt="Logo Fiscaliza+">
   </div>
 
   <!-- Perfil canto superior direito -->
   <div class="profile-top-right">
-    <img src="Imagem do WhatsApp de 2025-05-07 à(s) 16.22.28_30a9973e.jpg" alt="Perfil">
+    <img src="../assets/Captura_de_tela_2025-04-09_151332-removebg-preview.png" alt="Perfil">
   </div>
- 
-  <!-- Conteúdo principal - quadro branco incluindo logos e ícones -->
-  <div class="card">
-    <textarea class="text-area" placeholder="Sobre o que você quer falar?"></textarea>
 
-    <div class="chat-actions">
-      <div class="action-buttons">
-        <button class="action-button">
-          <img src="e906385ecf48d76d46f22c0e10a5f6123da5c261.png" alt="Imagem" width="24" height="24">
-        </button>
-        <button class="action-button">
-          <img src="e72ac55fd6da01123e3acff5cacc052b270bf51e.png" alt="Vídeo" width="24" height="24">
-        </button>
-        <button class="action-button">
-          <img src="8c4832b8235a70f0331e30396e4e61e84e4daa60.png" alt="Localização" width="24" height="24">
-        </button>
-      </div>
-      <button class="send-button">Comentar</button>
+  <!-- Conteúdo principal - quadro branco incluindo logos e ícones -->
+  <div class="post-container">
+    <div class="post-header">
+      <img src="/api/placeholder/40/40" alt="Foto de perfil" class="profile-pic"
+        style="border: 2px solid white; box-shadow: 0 0 0 2px #e4e6eb;">
+    </div>
+    <div class="post-content">
+      <img src="../assets/33526184cde53db3ea4dd5911f2efb95bc794742.png" alt="Imagem de um buraco na rua">
     </div>
 
-    <div class="logos-wrapper">
-      <div class="logo-circular">
-        <img src="d0c9102d634cc9323bfe94e40e18115af126e0e7.png" alt="Logo Circular">
+    <textarea id="postTexto" class="post-input" placeholder="O que você quer falar?"></textarea>
+
+    <!-- Inputs ocultos -->
+    <input type="file" id="inputImagem" accept="image/*" style="display:none;">
+    <input type="file" id="inputVideo" accept="video/*" style="display:none;">
+    <input type="text" id="inputLocalizacao" placeholder="Informe a localização" readonly style="display:none;">
+
+    <div class="post-actions">
+      <div class="action-buttons">
+        <!-- Botão para imagem -->
+        <button class="action-button" onclick="document.getElementById('inputImagem').click()" type="button">
+          <div class="icon">
+            <img src="../assets/icone-foto.png" alt="Ícone de foto">
+          </div>
+        </button>
+
+        <!-- Botão para vídeo -->
+        <button class="action-button" onclick="document.getElementById('inputVideo').click()" type="button">
+          <div class="icon">
+            <img src="../assets/icone-video.png" alt="Ícone de vídeo">
+          </div>
+        </button>
+
+        <!-- Botão para localização -->
+        <button class="action-button" onclick="pegarLocalizacao()" type="button">
+          <div class="icon">
+            <img src="../assets/icone-localizacao.png" alt="Ícone de localização">
+          </div>
+        </button>
       </div>
-      <div class="logo-retangular">
-        <img src="33526184cde53db3ea4dd5911f2efb95bc794742.png" alt="Logo Retangular">
-      </div>
+
+      <!-- Botão comentar -->
+      <button class="comment-button" onclick="enviarPostagem()" type="button">Comentar</button>
     </div>
   </div>
 </body>
