@@ -6,7 +6,7 @@
 }
 body {
     min-height: 100vh;
-    background-image: url(../assets/WhatsApp\ Image\ 2025-04-03\ at\ 18.34.22\ \(1\).jpeg);
+    background-image: url(../assets/fundo-login.jpeg);
     background-size: cover;
     height: 100vh;
     color: white;
@@ -44,8 +44,7 @@ body::before {
     align-items: center;
 }
 .logo img {
-    height: 50px;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 .logo span {
     color: white;
