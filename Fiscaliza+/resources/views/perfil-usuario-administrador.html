@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiscaliza+</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #dce3ec;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 60px;
+      background-color: #0288d1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      gap: 20px;
+    }
+
+    .sidebar img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0288d1;
+    }
+
+    .profile-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-name {
+      margin-top: 10px;
+      background-color: #0288d1;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .tab-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #004d6d;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .gallery-item {
+      position: relative;
+      width: 120px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .visualize-btn {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #00e676;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      margin-top: 40px;
+    }
+
+    .footer img {
+      width: 40px;
+      margin: 0 auto 10px;
+      display: block;
+    }
+  </style>
+  <script src="../js/sidebar-loader.js"></script>
+</head>
+<body>
+<div id="sidebar-container"></div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <div class="logo">Fiscaliza+</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" width="32" height="32" alt="Usuário">
+      </div>
+
+      <div class="profile-section">
+        <img src="PERFIL DO USUARIO - ADMINISTRADOR.jpg" alt="Foto do Perfil" class="profile-img">
+        <div class="profile-name">Maria Rita</div>
+      </div>
+
+      <div class="tab-title">Concluídas</div>
+      <div class="gallery">
+        <div class="gallery-item"><img src="Fiscaliza+/resources/assets/download (1).jpg" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="Fiscaliza+/resources/assets/download (2).jpg" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/202" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/203" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/204" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/205" alt=""><button class="visualize-btn">Visualizar</button></div>
+      </div>
+
+      <div class="tab-title">Não Aceitas</div>
+      <div class="gallery">
+        <div class="gallery-item"><img src="https://via.placeholder.com/210" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/211" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/212" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/213" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/214" alt=""><button class="visualize-btn">Visualizar</button></div>
+        <div class="gallery-item"><img src="https://via.placeholder.com/215" alt=""><button class="visualize-btn">Visualizar</button></div>
+      </div>
+
+      <div class="footer">
+        <div>
+          &copy; 2019 Lift Media. All Rights Reserved.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
