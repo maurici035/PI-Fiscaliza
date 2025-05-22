@@ -1,11 +1,119 @@
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: #ececec;
-  margin: 0;
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.post-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Aumentado para expandir à esquerda */
+    overflow: hidden;
+    position: relative;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    align-self: flex-end; /* Desce levemente a imagem circular */
+}
+
+.post-content {
+    position: relative;
+    height: 120px; /* Altura da área de imagem */
+}
+
+.post-content img {
+    position: absolute;
+    top: -50px;
+    right: 50px;
+    width: 300px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 0 10px 0 10px;
+}
+
+.post-input {
+    width: calc(100% - 30px); /* ocupa o espaço menos as margens */
+    background-color: #f1f1f1;
+    padding: 15px;
+    margin: 10px 15px;
+    border-radius: 8px;
+    color: #65676b;
+    font-size: 15px;
+    border: none;
+    resize: none; /* impede redimensionar */
+    font-family: Arial, sans-serif;
+    min-height: 60px; /* altura mínima */
+    box-sizing: border-box;
+    outline: none;
+}
+
+.post-actions {
+    display: flex;
+    padding: 8px 15px;
+    border-top: 1px solid #e4e6eb;
+    justify-content: space-between;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #65676b;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.comment-button {
+    background-color: #0FD95B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ----- SEGUNDO BLOCO (mantido como enviado) ----- */
 
 /* Topbar com logo Fiscaliza+ */
 .topbar {
@@ -38,109 +146,8 @@ body {
   object-fit: cover;
 }
 
-/* Cartão de comentário */
-.card {
-  width: 600%;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  position: relative;
-  margin-left: 100px;
-  margin-top: 80px;
-}
-
-.text-area {
-  width: 100%;
-  height: 300px;
-  border: none;
-  resize: none;
-  outline: none;
-  font-size: 16px;
-  padding: 8px;
-  box-sizing: border-box;
-  font-family: inherit;
-}
-
-.chat-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-  border-top: 1px solid #BDC3C7;
-  padding-top: 12px;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.action-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-}
-
-.action-button:hover {
-  background-color: #f2f2f2;
-}
-
-.action-button img {
-  width: 24px;
-  height: 24px;
-}
-
-.send-button {
-  background-color: #17e979;
-  color: white;
-  border: none;
-  border-radius: 18px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.send-button:hover {
-  background-color: #0066cc;
-}
-
-.logos-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 12px 0 0 0;
-  margin-top: 12px;
-  border-top: 1px solid #eee;
-}
-
-.logo-circular {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: #eee;
-}
-
-.logo-retangular {
-  width: 120px;
-  height: 45px;
-  border-radius: 6px;
-  overflow: hidden;
-  background-color: #eee;
-}
-
-.logo-circular img,
-.logo-retangular img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
