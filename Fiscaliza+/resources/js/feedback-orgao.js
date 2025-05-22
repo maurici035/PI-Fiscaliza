@@ -1,4 +1,4 @@
- // Estado da aplicação
+// Estado da aplicação
     let currentFilter = 'todos';
     let currentSort = 'rating-desc';
     let selectedRating = 0;
