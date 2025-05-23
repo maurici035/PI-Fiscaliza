@@ -231,8 +231,9 @@ body {
 }
 
 .primary-btn {
-    background-color: #26B99A;
+    //background-color: #26B99A;
     color: white;
+    background-color: black;
 }
 
 .complaint-reactions {

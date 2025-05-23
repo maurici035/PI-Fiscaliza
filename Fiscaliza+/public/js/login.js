@@ -15,6 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Redireciona se os campos estiverem preenchidos
-    window.location.href = '../views/home.html';
+    window.location.href = 'home';
   });
 });

@@ -19,6 +19,9 @@ Route::get('/login', function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
+Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+
+
 
 
 

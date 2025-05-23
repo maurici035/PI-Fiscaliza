@@ -109,3 +109,40 @@ function compartilharDenuncia(button) {
         // fallback opcional
     });
 }
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const coords = position.coords.latitude + ',' + position.coords.longitude;
+      document.getElementById('locationInput').value = coords;
+      alert('Localização capturada!');
+    }, function() {
+      alert('Não foi possível capturar a localização.');
+    });
+  } else {
+    alert('Geolocalização não suportada pelo navegador.');
+  }
+}
+
+document.getElementById('formDenuncia').addEventListener('submit', function(e) {
+  e.preventDefault(); // previne recarregar a página
+
+  const formData = new FormData(this);
+
+  fetch('/denuncia', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Denúncia enviada com sucesso!');
+    // opcional: limpar o form ou fechar modal
+  })
+  .catch(error => {
+    alert('Erro ao enviar denúncia');
+    console.error(error);
+  });
+});

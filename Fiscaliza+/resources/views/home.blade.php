@@ -8,7 +8,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="../js/sidebar-loader.js"></script>
-  <link rel="stylesheet" href="../css/home.css">
   <link rel="icon" href="../assets/logo-menor.png" type="image/png">
   <link href="{{ asset('css/home.css') }}" rel="stylesheet" />
   <script src="{{ asset('js/sidebar-loader.js') }}"></script>
@@ -61,6 +60,13 @@
           <i class="bi bi-geo-alt-fill"></i>
           Localização
         </button>
+
+        <form action="/denuncia" method="POST" enctype="multipart/form-data">
+  @csrf
+  <!-- seus inputs -->
+  <button type="submit" class="option-btn">Enviar</button>
+</form>
+
       </div>
 
       <input type="file" id="videoInput" accept="video/*" style="display: none;" />
@@ -130,6 +136,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-primary">Enviar</button>
+            <button>enviar</button>
           </div>
         </form>
       </div>
