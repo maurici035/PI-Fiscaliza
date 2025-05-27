@@ -13,7 +13,7 @@
   
   /* Fundo com imagem desfocada */
   .background {
-    background: url(../assets/fundo-login.jpeg) no-repeat center center;
+    background: url(../../resources/assets/imagem_de_fundo.jpeg) no-repeat center center;
     background-size: cover;
     height: 100vh;
     width: 100vw;
