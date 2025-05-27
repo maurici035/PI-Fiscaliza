@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #ececec;
+    color: black;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 100px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.title {
+    color: #58a6ff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin: 0 auto 0 auto;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.img-user {
+    height: 80px;
+    width: 80px;
+}
+
+.user-profile {
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+}
+
+.profile-img {
+    width: 70px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.company-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    background-color: #f0d878;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.user-name {
+    background-color: #58a6ff;
+    color: white;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.card {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 450px;
+}
+
+.card-header {
+    padding: 15px 20px;
+}
+
+.complaint-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 14px;
+    color: black;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.complaint-image {
+    width: 400px;
+    height: 200px;
+    margin-bottom: 10px;
+    object-fit: center;
+    
+}
+
+.response-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
