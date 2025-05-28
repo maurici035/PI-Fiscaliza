@@ -6,7 +6,7 @@
 }
 
 body {
-    background: url('../assets/WhatsApp\ Image\ 2025-04-03\ at\ 18.34.22\ \(1\).jpeg') no-repeat center center/cover;
+    background: url('../../resources/assets/fundo-login.jpeg') no-repeat center center/cover;
     height: 100vh;
     display: flex;
     justify-content: center;

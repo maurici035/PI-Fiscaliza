@@ -7,10 +7,10 @@
   <title>home</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-  <script src="../js/sidebar-loader.js"></script>
+  <script src="../../public/js/sidebar-loader.js"></script>
   <link rel="icon" href="../assets/logo-menor.png" type="image/png">
-  <link href="{{ asset('css/home.css') }}" rel="stylesheet" />
-  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link href="{{ asset('../../public/css/home.css') }}" rel="stylesheet" />
+  <script src="{{ asset('../../public/js/sidebar-loader.js') }}"></script>
   <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 
 </head>
@@ -162,7 +162,7 @@
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  <script src="{{ asset('js/home.js') }}"></script>
+  <script src="{{ asset('../../public/js/home.js') }}"></script>
 
 </body>
 

@@ -6,7 +6,7 @@
 }
 
 body {
-    background: url(../assets/WhatsApp\ Image\ 2025-04-03\ at\ 18.34.22\ \(1\).jpeg) no-repeat center center/cover;
+    background: url(../../resources/assets/fundo-login.jpeg) no-repeat center center/cover;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -145,12 +145,10 @@ body {
 .checkbox-container {
     display: flex;
     align-items: center;
-    font-size: 14px;
-    margin: 10px 0;
-}
-
-.checkbox-container input {
-    margin-right: 5px;
+    font-size: 15px;
+    margin: 20px 0;
+    gap: 10px;
+    justify-content: center;
 }
 
 .register-btn {
@@ -192,6 +190,31 @@ input {
     border: none;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+.checkbox-container input {
+    width: fit-content;
+    padding: 0px;
+    margin-bottom: 0px;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgba(255, 255, 255, 0.5); /* Translucid background */
+    border: 2px solid #1E3A8A; /* Blue border */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checkbox-container input:checked {
+    background-color: #1E3A8A; /* Blue background */
+    border-color: #1E3A8A; /* Blue border */
+}
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
 }
 .btn {
     width: 50px;

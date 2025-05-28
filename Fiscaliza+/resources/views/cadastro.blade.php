@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiscaliza+</title>
-    <link rel="stylesheet" href="../css/cadastro.css">
-    <script src="../js/cadastro.js"></script>
+    <title>Fiscaliza+ | Cadastro</title>
+    <link rel="stylesheet" href="../../public/css/cadastro.css">
+    <script src="../../public/js/sidebar-loader.js"></script>
     <link rel="icon" href="../assets/logo-menor.png" type="image/png">
 </head>
 <body>
