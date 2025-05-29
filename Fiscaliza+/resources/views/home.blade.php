@@ -37,7 +37,8 @@
 
   <!-- Main Content Area -->
   <div class="main-content">
-
+<form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
     <!-- Create Report Card -->
     <div class="report-card">
       <div class="report-input">
@@ -60,9 +61,6 @@
           <i class="bi bi-geo-alt-fill"></i>
           Localização
         </button>
-
-        <form action="/denuncia" method="POST" enctype="multipart/form-data">
-  @csrf
   <!-- seus inputs -->
   <button type="submit" class="option-btn">Enviar</button>
 </form>
