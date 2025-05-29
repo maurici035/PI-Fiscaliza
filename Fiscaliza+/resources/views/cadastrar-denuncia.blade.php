@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiscaliza+ | Cadastrar Denúncia</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../public/css/cadastrar-denuncia.css">
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <script src="../../public/js/cadastrar-denuncia.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/cadastrar-denuncia.css') }}">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <script src="{{ asset('js/cadastrar-denuncia.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
   <div id="sidebar-container"></div>
 
   <header class="top-header">
     <div>
-      <img src="../assets/fiscaliza+-name.png" alt="Fiscaliza+" class="brand-logo">
+      <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+" class="brand-logo">
     </div>
     <div class="header-right">
-    <div class="user-avatar">
-        <img src="../assets/usuario-exemplo.png" alt="User profile">
+      <div class="user-avatar">
+        <img src="{{ asset('assets/usuario-exemplo.png') }}" alt="User profile">
       </div>
     </div>
   </header>
@@ -35,18 +37,17 @@
         <div class="action-buttons" style="display: flex; gap: 10px;">
           <!-- Botão Foto -->
           <button class="action-button photo" style="background: none; border: none;">
-            <img src="../assets/icone-foto.png" alt="Imagem" width="24" height="24" />
+            <img src="{{ asset('assets/icone-foto.png') }}" alt="Imagem" width="24" height="24" />
           </button>
 
           <!-- Botão Vídeo -->
           <button class="action-button video" style="background: none; border: none;">
-            <img src="../assets/icone-video.png" alt="Vídeo" width="24" height="24" />
+            <img src="{{ asset('assets/icone-video.png') }}" alt="Vídeo" width="24" height="24" />
           </button>
 
           <!-- Botão Localização -->
           <button class="action-button location" style="background: none; border: none;">
-            <img src="../assets/icone-localizacao.png" alt="Localização" width="24"
-              height="24" />
+            <img src="{{ asset('assets/icone-localizacao.png') }}" alt="Localização" width="24" height="24" />
           </button>
         </div>
 
@@ -63,4 +64,5 @@
     </div>
   </div>
 </body>
+
 </html>
