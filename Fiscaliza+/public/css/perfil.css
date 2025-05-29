@@ -1,81 +1,94 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #ececec;
-    color: white;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .container {
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  .app-title {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #00bfff;
-  }
-  
-  .plus {
-    color: #ffe600;
-  }
-  
-  .profile-section {
-    background-color: #151e25;
-    border-radius: 15px;
-    padding: 20px;
-  }
-  
-  .profile-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-  
-  .profile-title {
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .info-box {
-    background-color: #2b343c;
-    padding: 15px;
-    border-radius: 10px;
-  }
-  
-  .info-item {
-    background-color: #3c464f;
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: left;
-    font-weight: 600;
-  }
-  
-  .btn-alterar {
-    margin-top: 15px;
-    background-color: #009dff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .btn-alterar:hover {
-    background-color: #007acc;
-  }
+
+   * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #ececec;
+        color: black;
+        display: flex;
+        height: 100vh;
+      }
+
+      /* Main content */
+      .main {
+        flex: 1;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        /* ⬅️ Alinha conteúdo à esquerda */
+      }
+
+      .logo-img {
+        width: 180px;
+        /* Ajuste conforme necessário */
+        height: auto;
+        margin-bottom: 30px;
+        margin-left: 60px;
+      }
+
+      .profile-img {
+        width: 200px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        /* border: 3px solid #444; */
+        /* ⬅️ Removido */
+        align-self: center;
+      }
+
+
+      .profile-name {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 25px;
+        align-self: center;
+      }
+
+      .profile-box {
+        background-color: white;
+        padding: 40px;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 900px;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        align-self: center;
+      }
+
+      .info {
+        background-color: #D9D9D9;
+        padding: 16px 22px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .btn-alterar {
+        margin-top: 15px;
+        padding: 14px 24px;
+        background-color: #17E979;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        font-size: 16px;
+        width: 130px;
+        align-self: flex-start;
+      }
+
+      .btn-alterar:hover {
+        background-color: #0b7dda;
+      }
+
   

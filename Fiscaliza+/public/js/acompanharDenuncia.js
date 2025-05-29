@@ -21,6 +21,6 @@
   document.querySelectorAll('.view-button').forEach(button => {
     button.addEventListener('click', () => {
       const id = button.getAttribute('data-id');
-      window.location.href = `visualizar-denuncia.html?id=${id}`;
+      window.location.href = `denunciaAD.html?id=${id}`;
     });
   });
