@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fiscaliza+ | Perfil do Usuário</title>
   <style>
     * {
@@ -59,8 +60,10 @@
       padding: 40px;
       border-radius: 20px;
       width: 100%;
-      max-width: 900px; /* 👈 mais largo */
-      min-height: 500px; /* 👈 altura mínima como na imagem */
+      max-width: 900px;
+      /* 👈 mais largo */
+      min-height: 500px;
+      /* 👈 altura mínima como na imagem */
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -95,16 +98,17 @@
     }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="../js/sidebar-loader.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
   <div id="sidebar-container"></div>
 
   <div class="main">
     <h1 class="title">Fiscaliza<span>+</span></h1>
 
-    <img src="img/perfil_fake_88e093785ba8.png" alt="Foto do Usuário" class="profile-img">
+    <img src="{{ asset('img/perfil_fake_88e093785ba8.png') }}" alt="Foto do Usuário" class="profile-img">
     <div class="profile-name">Perfil Do Usuário</div>
 
     <div class="profile-box">
@@ -117,4 +121,5 @@
     </div>
   </div>
 </body>
+
 </html>

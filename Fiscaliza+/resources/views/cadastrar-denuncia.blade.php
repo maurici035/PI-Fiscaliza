@@ -29,7 +29,7 @@
   <div class="main-content">
     <div class="chat-container">
       <textarea id="textMessage" class="chat-input" placeholder="Sobre o que você quer falar?"
-        style="width: 100%; min-height: 80px; padding: 10px;"></textarea>
+        style="min-height: 80px; padding: 10px;"></textarea>
       <div id="feedbackMessage" style="color: red; margin-top: 8px; min-height: 20px;"></div>
 
       <div class="chat-actions"

@@ -29,6 +29,9 @@ Route::get('/cadastrar-denuncia', function () {
 Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 });
+Route::get('/perfil', function () {
+    return view('perfil');
+});
 
 
 
