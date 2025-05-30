@@ -12,7 +12,7 @@
 <body>
     <div class="header">
         <div class="logo">
-            <img src="{{ asset('assets/fiscaliza+-name.png') }}" alt="Fiscaliza+ Logo">
+            <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+ Logo">
         </div>
         <div class="buttons">
             <button class="btn-create" onclick="irParaCadastro()">CADASTRAR</button>

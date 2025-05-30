@@ -21,7 +21,7 @@
     </div>
     <div class="header-right">
       <div class="user-avatar">
-        <img src="{{ asset('assets/usuario-exemplo.png') }}" alt="User profile">
+        <img src="{{ asset('assets/foto_usuario.png') }}" alt="User profile">
       </div>
     </div>
   </header>

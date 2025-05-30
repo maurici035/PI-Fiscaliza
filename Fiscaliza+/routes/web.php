@@ -10,7 +10,7 @@ use App\Http\Controllers\HomeController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/denuncias', [DenunciaController::class, 'store']);
-Route::get('/cadastro', function() {
+Route::get('/cadastro', function () {
     return view('cadastro');
 });
 Route::get('/login', function () {
@@ -20,6 +20,15 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/denuncia/criar', [DenunciaController::class, 'create'])->name('denuncia.create');
 Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+Route::get('/', function () {
+    return view('index');
+});
+Route::get('/cadastrar-denuncia', function () {
+    return view('cadastrar-denuncia');
+});
+Route::get('/acompanhar-denuncia', function () {
+    return view('acompanhar-denuncia');
+});
 
 
 

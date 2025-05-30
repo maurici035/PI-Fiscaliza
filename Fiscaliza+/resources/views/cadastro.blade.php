@@ -34,7 +34,7 @@
             <!-- CSRF token necessário no Laravel -->
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <img src="{{ asset('assets/fiscaliza+-name.png') }}" alt="Fiscaliza+ Logo">
+            <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+ Logo">
             <h2>Cadastre-se</h2>
 
             <input type="text" class="input-field" name="nome" placeholder="Nome" required>
