@@ -5,44 +5,63 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // Exibe a página de login
+    public function showLogin()
+    {
+        return view('login');
+    }
+
+    // Exibe a página de cadastro
+    public function showRegister()
+    {
+        return view('cadastro');
+    }
+
     public function register(Request $request)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|string|min:6',
+            'repitaSenha' => 'required|string|same:senha',
+            'dataNascimento' => 'required|date',
         ]);
 
         $usuario = Usuario::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
+            'data_nascimento' => $request->dataNascimento,
         ]);
 
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Cadastro realizado com sucesso!');
     }
 
     public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'senha' => 'required|string',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'senha' => 'required|string',
+        ]);
 
-    $usuario = Usuario::where('email', $request->email)->first();
+        $usuario = Usuario::where('email', $request->email)->first();
 
-    if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
-        // Login falhou: volta com mensagem de erro
-        return back()->withErrors(['login' => 'Usuário ou senha incorretos'])->withInput();
+        if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
+            return back()->withErrors(['login' => 'Usuário ou senha incorretos'])->withInput();
+        }
+
+        // Login OK: autentica e redireciona
+        Auth::login($usuario);
+        return redirect()->route('home')->with('success', 'Login realizado com sucesso!');
     }
 
-    // Login OK: autentica e redireciona com mensagem de sucesso
-    auth()->login($usuario);
-
-    return redirect()->route('home')->with('success', 'Login realizado com sucesso!');
-}
-
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login')->with('success', 'Logout realizado com sucesso!');
+    }
 }
