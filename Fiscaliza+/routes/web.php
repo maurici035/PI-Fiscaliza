@@ -5,21 +5,19 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
 
-
-
-Route::post('/register', [AuthController::class, 'register']);
+// Rotas de autenticação
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/denuncias', [DenunciaController::class, 'store']);
-Route::get('/cadastro', function () {
-    return view('cadastro');
-});
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+// Rota protegida de denúncia
+Route::post('/denuncia', [DenunciaController::class, 'store'])->middleware('auth')->name('denuncia.store');
+
 Route::get('/denuncia/criar', [DenunciaController::class, 'create'])->name('denuncia.create');
-Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
 Route::get('/', function () {
     return view('index');
 });

@@ -58,20 +58,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const formData = new FormData();
-    formData.append('mensagem', mensagem);
+    formData.append('descricao', mensagem);
+    formData.append('titulo', mensagem.substring(0, 50)); // Usa primeiras 50 chars como título
     if (fotoFile) formData.append('foto', fotoFile);
     if (videoFile) formData.append('video', videoFile);
     if (localizacao) formData.append('localizacao', localizacao);
 
-    // Aqui você pode fazer a requisição fetch para enviar os dados para backend
-    // Por enquanto, só simula um envio:
-    console.log('Enviando dados:', { mensagem, fotoFile, videoFile, localizacao });
-    showFeedback('Denúncia enviada com sucesso!', false);
+    // NÃO precisa mais enviar nome_usuario - será pego automaticamente do usuário logado
 
-    // Limpa os campos
-    textMessage.value = '';
-    photoInput.value = '';
-    videoInput.value = '';
-    locationInput.value = '';
+    // Requisição real para o backend Laravel
+    fetch('/denuncia', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na requisição');
+      }
+      return response.json();
+    })
+    .then(data => {
+      showFeedback('Denúncia enviada com sucesso!', false);
+      // Limpa os campos
+      textMessage.value = '';
+      photoInput.value = '';
+      videoInput.value = '';
+      locationInput.value = '';
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+      showFeedback('Erro ao enviar denúncia. Tente novamente.');
+    });
   });
 });
