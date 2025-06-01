@@ -1,139 +1,122 @@
 -- MySQL Database Structure for Fiscaliza+
 -- Script de criação do banco de dados e tabelas
 
--- Criação do banco de dados
+-- Criação do banco de dados fiscaliza_db se não existir, com charset utf8mb4 e collation unicode
 CREATE DATABASE IF NOT EXISTS fiscaliza_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Usar o banco de dados
+-- Seleciona o banco de dados fiscaliza_db para uso nas próximas operações
 USE fiscaliza_db;
 
--- Tabela de usuários
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    birth_date DATE,
-    phone VARCHAR(20),
-    secondary_phone VARCHAR(20),
-    profile_image VARCHAR(255),
-    notification_enabled BOOLEAN DEFAULT TRUE,
-    remember_token VARCHAR(100),
-    email_verified_at TIMESTAMP NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Criação da tabela de usuários chamada 'usuarios'
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único do usuário, auto-incrementado
+    nome VARCHAR(255) NOT NULL, -- Nome do usuário, campo obrigatório
+    email VARCHAR(255) NOT NULL UNIQUE, -- Email do usuário, obrigatório e único para evitar duplicidade
+    senha VARCHAR(255) NOT NULL, -- Senha do usuário, obrigatório
+    data_nascimento DATE, -- Data de nascimento do usuário, opcional
+    telefone VARCHAR(20), -- Telefone principal do usuário, opcional
+    telefone_secundario VARCHAR(20), -- Telefone secundário, opcional
+    imagem_perfil VARCHAR(255), -- Caminho da imagem do perfil, opcional
+    notificacao_ativa BOOLEAN DEFAULT TRUE, -- Indica se notificações estão ativadas (true por padrão)
+    token_lembrar VARCHAR(100), -- Token para lembrar usuário em sessões (login persistente), opcional
+    email_verificado_em TIMESTAMP NULL -- Data/hora em que o email foi verificado, pode ser nulo
 );
 
--- Tabela de categorias
-CREATE TABLE categories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    icon VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Criação da tabela de categorias chamada 'categorias'
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único da categoria, auto-incrementado
+    nome VARCHAR(255) NOT NULL, -- Nome da categoria, obrigatório
+    icone VARCHAR(255) -- Caminho ou nome do ícone associado à categoria, opcional
 );
 
--- Tabela de órgãos governamentais
-CREATE TABLE government_agencies (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    acronym VARCHAR(50),
-    logo VARCHAR(255),
-    avg_response_time INT DEFAULT 0 COMMENT 'Tempo médio de resposta em dias',
-    rating DECIMAL(3,1) DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Criação da tabela de órgãos governamentais chamada 'orgaos_governamentais'
+CREATE TABLE orgaos_governamentais (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único do órgão, auto-incrementado
+    nome VARCHAR(255) NOT NULL, -- Nome completo do órgão, obrigatório
+    sigla VARCHAR(50), -- Sigla do órgão, opcional
+    logo VARCHAR(255), -- Caminho da imagem do logo do órgão, opcional
+    tempo_medio_resposta INT DEFAULT 0 COMMENT 'Tempo médio de resposta em dias', -- Tempo médio para responder denúncias, padrão 0 dias
+    avaliacao DECIMAL(3,1) DEFAULT 0 -- Avaliação média do órgão (ex: 4.5), padrão 0
 );
 
--- Tabela de denúncias/relatórios
-CREATE TABLE reports (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    category_id INT,
-    government_agency_id INT,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    latitude DECIMAL(10,7) NOT NULL,
-    longitude DECIMAL(10,7) NOT NULL,
-    address VARCHAR(255),
-    neighborhood VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    state VARCHAR(2) NOT NULL,
-    status ENUM('pending', 'in_progress', 'completed', 'rejected') DEFAULT 'pending',
-    is_public BOOLEAN DEFAULT TRUE,
-    likes_count INT DEFAULT 0,
-    comments_count INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL,
-    FOREIGN KEY (government_agency_id) REFERENCES government_agencies(id) ON DELETE SET NULL
+-- Criação da tabela de denúncias chamada 'denuncias'
+CREATE TABLE denuncias (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único da denúncia, auto-incrementado
+    usuario_id INT NOT NULL, -- ID do usuário que criou a denúncia, obrigatório
+    categoria_id INT, -- ID da categoria da denúncia, pode ser nulo
+    orgao_governamental_id INT, -- ID do órgão responsável, pode ser nulo
+    titulo VARCHAR(255) NOT NULL, -- Título da denúncia, obrigatório
+    descricao TEXT NOT NULL, -- Descrição detalhada da denúncia, obrigatório
+    latitude DECIMAL(10,7) NOT NULL, -- Latitude do local da denúncia, obrigatório
+    longitude DECIMAL(10,7) NOT NULL, -- Longitude do local da denúncia, obrigatório
+    endereco VARCHAR(255), -- Endereço aproximado, opcional
+    bairro VARCHAR(255) NOT NULL, -- Bairro do local da denúncia, obrigatório
+    cidade VARCHAR(255) NOT NULL, -- Cidade do local da denúncia, obrigatório
+    estado VARCHAR(2) NOT NULL, -- Estado (sigla) do local, obrigatório
+    status ENUM('pendente', 'em_andamento', 'concluido', 'rejeitado') DEFAULT 'pendente', -- Status da denúncia com valor padrão 'pendente'
+    publico BOOLEAN DEFAULT TRUE, -- Se a denúncia é pública, padrão verdadeiro
+    quantidade_curtidas INT DEFAULT 0, -- Quantidade de curtidas da denúncia, padrão zero
+    quantidade_comentarios INT DEFAULT 0, -- Quantidade de comentários da denúncia, padrão zero
+    -- Definição das chaves estrangeiras (relacionamentos)
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE, -- Se usuário for deletado, denúncia também é deletada
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL, -- Se categoria deletada, seta valor para NULL
+    FOREIGN KEY (orgao_governamental_id) REFERENCES orgaos_governamentais(id) ON DELETE SET NULL -- Se órgão deletado, seta NULL
 );
 
--- Tabela de imagens de denúncias
-CREATE TABLE report_images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    report_id INT NOT NULL,
-    image_path VARCHAR(255) NOT NULL,
-    is_main BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE
+-- Criação da tabela de imagens associadas às denúncias chamada 'imagens_denuncias'
+CREATE TABLE imagens_denuncias (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único da imagem, auto-incrementado
+    denuncia_id INT NOT NULL, -- ID da denúncia a que a imagem pertence, obrigatório
+    caminho_imagem VARCHAR(255) NOT NULL, -- Caminho da imagem, obrigatório
+    principal BOOLEAN DEFAULT FALSE, -- Indica se essa é a imagem principal da denúncia, padrão falso
+    FOREIGN KEY (denuncia_id) REFERENCES denuncias(id) ON DELETE CASCADE -- Se denúncia deletada, imagens também deletadas
 );
 
--- Tabela de comentários em denúncias
-CREATE TABLE report_comments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    report_id INT NOT NULL,
-    user_id INT,
-    government_agency_id INT,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
-    FOREIGN KEY (government_agency_id) REFERENCES government_agencies(id) ON DELETE SET NULL
+-- Criação da tabela de comentários em denúncias chamada 'comentarios_denuncias'
+CREATE TABLE comentarios_denuncias (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único do comentário, auto-incrementado
+    denuncia_id INT NOT NULL, -- ID da denúncia comentada, obrigatório
+    usuario_id INT, -- ID do usuário que comentou, pode ser nulo (ex: comentário de órgão)
+    orgao_governamental_id INT, -- ID do órgão que comentou, pode ser nulo
+    conteudo TEXT NOT NULL, -- Conteúdo do comentário, obrigatório
+    FOREIGN KEY (denuncia_id) REFERENCES denuncias(id) ON DELETE CASCADE, -- Se denúncia deletada, comentário também
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL, -- Se usuário deletado, seta NULL no comentário
+    FOREIGN KEY (orgao_governamental_id) REFERENCES orgaos_governamentais(id) ON DELETE SET NULL -- Mesmo para órgão
 );
 
--- Tabela de curtidas em denúncias
-CREATE TABLE report_likes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    report_id INT NOT NULL,
-    user_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY (report_id, user_id),
-    FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- Criação da tabela de curtidas em denúncias chamada 'curtidas_denuncias'
+CREATE TABLE curtidas_denuncias (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único da curtida, auto-incrementado
+    denuncia_id INT NOT NULL, -- ID da denúncia curtida, obrigatório
+    usuario_id INT NOT NULL, -- ID do usuário que curtiu, obrigatório
+    UNIQUE KEY (denuncia_id, usuario_id), -- Evita que o mesmo usuário curta a mesma denúncia mais de uma vez
+    FOREIGN KEY (denuncia_id) REFERENCES denuncias(id) ON DELETE CASCADE, -- Se denúncia deletada, curtidas também
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE -- Se usuário deletado, curtidas também
 );
 
--- Tabela de avaliações dos órgãos governamentais
-CREATE TABLE agency_ratings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    government_agency_id INT NOT NULL,
-    user_id INT NOT NULL,
-    rating INT NOT NULL COMMENT 'Nota de 1 a 5 estrelas',
-    comment TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY (government_agency_id, user_id),
-    FOREIGN KEY (government_agency_id) REFERENCES government_agencies(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- Criação da tabela de avaliações dos órgãos governamentais chamada 'avaliacoes_orgaos'
+CREATE TABLE avaliacoes_orgaos (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único da avaliação, auto-incrementado
+    orgao_governamental_id INT NOT NULL, -- ID do órgão avaliado, obrigatório
+    usuario_id INT NOT NULL, -- ID do usuário que avaliou, obrigatório
+    avaliacao INT NOT NULL COMMENT 'Nota de 1 a 5 estrelas', -- Nota de avaliação, obrigatório, entre 1 e 5
+    comentario TEXT, -- Comentário opcional sobre a avaliação
+    UNIQUE KEY (orgao_governamental_id, usuario_id), -- Um usuário só pode avaliar um órgão uma vez
+    FOREIGN KEY (orgao_governamental_id) REFERENCES orgaos_governamentais(id) ON DELETE CASCADE, -- Se órgão deletado, avaliacoes deletadas
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE -- Se usuário deletado, avaliacoes deletadas
 );
 
--- Tabela de histórico de status das denúncias
-CREATE TABLE report_status_history (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    report_id INT NOT NULL,
-    status ENUM('pending', 'in_progress', 'completed', 'rejected') NOT NULL,
-    updated_by_user_id INT,
-    updated_by_agency_id INT,
-    notes TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE,
-    FOREIGN KEY (updated_by_user_id) REFERENCES users(id) ON DELETE SET NULL,
-    FOREIGN KEY (updated_by_agency_id) REFERENCES government_agencies(id) ON DELETE SET NULL
+-- Criação da tabela de histórico de status das denúncias chamada 'historico_status_denuncias'
+CREATE TABLE historico_status_denuncias (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único do registro de histórico, auto-incrementado
+    denuncia_id INT NOT NULL, -- ID da denúncia que teve o status alterado, obrigatório
+    status ENUM('pendente', 'em_andamento', 'concluido', 'rejeitado') NOT NULL, -- Novo status da denúncia, obrigatório
+    atualizado_por_usuario_id INT, -- ID do usuário que realizou a alteração, pode ser nulo
+    atualizado_por_orgao_id INT, -- ID do órgão que realizou a alteração, pode ser nulo
+    observacoes TEXT, -- Observações adicionais sobre a alteração do status, opcional
+    FOREIGN KEY (denuncia_id) REFERENCES denuncias(id) ON DELETE CASCADE, -- Se denúncia deletada, histórico também
+    FOREIGN KEY (atualizado_por_usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL, -- Se usuário deletado, seta NULL
+    FOREIGN KEY (atualizado_por_orgao_id) REFERENCES orgaos_governamentais(id) ON DELETE SET NULL -- Se órgão deletado, seta NULL
 );
 
 -- =============================================
@@ -141,121 +124,106 @@ CREATE TABLE report_status_history (
 -- =============================================
 
 -- Tabela de administradores
-CREATE TABLE administrators (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    birth_date DATE,
-    phone VARCHAR(20),
-    secondary_phone VARCHAR(20),
-    profile_image VARCHAR(255),
-    last_login TIMESTAMP NULL,
-    is_super_admin BOOLEAN DEFAULT FALSE,
-    remember_token VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,         -- Identificador único do administrador
+    nome VARCHAR(255) NOT NULL,                 -- Nome do administrador, obrigatório
+    email VARCHAR(255) NOT NULL UNIQUE,         -- Email único do administrador
+    senha VARCHAR(255) NOT NULL,                 -- Senha do administrador
+    data_nascimento DATE,                        -- Data de nascimento, opcional
+    telefone VARCHAR(20),                        -- Telefone principal, opcional
+    telefone_secundario VARCHAR(20),            -- Telefone secundário, opcional
+    imagem_perfil VARCHAR(255),                  -- Caminho da imagem do perfil, opcional
+    ultimo_login TIMESTAMP NULL,                 -- Último login do administrador, pode ser nulo
+    e_super_admin BOOLEAN DEFAULT FALSE,        -- Indica se é super administrador, padrão falso
+    token_lembrar VARCHAR(100)                   -- Token para sessão persistente, opcional
 );
 
--- Tabela de permissões de administradores
-CREATE TABLE admin_permissions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Tabela de permissões dos administradores
+CREATE TABLE permissoes_administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,         -- Identificador da permissão
+    nome VARCHAR(255) NOT NULL,                 -- Nome da permissão, obrigatório
+    descricao TEXT                              -- Descrição da permissão, opcional
 );
 
--- Tabela de relação entre administradores e permissões
-CREATE TABLE admin_permission_assignments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    administrator_id INT NOT NULL,
-    permission_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (administrator_id) REFERENCES administrators(id) ON DELETE CASCADE,
-    FOREIGN KEY (permission_id) REFERENCES admin_permissions(id) ON DELETE CASCADE,
-    UNIQUE KEY (administrator_id, permission_id)
+-- Tabela que relaciona administradores com suas permissões
+CREATE TABLE atribuicoes_permissoes_administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,         -- Identificador único da atribuição
+    administrador_id INT NOT NULL,              -- ID do administrador, obrigatório
+    permissao_id INT NOT NULL,                   -- ID da permissão, obrigatório
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id) ON DELETE CASCADE,
+    FOREIGN KEY (permissao_id) REFERENCES permissoes_administradores(id) ON DELETE CASCADE,
+    UNIQUE KEY (administrador_id, permissao_id) -- Garante que uma permissão não seja atribuída duas vezes ao mesmo administrador
 );
 
--- Tabela de logs de ações dos administradores
-CREATE TABLE admin_action_logs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    administrator_id INT NOT NULL,
-    action_type VARCHAR(50) NOT NULL,
-    description TEXT NOT NULL,
-    entity_type VARCHAR(50),
-    entity_id INT,
-    ip_address VARCHAR(45),
-    user_agent TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (administrator_id) REFERENCES administrators(id) ON DELETE CASCADE
+-- Tabela de logs das ações realizadas pelos administradores
+CREATE TABLE logs_acoes_administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,         -- Identificador do log
+    administrador_id INT NOT NULL,              -- ID do administrador que realizou a ação
+    tipo_acao VARCHAR(50) NOT NULL,             -- Tipo da ação executada (ex: "criação", "exclusão")
+    descricao TEXT NOT NULL,                     -- Descrição detalhada da ação
+    tipo_entidade VARCHAR(50),                   -- Tipo da entidade afetada (ex: "usuário", "denúncia")
+    id_entidade INT,                             -- ID da entidade afetada
+    endereco_ip VARCHAR(45),                     -- Endereço IP do administrador na ação
+    user_agent TEXT,                             -- Informação do navegador ou dispositivo usado
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id) ON DELETE CASCADE
 );
 
 -- Tabela de mensagens entre administradores e usuários
-CREATE TABLE admin_user_messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    administrator_id INT NOT NULL,
-    user_id INT NOT NULL,
-    message TEXT NOT NULL,
-    is_from_admin BOOLEAN DEFAULT TRUE,
-    is_read BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (administrator_id) REFERENCES administrators(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+CREATE TABLE mensagens_administrador_usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,          -- Identificador da mensagem
+    administrador_id INT NOT NULL,               -- ID do administrador remetente ou destinatário
+    usuario_id INT NOT NULL,                      -- ID do usuário destinatário ou remetente
+    mensagem TEXT NOT NULL,                       -- Conteúdo da mensagem
+    veio_do_administrador BOOLEAN DEFAULT TRUE,  -- Indica se a mensagem é do administrador
+    lida BOOLEAN DEFAULT FALSE,                   -- Indica se a mensagem foi lida
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 -- Tabela de configurações do sistema
-CREATE TABLE system_settings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    setting_key VARCHAR(255) NOT NULL UNIQUE,
-    setting_value TEXT,
-    setting_group VARCHAR(100),
-    is_public BOOLEAN DEFAULT FALSE,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE configuracoes_sistema (
+    id INT AUTO_INCREMENT PRIMARY KEY,           -- Identificador da configuração
+    chave_configuracao VARCHAR(255) NOT NULL UNIQUE, -- Chave única para cada configuração
+    valor_configuracao TEXT,                      -- Valor associado à chave
+    grupo_configuracao VARCHAR(100),              -- Grupo ou categoria da configuração, opcional
+    e_publica BOOLEAN DEFAULT FALSE,               -- Indica se a configuração é pública
+    descricao TEXT                                -- Descrição da configuração, opcional
 );
 
 -- Tabela de notificações para administradores
-CREATE TABLE admin_notifications (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    administrator_id INT,
-    title VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
-    is_read BOOLEAN DEFAULT FALSE,
-    notification_type VARCHAR(50),
-    reference_type VARCHAR(50),
-    reference_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (administrator_id) REFERENCES administrators(id) ON DELETE CASCADE
+CREATE TABLE notificacoes_administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,           -- Identificador da notificação
+    administrador_id INT,                         -- ID do administrador relacionado (pode ser nulo)
+    titulo VARCHAR(255) NOT NULL,                 -- Título da notificação
+    mensagem TEXT NOT NULL,                        -- Conteúdo da notificação
+    lida BOOLEAN DEFAULT FALSE,                   -- Indica se a notificação foi lida
+    tipo_notificacao VARCHAR(50),                 -- Tipo da notificação, opcional
+    tipo_referencia VARCHAR(50),                   -- Tipo da entidade referenciada, opcional
+    id_referencia INT                             -- ID da entidade referenciada, opcional
+    ,
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id) ON DELETE CASCADE
 );
 
--- Tabela para relatórios gerados
-CREATE TABLE generated_reports (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    administrator_id INT NOT NULL,
-    report_type VARCHAR(100) NOT NULL,
-    report_parameters TEXT,
-    file_path VARCHAR(255),
-    file_size INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (administrator_id) REFERENCES administrators(id) ON DELETE CASCADE
+-- Tabela para relatórios gerados pelos administradores
+CREATE TABLE relatorios_gerados (
+    id INT AUTO_INCREMENT PRIMARY KEY,           -- Identificador do relatório
+    administrador_id INT NOT NULL,                -- ID do administrador que gerou o relatório
+    tipo_relatorio VARCHAR(100) NOT NULL,        -- Tipo do relatório (ex: "estatístico", "financeiro")
+    parametros_relatorio TEXT,                     -- Parâmetros usados para gerar o relatório, em texto
+    caminho_arquivo VARCHAR(255),                  -- Caminho do arquivo gerado
+    tamanho_arquivo INT,                           -- Tamanho do arquivo em bytes
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id) ON DELETE CASCADE
 );
 
--- Tabela para armazenar filtros salvos dos administradores
-CREATE TABLE admin_saved_filters (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    administrator_id INT NOT NULL,
-    filter_name VARCHAR(255) NOT NULL,
-    filter_type VARCHAR(50) NOT NULL,
-    filter_data JSON NOT NULL,
-    is_default BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (administrator_id) REFERENCES administrators(id) ON DELETE CASCADE
+-- Tabela para filtros salvos pelos administradores
+CREATE TABLE filtros_salvos_administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,            -- Identificador do filtro salvo
+    administrador_id INT NOT NULL,                 -- ID do administrador que salvou o filtro
+    nome_filtro VARCHAR(255) NOT NULL,             -- Nome dado ao filtro
+    tipo_filtro VARCHAR(50) NOT NULL,              -- Tipo do filtro
+    dados_filtro JSON NOT NULL,                     -- Dados do filtro armazenados em formato JSON
+    e_padrao BOOLEAN DEFAULT FALSE,                 -- Indica se o filtro é o padrão do administrador
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id) ON DELETE CASCADE
 );
 
 -- =============================================
@@ -263,7 +231,7 @@ CREATE TABLE admin_saved_filters (
 -- =============================================
 
 -- Inserir dados iniciais para categorias
-INSERT INTO categories (name, icon) VALUES
+INSERT INTO categorias (nome, icone) VALUES
 ('Buracos', 'pothole.svg'),
 ('Falta de água', 'water.svg'),
 ('Iluminação pública', 'streetlight.svg'),
@@ -274,43 +242,43 @@ INSERT INTO categories (name, icon) VALUES
 ('Transporte público', 'bus.svg');
 
 -- Inserir dados iniciais para órgãos governamentais
-INSERT INTO government_agencies (name, acronym, logo, avg_response_time, rating) VALUES
+INSERT INTO organismos_governamentais (nome, sigla, logo, tempo_medio_resposta, avaliacao) VALUES
 ('Secretaria Municipal de Obras e Infraestrutura', 'SEMOI', 'semoi.png', 3, 4.2),
 ('Secretaria Municipal do Meio Ambiente', 'SEMMA', 'semma.png', 5, 3.5),
 ('Secretaria Municipal de Trânsito e Transportes', 'SEMTT', 'semtt.png', 7, 3.2),
 ('Companhia de Gestão de Limpeza e Conservação', 'COGLICE', 'coglice.png', 11, 2.5);
 
 -- Inserir permissões iniciais
-INSERT INTO admin_permissions (name, description) VALUES
-('user_management', 'Gerenciar usuários do sistema'),
-('report_management', 'Gerenciar denúncias e relatórios'),
-('agency_management', 'Gerenciar órgãos governamentais'),
-('system_settings', 'Configurar parâmetros do sistema'),
-('generate_reports', 'Gerar relatórios estatísticos'),
-('view_statistics', 'Visualizar estatísticas do sistema'),
-('message_users', 'Enviar mensagens aos usuários'),
-('super_admin', 'Acesso completo a todas as funcionalidades');
+INSERT INTO permissoes_administradores (nome, descricao) VALUES
+('gerenciamento_usuarios', 'Gerenciar usuários do sistema'),
+('gerenciamento_denuncias', 'Gerenciar denúncias e relatórios'),
+('gerenciamento_orgaos', 'Gerenciar órgãos governamentais'),
+('configuracao_sistema', 'Configurar parâmetros do sistema'),
+('gerar_relatorios', 'Gerar relatórios estatísticos'),
+('visualizar_estatisticas', 'Visualizar estatísticas do sistema'),
+('enviar_mensagens_usuarios', 'Enviar mensagens aos usuários'),
+('super_administrador', 'Acesso completo a todas as funcionalidades');
 
--- Criar um administrador padrão (super admin)
-INSERT INTO administrators (name, email, password, is_super_admin) VALUES
+-- Criar um administrador padrão (super administrador)
+INSERT INTO administradores (nome, email, senha, e_super_admin) VALUES
 ('Administrador', 'admin@fiscalizamais.com.br', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', TRUE);
 
--- Atribuir todas as permissões ao super admin
-INSERT INTO admin_permission_assignments (administrator_id, permission_id)
-SELECT 1, id FROM admin_permissions;
+-- Atribuir todas as permissões ao super administrador
+INSERT INTO atribuicoes_permissoes_administradores (administrador_id, permissao_id)
+SELECT 1, id FROM permissoes_administradores;
 
 -- Configurações iniciais do sistema
-INSERT INTO system_settings (setting_key, setting_value, setting_group, is_public, description) VALUES
-('app_name', 'Fiscaliza+', 'general', TRUE, 'Nome da aplicação'),
-('app_description', 'Plataforma de denúncias para problemas urbanos', 'general', TRUE, 'Descrição da aplicação'),
-('contact_email', 'contato@fiscalizamais.com.br', 'contact', TRUE, 'Email de contato'),
-('reports_per_page', '20', 'pagination', TRUE, 'Quantidade de denúncias por página'),
-('default_map_center_lat', '-23.5505', 'map', TRUE, 'Latitude central do mapa padrão'),
-('default_map_center_lng', '-46.6333', 'map', TRUE, 'Longitude central do mapa padrão'),
-('default_map_zoom', '12', 'map', TRUE, 'Zoom padrão do mapa'),
-('enable_user_registration', 'true', 'security', FALSE, 'Habilitar registro de novos usuários'),
-('require_email_verification', 'true', 'security', FALSE, 'Exigir verificação de email para novos usuários'),
-('moderation_required', 'false', 'reports', FALSE, 'Exigir moderação para novas denúncias');
+INSERT INTO configuracoes_sistema (chave_configuracao, valor_configuracao, grupo_configuracao, e_publica, descricao) VALUES
+('nome_aplicacao', 'Fiscaliza+', 'geral', TRUE, 'Nome da aplicação'),
+('descricao_aplicacao', 'Plataforma de denúncias para problemas urbanos', 'geral', TRUE, 'Descrição da aplicação'),
+('email_contato', 'contato@fiscalizamais.com.br', 'contato', TRUE, 'Email de contato'),
+('denuncias_por_pagina', '20', 'paginacao', TRUE, 'Quantidade de denúncias por página'),
+('latitude_centro_mapa_padrao', '-23.5505', 'mapa', TRUE, 'Latitude central do mapa padrão'),
+('longitude_centro_mapa_padrao', '-46.6333', 'mapa', TRUE, 'Longitude central do mapa padrão'),
+('zoom_mapa_padrao', '12', 'mapa', TRUE, 'Zoom padrão do mapa'),
+('habilitar_registro_usuarios', 'true', 'seguranca', FALSE, 'Habilitar registro de novos usuários'),
+('exigir_verificacao_email', 'true', 'seguranca', FALSE, 'Exigir verificação de email para novos usuários'),
+('moderacao_exigida', 'false', 'denuncias', FALSE, 'Exigir moderação para novas denúncias');
 
 -- =============================================
 -- PROCEDURES E TRIGGERS
@@ -318,201 +286,201 @@ INSERT INTO system_settings (setting_key, setting_value, setting_group, is_publi
 
 -- Procedure para atualizar o contador de curtidas em uma denúncia
 DELIMITER //
-CREATE PROCEDURE update_report_likes_count(IN report_id_param INT)
+CREATE PROCEDURE atualizar_contador_curtidas_denuncia(IN id_denuncia INT)
 BEGIN
-    UPDATE reports 
-    SET likes_count = (
-        SELECT COUNT(*) FROM report_likes 
-        WHERE report_id = report_id_param
+    UPDATE denuncias
+    SET contador_curtidas = (
+        SELECT COUNT(*) FROM curtidas_denuncias
+        WHERE denuncia_id = id_denuncia
     )
-    WHERE id = report_id_param;
+    WHERE id = id_denuncia;
 END //
 DELIMITER ;
 
 -- Procedure para atualizar o contador de comentários em uma denúncia
 DELIMITER //
-CREATE PROCEDURE update_report_comments_count(IN report_id_param INT)
+CREATE PROCEDURE atualizar_contador_comentarios_denuncia(IN id_denuncia INT)
 BEGIN
-    UPDATE reports 
-    SET comments_count = (
-        SELECT COUNT(*) FROM report_comments 
-        WHERE report_id = report_id_param
+    UPDATE denuncias
+    SET contador_comentarios = (
+        SELECT COUNT(*) FROM comentarios_denuncias
+        WHERE denuncia_id = id_denuncia
     )
-    WHERE id = report_id_param;
+    WHERE id = id_denuncia;
 END //
 DELIMITER ;
 
 -- Procedure para atualizar a média de avaliação de um órgão governamental
 DELIMITER //
-CREATE PROCEDURE update_agency_avg_rating(IN agency_id_param INT)
+CREATE PROCEDURE atualizar_media_avaliacao_orgaos(IN id_orgao INT)
 BEGIN
-    UPDATE government_agencies 
-    SET rating = (
-        SELECT AVG(rating) FROM agency_ratings 
-        WHERE government_agency_id = agency_id_param
+    UPDATE organismos_governamentais
+    SET avaliacao = (
+        SELECT AVG(avaliacao) FROM avaliacoes_orgaos
+        WHERE organismo_governamental_id = id_orgao
     )
-    WHERE id = agency_id_param;
+    WHERE id = id_orgao;
 END //
 DELIMITER ;
 
--- Procedimento para atualizar o status de uma denúncia (com log de administrador)
+-- Procedure para atualizar o status de uma denúncia (com log do administrador)
 DELIMITER //
-CREATE PROCEDURE update_report_status_by_admin(
-    IN p_report_id INT,
+CREATE PROCEDURE atualizar_status_denuncia_por_admin(
+    IN p_id_denuncia INT,
     IN p_status VARCHAR(20),
-    IN p_admin_id INT,
-    IN p_notes TEXT
+    IN p_id_admin INT,
+    IN p_notas TEXT
 )
 BEGIN
     -- Atualizar o status da denúncia
-    UPDATE reports SET status = p_status WHERE id = p_report_id;
+    UPDATE denuncias SET status = p_status WHERE id = p_id_denuncia;
     
     -- Inserir no histórico de status
-    INSERT INTO report_status_history (
-        report_id,
+    INSERT INTO historico_status_denuncias (
+        denuncia_id,
         status,
-        updated_by_user_id,
-        updated_by_agency_id,
-        notes
+        atualizado_por_usuario_id,
+        atualizado_por_orgao_id,
+        notas
     ) VALUES (
-        p_report_id,
+        p_id_denuncia,
         p_status,
         NULL,
         NULL,
-        p_notes
+        p_notas
     );
     
     -- Registrar ação do administrador
-    INSERT INTO admin_action_logs (
-        administrator_id,
-        action_type,
-        description,
-        entity_type,
-        entity_id
+    INSERT INTO logs_acoes_administradores (
+        administrador_id,
+        tipo_acao,
+        descricao,
+        tipo_entidade,
+        id_entidade
     ) VALUES (
-        p_admin_id,
-        'update_report_status',
-        CONCAT('Alterou status da denúncia #', p_report_id, ' para "', p_status, '"'),
-        'report',
-        p_report_id
+        p_id_admin,
+        'atualizar_status_denuncia',
+        CONCAT('Alterou status da denúncia #', p_id_denuncia, ' para "', p_status, '"'),
+        'denuncia',
+        p_id_denuncia
     );
     
-    -- Notificar o usuário que criou a denúncia
-    INSERT INTO admin_notifications (
-        administrator_id,
-        title,
-        message,
-        notification_type,
-        reference_type,
-        reference_id
+    -- Notificar usuário que criou a denúncia
+    INSERT INTO notificacoes_administradores (
+        administrador_id,
+        titulo,
+        mensagem,
+        tipo_notificacao,
+        tipo_referencia,
+        id_referencia
     )
     SELECT
         NULL,
-        CONCAT('Status da denúncia #', p_report_id, ' atualizado'),
+        CONCAT('Status da denúncia #', p_id_denuncia, ' atualizado'),
         CONCAT('O status da sua denúncia foi atualizado para "', 
             CASE 
-                WHEN p_status = 'pending' THEN 'Pendente'
-                WHEN p_status = 'in_progress' THEN 'Em Andamento'
-                WHEN p_status = 'completed' THEN 'Concluída'
-                WHEN p_status = 'rejected' THEN 'Rejeitada'
+                WHEN p_status = 'pendente' THEN 'Pendente'
+                WHEN p_status = 'em_andamento' THEN 'Em Andamento'
+                WHEN p_status = 'concluida' THEN 'Concluída'
+                WHEN p_status = 'rejeitada' THEN 'Rejeitada'
                 ELSE p_status
             END, '"'),
-        'status_update',
-        'report',
-        p_report_id
-    FROM reports WHERE id = p_report_id;
+        'atualizacao_status',
+        'denuncia',
+        p_id_denuncia
+    FROM denuncias WHERE id = p_id_denuncia;
 END //
 DELIMITER ;
 
--- Trigger para atualizar o contador de curtidas quando uma curtida é inserida
+-- Trigger para atualizar contador de curtidas quando uma curtida é inserida
 DELIMITER //
-CREATE TRIGGER after_report_like_insert
-AFTER INSERT ON report_likes
+CREATE TRIGGER apos_inserir_curtida_denuncia
+AFTER INSERT ON curtidas_denuncias
 FOR EACH ROW
 BEGIN
-    CALL update_report_likes_count(NEW.report_id);
+    CALL atualizar_contador_curtidas_denuncia(NEW.denuncia_id);
 END //
 DELIMITER ;
 
--- Trigger para atualizar o contador de curtidas quando uma curtida é removida
+-- Trigger para atualizar contador de curtidas quando uma curtida é removida
 DELIMITER //
-CREATE TRIGGER after_report_like_delete
-AFTER DELETE ON report_likes
+CREATE TRIGGER apos_remover_curtida_denuncia
+AFTER DELETE ON curtidas_denuncias
 FOR EACH ROW
 BEGIN
-    CALL update_report_likes_count(OLD.report_id);
+    CALL atualizar_contador_curtidas_denuncia(OLD.denuncia_id);
 END //
 DELIMITER ;
 
--- Trigger para atualizar o contador de comentários quando um comentário é inserido
+-- Trigger para atualizar contador de comentários quando um comentário é inserido
 DELIMITER //
-CREATE TRIGGER after_report_comment_insert
-AFTER INSERT ON report_comments
+CREATE TRIGGER apos_inserir_comentario_denuncia
+AFTER INSERT ON comentarios_denuncias
 FOR EACH ROW
 BEGIN
-    CALL update_report_comments_count(NEW.report_id);
+    CALL atualizar_contador_comentarios_denuncia(NEW.denuncia_id);
 END //
 DELIMITER ;
 
--- Trigger para atualizar o contador de comentários quando um comentário é removido
+-- Trigger para atualizar contador de comentários quando um comentário é removido
 DELIMITER //
-CREATE TRIGGER after_report_comment_delete
-AFTER DELETE ON report_comments
+CREATE TRIGGER apos_remover_comentario_denuncia
+AFTER DELETE ON comentarios_denuncias
 FOR EACH ROW
 BEGIN
-    CALL update_report_comments_count(OLD.report_id);
+    CALL atualizar_contador_comentarios_denuncia(OLD.denuncia_id);
 END //
 DELIMITER ;
 
--- Trigger para atualizar a média de avaliação quando uma avaliação é inserida
+-- Trigger para atualizar média de avaliação quando uma avaliação é inserida
 DELIMITER //
-CREATE TRIGGER after_agency_rating_insert
-AFTER INSERT ON agency_ratings
+CREATE TRIGGER apos_inserir_avaliacao_orgao
+AFTER INSERT ON avaliacoes_orgaos
 FOR EACH ROW
 BEGIN
-    CALL update_agency_avg_rating(NEW.government_agency_id);
+    CALL atualizar_media_avaliacao_orgaos(NEW.organismo_governamental_id);
 END //
 DELIMITER ;
 
--- Trigger para atualizar a média de avaliação quando uma avaliação é atualizada
+-- Trigger para atualizar média de avaliação quando uma avaliação é atualizada
 DELIMITER //
-CREATE TRIGGER after_agency_rating_update
-AFTER UPDATE ON agency_ratings
+CREATE TRIGGER apos_atualizar_avaliacao_orgao
+AFTER UPDATE ON avaliacoes_orgaos
 FOR EACH ROW
 BEGIN
-    CALL update_agency_avg_rating(NEW.government_agency_id);
+    CALL atualizar_media_avaliacao_orgaos(NEW.organismo_governamental_id);
 END //
 DELIMITER ;
 
--- Trigger para atualizar a média de avaliação quando uma avaliação é removida
+-- Trigger para atualizar média de avaliação quando uma avaliação é removida
 DELIMITER //
-CREATE TRIGGER after_agency_rating_delete
-AFTER DELETE ON agency_ratings
+CREATE TRIGGER apos_remover_avaliacao_orgao
+AFTER DELETE ON avaliacoes_orgaos
 FOR EACH ROW
 BEGIN
-    CALL update_agency_avg_rating(OLD.government_agency_id);
+    CALL atualizar_media_avaliacao_orgaos(OLD.organismo_governamental_id);
 END //
 DELIMITER ;
 
 -- Trigger para registrar mudanças de status em denúncias
 DELIMITER //
-CREATE TRIGGER before_report_status_update
-BEFORE UPDATE ON reports
+CREATE TRIGGER antes_atualizar_status_denuncia
+BEFORE UPDATE ON denuncias
 FOR EACH ROW
 BEGIN
     IF OLD.status <> NEW.status THEN
-        INSERT INTO report_status_history (
-            report_id, 
+        INSERT INTO historico_status_denuncias (
+            denuncia_id, 
             status, 
-            updated_by_user_id, 
-            updated_by_agency_id,
-            notes
+            atualizado_por_usuario_id, 
+            atualizado_por_orgao_id,
+            notas
         ) VALUES (
             NEW.id,
             NEW.status,
-            NULL, -- Aqui deve ser implementado para capturar o ID do usuário que fez a alteração
-            NULL, -- Aqui deve ser implementado para capturar o ID da agência que fez a alteração
-            NULL  -- Notas adicionais sobre a alteração
+            NULL, -- implementar captura do usuário que fez a alteração
+            NULL, -- implementar captura do órgão que fez a alteração
+            NULL  -- notas adicionais
         );
     END IF;
 END //
@@ -520,27 +488,27 @@ DELIMITER ;
 
 -- Trigger para criar notificações ao administrador quando novas denúncias são registradas
 DELIMITER //
-CREATE TRIGGER after_report_insert
-AFTER INSERT ON reports
+CREATE TRIGGER apos_inserir_denuncia
+AFTER INSERT ON denuncias
 FOR EACH ROW
 BEGIN
-    INSERT INTO admin_notifications (
-        administrator_id,
-        title,
-        message,
-        notification_type,
-        reference_type,
-        reference_id
+    INSERT INTO notificacoes_administradores (
+        administrador_id,
+        titulo,
+        mensagem,
+        tipo_notificacao,
+        tipo_referencia,
+        id_referencia
     )
     SELECT
         id,
         'Nova denúncia registrada',
-        CONCAT('Uma nova denúncia foi registrada em ', NEW.neighborhood, ', ', NEW.city, ': "', NEW.title, '"'),
-        'new_report',
-        'report',
+        CONCAT('Uma nova denúncia foi registrada em ', NEW.bairro, ', ', NEW.cidade, ': "', NEW.titulo, '"'),
+        'nova_denuncia',
+        'denuncia',
         NEW.id
-    FROM administrators WHERE (
-        SELECT setting_value FROM system_settings WHERE setting_key = 'admin_notification_new_reports'
+    FROM administradores WHERE (
+        SELECT valor_configuracao FROM configuracoes_sistema WHERE chave_configuracao = 'notificacao_admin_novas_denuncias'
     ) = 'true';
 END //
 DELIMITER ;
@@ -548,131 +516,139 @@ DELIMITER ;
 -- =============================================
 -- VIEWS
 -- =============================================
-
 -- View para listar denúncias com informações relacionadas
-CREATE VIEW view_reports_with_details AS
+CREATE VIEW view_denuncias_com_detalhes AS
 SELECT 
-    r.id,
-    r.title,
-    r.description,
-    r.status,
-    r.created_at,
-    r.updated_at,
-    u.name AS user_name,
-    c.name AS category_name,
-    g.name AS agency_name,
-    r.neighborhood,
-    r.city,
-    r.state,
-    r.latitude,
-    r.longitude,
-    r.likes_count,
-    r.comments_count,
-    (SELECT image_path FROM report_images WHERE report_id = r.id AND is_main = TRUE LIMIT 1) AS main_image
+    d.id, -- ID da denúncia
+    d.titulo, -- Título da denúncia
+    d.descricao, -- Descrição da denúncia
+    d.status, -- Status atual da denúncia
+    u.nome AS nome_usuario, -- Nome do usuário que criou a denúncia
+    c.nome AS nome_categoria, -- Nome da categoria da denúncia
+    o.nome AS nome_orgao, -- Nome do órgão governamental responsável
+    d.bairro, -- Bairro onde a denúncia foi feita
+    d.cidade, -- Cidade onde a denúncia foi feita
+    d.estado, -- Estado onde a denúncia foi feita
+    d.latitude, -- Latitude do local da denúncia
+    d.longitude, -- Longitude do local da denúncia
+    d.contador_curtidas, -- Quantidade de curtidas na denúncia
+    d.contador_comentarios, -- Quantidade de comentários na denúncia
+    (SELECT caminho_imagem FROM imagens_denuncias WHERE denuncia_id = d.id AND imagem_principal = TRUE LIMIT 1) AS imagem_principal -- Imagem principal associada à denúncia
 FROM 
-    reports r
+    denuncias d -- Tabela principal de denúncias
 LEFT JOIN 
-    users u ON r.user_id = u.id
+    usuarios u ON d.usuario_id = u.id -- Associação com o usuário que criou a denúncia
 LEFT JOIN 
-    categories c ON r.category_id = c.id
+    categorias c ON d.categoria_id = c.id -- Associação com a categoria da denúncia
 LEFT JOIN 
-    government_agencies g ON r.government_agency_id = g.id;
+    organismos_governamentais o ON d.organismo_governamental_id = o.id; -- Associação com órgão governamental responsável
 
--- View para listar os órgãos governamentais com suas estatísticas
-CREATE VIEW view_agency_statistics AS
+-- View para listar órgãos governamentais com suas estatísticas
+CREATE VIEW view_estatisticas_orgaos AS
 SELECT 
-    g.id,
-    g.name,
-    g.acronym,
-    g.logo,
-    g.rating,
-    g.avg_response_time,
-    COUNT(DISTINCT r.id) AS total_reports,
-    SUM(CASE WHEN r.status = 'completed' THEN 1 ELSE 0 END) AS resolved_reports,
-    SUM(CASE WHEN r.status = 'pending' THEN 1 ELSE 0 END) AS pending_reports,
-    SUM(CASE WHEN r.status = 'in_progress' THEN 1 ELSE 0 END) AS in_progress_reports,
-    SUM(CASE WHEN r.status = 'rejected' THEN 1 ELSE 0 END) AS rejected_reports
+    o.id, -- ID do órgão governamental
+    o.nome, -- Nome do órgão
+    o.sigla, -- Sigla do órgão
+    o.logo, -- Logo do órgão
+    o.avaliacao, -- Avaliação média do órgão
+    o.tempo_medio_resposta, -- Tempo médio de resposta do órgão
+    COUNT(DISTINCT d.id) AS total_denuncias, -- Total de denúncias associadas ao órgão
+    SUM(CASE WHEN d.status = 'concluida' THEN 1 ELSE 0 END) AS denuncias_resolvidas, -- Quantidade de denúncias concluídas
+    SUM(CASE WHEN d.status = 'pendente' THEN 1 ELSE 0 END) AS denuncias_pendentes, -- Quantidade de denúncias pendentes
+    SUM(CASE WHEN d.status = 'em_andamento' THEN 1 ELSE 0 END) AS denuncias_em_andamento, -- Quantidade de denúncias em andamento
+    SUM(CASE WHEN d.status = 'rejeitada' THEN 1 ELSE 0 END) AS denuncias_rejeitadas -- Quantidade de denúncias rejeitadas
 FROM 
-    government_agencies g
+    organismos_governamentais o -- Tabela de órgãos governamentais
 LEFT JOIN 
-    reports r ON g.id = r.government_agency_id
+    denuncias d ON o.id = d.organismo_governamental_id -- Associação com denúncias atribuídas ao órgão
 GROUP BY 
-    g.id, g.name, g.acronym, g.logo, g.rating, g.avg_response_time;
+    o.id, o.nome, o.sigla, o.logo, o.avaliacao, o.tempo_medio_resposta; -- Agrupar por campos do órgão governamental
 
 -- View para estatísticas por categoria
-CREATE VIEW view_category_statistics AS
+CREATE VIEW view_estatisticas_categorias AS
 SELECT 
-    c.id,
-    c.name,
-    c.icon,
-    COUNT(r.id) AS total_reports,
-    SUM(CASE WHEN r.status = 'completed' THEN 1 ELSE 0 END) AS resolved_reports,
-    SUM(CASE WHEN r.status = 'pending' THEN 1 ELSE 0 END) AS pending_reports
+    c.id, -- ID da categoria
+    c.nome, -- Nome da categoria
+    c.icone, -- Ícone associado à categoria
+    COUNT(d.id) AS total_denuncias, -- Total de denúncias na categoria
+    SUM(CASE WHEN d.status = 'concluida' THEN 1 ELSE 0 END) AS denuncias_resolvidas, -- Denúncias concluídas na categoria
+    SUM(CASE WHEN d.status = 'pendente' THEN 1 ELSE 0 END) AS denuncias_pendentes -- Denúncias pendentes na categoria
 FROM 
-    categories c
+    categorias c -- Tabela de categorias
 LEFT JOIN 
-    reports r ON c.id = r.category_id
+    denuncias d ON c.id = d.categoria_id -- Associação com denúncias da categoria
 GROUP BY 
-    c.id, c.name, c.icon;
+    c.id, c.nome, c.icone; -- Agrupar por campos da categoria
 
 -- View para estatísticas por bairro
-CREATE VIEW view_neighborhood_statistics AS
+CREATE VIEW view_estatisticas_bairros AS
 SELECT 
-    r.neighborhood,
-    r.city,
-    r.state,
-    COUNT(r.id) AS total_reports,
-    SUM(CASE WHEN r.status = 'completed' THEN 1 ELSE 0 END) AS resolved_reports,
-    SUM(CASE WHEN r.status = 'pending' THEN 1 ELSE 0 END) AS pending_reports
+    d.bairro, -- Nome do bairro
+    d.cidade, -- Cidade do bairro
+    d.estado, -- Estado do bairro
+    COUNT(d.id) AS total_denuncias, -- Total de denúncias no bairro
+    SUM(CASE WHEN d.status = 'concluida' THEN 1 ELSE 0 END) AS denuncias_resolvidas, -- Denúncias concluídas no bairro
+    SUM(CASE WHEN d.status = 'pendente' THEN 1 ELSE 0 END) AS denuncias_pendentes -- Denúncias pendentes no bairro
 FROM 
-    reports r
+    denuncias d -- Tabela de denúncias
 GROUP BY 
-    r.neighborhood, r.city, r.state;
+    d.bairro, d.cidade, d.estado; -- Agrupar por bairro, cidade e estado
 
--- View para dashboard de administrador
-CREATE VIEW view_admin_dashboard AS
+-- View para dashboard do administrador
+CREATE VIEW view_dashboard_administrador AS
 SELECT
-    (SELECT COUNT(*) FROM reports) AS total_reports,
-    (SELECT COUNT(*) FROM reports WHERE status = 'pending') AS pending_reports,
-    (SELECT COUNT(*) FROM reports WHERE status = 'in_progress') AS in_progress_reports,
-    (SELECT COUNT(*) FROM reports WHERE status = 'completed') AS completed_reports,
-    (SELECT COUNT(*) FROM reports WHERE status = 'rejected') AS rejected_reports,
-    (SELECT COUNT(*) FROM users) AS total_users,
-    (SELECT COUNT(*) FROM users WHERE DATE(created_at) = CURDATE()) AS new_users_today,
-    (SELECT COUNT(*) FROM reports WHERE DATE(created_at) = CURDATE()) AS new_reports_today;
+    (SELECT COUNT(*) FROM denuncias) AS total_denuncias, -- Total de denúncias cadastradas no sistema
+    (SELECT COUNT(*) FROM denuncias WHERE status = 'pendente') AS denuncias_pendentes, -- Denúncias pendentes
+    (SELECT COUNT(*) FROM denuncias WHERE status = 'em_andamento') AS denuncias_em_andamento, -- Denúncias em andamento
+    (SELECT COUNT(*) FROM denuncias WHERE status = 'concluida') AS denuncias_concluidas, -- Denúncias concluídas
+    (SELECT COUNT(*) FROM denuncias WHERE status = 'rejeitada') AS denuncias_rejeitadas, -- Denúncias rejeitadas
+    (SELECT COUNT(*) FROM usuarios) AS total_usuarios, -- Total de usuários cadastrados
+    (SELECT COUNT(*) FROM usuarios WHERE DATE(data_cadastro) = CURDATE()) AS novos_usuarios_hoje, -- Usuários cadastrados hoje
+    (SELECT COUNT(*) FROM denuncias WHERE DATE(data_cadastro) = CURDATE()) AS novas_denuncias_hoje; -- Denúncias cadastradas hoje
 
 -- View para estatísticas de atividade dos usuários
-CREATE VIEW view_user_activity_stats AS
+CREATE VIEW view_estatisticas_atividade_usuarios AS
 SELECT
-    u.id,
-    u.name,
-    u.email,
-    u.profile_image,
-    COUNT(r.id) AS total_reports,
-    SUM(CASE WHEN r.status = 'completed' THEN 1 ELSE 0 END) AS completed_reports,
-    SUM(CASE WHEN r.status = 'rejected' THEN 1 ELSE 0 END) AS rejected_reports,
-    COUNT(DISTINCT rc.id) AS total_comments,
-    COUNT(DISTINCT rl.id) AS total_likes,
-    MIN(r.created_at) AS first_activity,
-    MAX(r.created_at) AS last_activity
+    u.id, -- ID do usuário
+    u.nome, -- Nome do usuário
+    u.email, -- Email do usuário
+    u.imagem_perfil, -- Imagem de perfil do usuário
+    COUNT(d.id) AS total_denuncias, -- Total de denúncias feitas pelo usuário
+    SUM(CASE WHEN d.status = 'concluida' THEN 1 ELSE 0 END) AS denuncias_concluidas, -- Denúncias concluídas pelo usuário
+    SUM(CASE WHEN d.status = 'rejeitada' THEN 1 ELSE 0 END) AS denuncias_rejeitadas, -- Denúncias rejeitadas pelo usuário
+    COUNT(DISTINCT cd.id) AS total_comentarios, -- Total de comentários feitos pelo usuário
+    COUNT(DISTINCT cl.id) AS total_curtidas, -- Total de curtidas feitas pelo usuário
+    MIN(d.data_cadastro) AS primeira_atividade, -- Data da primeira denúncia cadastrada pelo usuário
+    MAX(d.data_cadastro) AS ultima_atividade -- Data da última denúncia cadastrada pelo usuário
 FROM
-    users u
+    usuarios u -- Tabela de usuários
 LEFT JOIN
-    reports r ON u.id = r.user_id
+    denuncias d ON u.id = d.usuario_id -- Associação com denúncias feitas pelo usuário
 LEFT JOIN
-    report_comments rc ON u.id = rc.user_id
+    comentarios_denuncias cd ON u.id = cd.usuario_id -- Associação com comentários feitos pelo usuário
 LEFT JOIN
-    report_likes rl ON u.id = rl.user_id
+    curtidas_denuncias cl ON u.id = cl.usuario_id -- Associação com curtidas feitas pelo usuário
 GROUP BY
-    u.id, u.name, u.email, u.profile_image;
+    u.id, u.nome, u.email, u.imagem_perfil; -- Agrupar por dados do usuário
+
 
 -- =============================================
 -- ÍNDICES
 -- =============================================
 
 -- Índices adicionais para melhorar o desempenho das consultas do administrador
-CREATE INDEX idx_reports_status ON reports(status);
-CREATE INDEX idx_reports_created_at ON reports(created_at);
-CREATE INDEX idx_reports_neighborhood_city_state ON reports(neighborhood, city, state);
-CREATE INDEX idx_admin_notifications_is_read ON admin_notifications(is_read);
-CREATE INDEX idx_admin_user_messages_is_read ON admin_user_messages(is_read);
+
+-- Índice para melhorar buscas por status nas denúncias
+CREATE INDEX idx_denuncias_status ON denuncias(status);
+
+-- Índice para melhorar buscas por data de cadastro nas denúncias
+CREATE INDEX idx_denuncias_data_cadastro ON denuncias(data_cadastro);
+
+-- Índice para melhorar buscas por localização (bairro, cidade e estado) nas denúncias
+CREATE INDEX idx_denuncias_bairro_cidade_estado ON denuncias(bairro, cidade, estado);
+
+-- Índice para melhorar buscas por status de leitura nas notificações do administrador
+CREATE INDEX idx_notificacoes_adm_lidas ON notificacoes_administrador(foi_lida);
+
+-- Índice para melhorar buscas por status de leitura nas mensagens dos administradores para usuários
+CREATE INDEX idx_mensagens_adm_usuarios_lidas ON mensagens_administrador_usuario(foi_lida);
