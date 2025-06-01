@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiscaliza+ | Acompanhar Denúncia</title>
-  <link rel ="stylesheet" href="../../public/css/acompanhar-denuncia.css">
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/acompanhar-denuncia.css') }}">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
   <div id="sidebar-container"></div>
-  
+
   <div class="main-content">
   <div class="header">
     <div class="brand-name">
@@ -114,4 +116,5 @@
 </div>
   <script src="../../public/js/acompanharDenuncia.js"></script>
 </body>
+
 </html>

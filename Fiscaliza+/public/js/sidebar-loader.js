@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch('../templates/sidebar.html')
+        fetch('/templates/sidebar.html')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Falha ao carregar a sidebar: ' + response.status);

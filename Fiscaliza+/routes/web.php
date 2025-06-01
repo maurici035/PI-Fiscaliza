@@ -5,21 +5,38 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
 
+// Rota principal
+Route::get('/', function () {
+    return view('index');
+})->name('index');
 
+// Rotas de autenticação
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/denuncias', [DenunciaController::class, 'store']);
-Route::get('/cadastro', function() {
-    return view('cadastro');
+Route::get('/cadastro', [AuthController::class, 'showRegister'])->name('cadastro');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Rotas protegidas (precisam de autenticação)
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
 });
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+// Rotas das páginas
+Route::get('/cadastrar-denuncia', function () {
+    return view('cadastrar-denuncia');
+})->name('cadastrar-denuncia');
 
-Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+Route::get('/acompanhar-denuncia', function () {
+    return view('acompanhar-denuncia');
+})->name('acompanhar-denuncia');
+
+Route::get('/perfil', function () {
+    return view('perfil');
+})->name('perfil');
 
 
 

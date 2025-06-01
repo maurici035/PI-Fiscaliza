@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,8 +14,9 @@ return new class extends Migration
             $table->id();
             $table->string('titulo', 255);
             $table->text('descricao');
-            $table->decimal('latitude', 10, 7);  // latitude com precisão adequada
-            $table->decimal('longitude', 10, 7); // longitude com precisão adequada
+            $table->string('localizacao', 255)->nullable();
+            $table->unsignedBigInteger('usuario_id')->nullable();
+            $table->string('nome_usuario', 255)->nullable(); // Nova coluna para o nome do usuário
             $table->timestamps();
         });
     }

@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fiscaliza+ | Login</title>
-  <link rel="stylesheet" href="../../public/css/login.css"/>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
 <body>
   <div class="background"></div>
   <div class="overlay"></div>
   <div class="login-container">
     <div class="login-box">
-      <img src="../assets/usuario-exemplo.png" alt="Ícone de login" class="icon" />
+      <img src="{{ asset('assets/girl user.png') }}" alt="Ícone de login" class="icon" />
       <h2>Faça seu login</h2>
       <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -39,6 +40,6 @@
       </form>
     </div>
   </div>
-  <script src="../../public/js/login.js"></script>
+  <script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>
