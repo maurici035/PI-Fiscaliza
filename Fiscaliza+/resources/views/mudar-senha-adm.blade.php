@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,9 +96,10 @@
       margin-top: 10px;
     }
   </style>
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
   <div id="sidebar-container"></div>
   <div class="main-container">
@@ -142,4 +144,5 @@
     }
   </script>
 </body>
+
 </html>

@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Fiscaliza+ | Detalhes do Órgão</title>
-    <link rel="icon" href="../assets/logo-menor.png" type="image/png">
-    <script src="../../public/js/sidebar-loader.js"></script>
-    <link rel="stylesheet" href="../../public/css/avaliacao-orgao.css">
+    <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
+    <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/avaliacao-orgao.css') }}">
 </head>
+
 <body>
     <div id="sidebar-container"></div>
 
     <div class="main-content">
         <div class="header">
             <div class="brand-name">
-                <img src="../assets/fiscaliza+-name.png" alt="logo-fiscaliza+">
+                <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="logo-fiscaliza+">
             </div>
             <div class="profile-pic">
-                <img src="../assets/foto_usuario.png" alt="Foto de perfil">
+                <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto de perfil">
             </div>
         </div>
 
@@ -60,7 +62,8 @@
         </div>
     </div>
 
-    <script src="../../public/js/avaliacao-orgao.js"></script>
+    <script src="{{ asset('js/avaliacao-orgao.js') }}"></script>
 
 </body>
+
 </html>

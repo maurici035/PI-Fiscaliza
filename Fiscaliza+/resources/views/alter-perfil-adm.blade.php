@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
     }
 
     body {
-      background-color: #aeaeae;
+      background-color: #f5f5f5;
       color: white;
       display: flex;
     }
@@ -103,14 +104,15 @@
       margin-top: 20px;
     }
   </style>
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
   <div id="sidebar-container"></div>
-  
+
   <div class="main-container">
-    <div class="logo">Fiscaliza<span style="color:#00d4ff">+</span></div>
+    <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+" class="logo">
     <div class="card">
       <h1>Meu Perfil</h1>
       <div class="subtitle">Cadastro do Administrador</div>
@@ -164,7 +166,8 @@
       const data = document.getElementById('data').value;
 
       alert(`Dados salvos com sucesso:\n\nEmail: ${email}\nNome: ${nome}\nTelefone: ${telefone}\nCelular: ${celular}\nData de nascimento: ${data}`);
-      }
+    }
   </script>
 </body>
+
 </html>

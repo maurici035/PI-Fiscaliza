@@ -106,9 +106,9 @@
   <div id="sidebar-container"></div>
 
   <div class="main">
-    <h1 class="title">Fiscaliza<span>+</span></h1>
+    <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+" class="title">
 
-    <img src="{{ asset('img/perfil_fake_88e093785ba8.png') }}" alt="Foto do Usuário" class="profile-img">
+    <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto do Usuário" class="profile-img">
     <div class="profile-name">Perfil Do Usuário</div>
 
     <div class="profile-box">

@@ -13,11 +13,19 @@ class Denuncia extends Model
         'descricao',
         'localizacao',
         'usuario_id',
-        'nome_usuario', // Adicione aqui
+        'nome_usuario',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * Obtém o usuário que criou a denúncia.
+     */
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_id');
+    }
 }

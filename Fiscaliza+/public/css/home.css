@@ -1,4 +1,3 @@
-
 fbody {
     margin: 0;
     padding: 0;
@@ -60,7 +59,6 @@ body {
     height: 100%;
     object-fit: cover;
 }
-
 
 .divider {
     width: 40px;
@@ -150,15 +148,15 @@ body {
 }
 
 .option-btn.video {
-    color: #4CAF50;
+    color: #4caf50;
 }
 
 .option-btn.photo {
-    color: #2196F3;
+    color: #2196f3;
 }
 
 .option-btn.location {
-    color: #E91E63;
+    color: #e91e63;
 }
 
 .option-btn i {
@@ -202,10 +200,17 @@ body {
     line-height: 1.4;
 }
 
+.complaint-user {
+    color: #555;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+    font-weight: 500;
+}
+
 .complaint-location {
-    color: #333;
-    font-size: 1rem;
-    margin-top: 0.25rem;
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
 }
 
 .complaint-text {
@@ -231,7 +236,7 @@ body {
 }
 
 .primary-btn {
-    //background-color: #26B99A;
+    background-color: #26B99A;
     color: white;
     background-color: black;
 }
@@ -255,13 +260,13 @@ body {
 }
 
 .reaction-btn.like {
-    color: #4CAF50;
+    color: #4caf50;
 }
 
 .reaction-btn.comment {
-    color: #2196F3;
+    color: #2196f3;
 }
 
 .reaction-btn.share {
-    color: #FF9800;
+    color: #ff9800;
 }
