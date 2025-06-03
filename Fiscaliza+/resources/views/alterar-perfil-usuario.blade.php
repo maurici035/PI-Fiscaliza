@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiscaliza+ | Alterar Perfil</title>
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <link rel="stylesheet" href="../../public/css/alterar-perfil-usuario.css">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('css/alterar-perfil-usuario.css') }}">
 </head>
 
 <body>
   <div id="sidebar-container"></div>
   <header class="page-header">
-    <img src="../assets/fiscaliza+-name.png" alt="Logo Fiscaliza+" class="logo">
+    <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+" class="logo">
   </header>
 
   <div class="container">
@@ -23,7 +23,7 @@
       <form id="profile-form" novalidate>
         <div class="profile-section">
           <div class="profile-left">
-            <img src="../assets/foto_usuario.png" alt="Foto do usuário" class="profile-image" />
+            <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto do usuário" class="profile-image" />
           </div>
 
           <div class="profile-right">
@@ -88,7 +88,7 @@
     </div>
   </div>
 
-  <script src="../../public/js/alterar-perfil-usuario.js"></script>
+  <script src="{{ asset('js/alterar-perfil-usuario.js') }}"></script>
 
 
 </html>

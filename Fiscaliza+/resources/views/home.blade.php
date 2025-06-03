@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>home</title>
+  <title>Fiscaliza+ | Home</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
     rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -73,10 +73,11 @@
     <div class="complaint-card">
     <div class="complaint-header">
       <div class="complaint-avatar">
-      <img src="{{ asset('assets/user-avatar.png') }}" alt="User avatar" />
+      <img src="{{ asset('assets/foto_usuario.png') }}" alt="User avatar" />
       </div>
       <div>
       <h2 class="complaint-title">{{ $denuncia->titulo }}</h2>
+      <p class="complaint-user">{{ $denuncia->usuario->nome ?? 'Usuário desconhecido' }}</p>
       <p class="complaint-location">{{ $denuncia->localizacao }}</p>
       </div>
     </div>

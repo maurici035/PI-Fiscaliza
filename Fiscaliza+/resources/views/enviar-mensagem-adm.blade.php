@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,7 +134,8 @@
             object-fit: cover;
         }
 
-        .status-dropdown, .department-dropdown {
+        .status-dropdown,
+        .department-dropdown {
             background-color: #00e676;
             color: white;
             border: none;
@@ -155,7 +157,8 @@
         .message-container-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Alinhado à esquerda */
+            align-items: flex-start;
+            /* Alinhado à esquerda */
             width: 800px;
             margin-left: 0;
             margin-right: auto;
@@ -186,8 +189,10 @@
         .send-button-container {
             width: 100%;
             display: flex;
-            justify-content: flex-start; /* Alterado para alinhar à esquerda */
-            margin-top: 15px; /* Espaço entre o card e o botão */
+            justify-content: flex-start;
+            /* Alterado para alinhar à esquerda */
+            margin-top: 15px;
+            /* Espaço entre o card e o botão */
         }
 
 
@@ -222,7 +227,7 @@
             border-radius: 10px;
             overflow: hidden;
             height: 180px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .report-card img {
@@ -250,38 +255,39 @@
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .message-container-wrapper {
                 width: 100%;
                 margin-top: 20px;
             }
-            
+
             .profile-info {
                 align-items: center;
             }
         }
     </style>
-    <script src="../../public/js/sidebar-loader.js"></script>
-    <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+    <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+    <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
     <div id="sidebar-container"></div>
-    
+
     <div class="main-content">
         <div class="header">
             <div class="logo-container">
-                <img class="logo-image" src="fiscaliza+-name.png" alt="Logo Fiscaliza+">
+                <img class="logo-image" src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+">
             </div>
             <div class="user-avatar">
-                <img src="Mask group (3).png" alt="Admin avatar">
+                <img src="{{ asset('assets/foto_usuario.png') }}" alt="Admin avatar">
             </div>
         </div>
-        
+
         <div class="profile-section">
             <div class="profile-pic">
-                <img src="Imagem do WhatsApp de 2025-05-07 à(s) 16.22.28_30a9973e.jpg" alt="User profile picture">
+                <img src="{{ asset('assets/foto_usuario.png') }}" alt="User profile picture">
             </div>
-            
+
             <div class="profile-info">
                 <div class="status-dropdown">
                     Status
@@ -296,7 +302,7 @@
                     </svg>
                 </div>
             </div>
-            
+
             <div class="message-container-wrapper">
                 <!-- Card branco com textarea -->
                 <div class="message-container">
@@ -308,52 +314,53 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="reports-section">
             <div class="reports-title">Denúncias do Usuário</div>
             <div class="reports-grid">
                 <div class="report-card">
-                    <img src="5dceb61c5de045d00086f779cabbbf7a90ba973e.png" alt="Road collapse">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Road collapse">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="e52d00ab535324ad95cee90c2972d60cae9a72c4.png" alt="Car in pothole">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Car in pothole">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="9fa297e1eed0dfce1cd13bde42449edc6ab48a92.png" alt="Garbage pile">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Garbage pile">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="33c144e508a86c8d8ad5842d0a6e96ea2bc8fdff.png" alt="Open manhole">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Open manhole">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="914a045339c87433f20f010d0008226bcb1e6523.png" alt="Blue tarp">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Blue tarp">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="7908569c5716e1860662e34798505ee64c5ca4eb.png" alt="Overflowing bin">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Overflowing bin">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="33526184cde53db3ea4dd5911f2efb95bc794742 (1).png" alt="Police tape">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Police tape">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="e4105191e65769874eb9ba10e9c8e68fea0cca3e.png" alt="Trash bags">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Trash bags">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="bf1fa3ef37254509bde2f7a2f5e2b8ce930cf138.png" alt="Illegal dumping">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Illegal dumping">
                     <button class="view-button">Visualizar</button>
                 </div>
                 <div class="report-card">
-                    <img src="e0989ef0482ebdffb59c70f1e23734930b4728bb.png" alt="Waste pile">
+                    <img src="{{ asset('assets/lixeira.png') }}" alt="Waste pile">
                     <button class="view-button">Visualizar</button>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

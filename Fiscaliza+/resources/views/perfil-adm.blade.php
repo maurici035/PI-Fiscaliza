@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fiscaliza+ | Perfil do Usuário</title>
   <style>
     * {
@@ -115,16 +116,17 @@
     }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
+
 <body>
   <div id="sidebar-container"></div>
 
   <div class="main">
     <h1 class="title">Fiscaliza<span>+</span></h1>
 
-    <img src="https://i.postimg.cc/NF4pDtYn/image.pngK" alt="Foto do Administrador" class="profile-img">
+    <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto do Administrador" class="profile-img">
     <div class="profile-name">Perfil Do Administrador</div>
 
     <div class="profile-box">
@@ -137,4 +139,5 @@
     </div>
   </div>
 </body>
+
 </html>

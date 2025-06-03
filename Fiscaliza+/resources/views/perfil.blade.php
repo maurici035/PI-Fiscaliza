@@ -17,9 +17,9 @@
   <div id="sidebar-container"></div>
 
   <div class="main">
-    <img src="../assets/fiscaliza+-name.png" alt="Logo Fiscaliza+" class="logo-img">
+    <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+" class="title">
 
-    <img src="../assets/foto_usuario.png" alt="Foto do Usuário" class="profile-img">
+    <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto do Usuário" class="profile-img">
     <div class="profile-name">Perfil Do Usuário</div>
 
     <div class="profile-box">

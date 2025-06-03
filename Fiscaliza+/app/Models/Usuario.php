@@ -16,4 +16,12 @@ class Usuario extends Authenticatable
     {
         return $this->senha;
     }
+
+    /**
+     * Obtém todas as denúncias feitas pelo usuário.
+     */
+    public function denuncias()
+    {
+        return $this->hasMany(Denuncia::class, 'usuario_id');
+    }
 }
