@@ -14,6 +14,7 @@ class Denuncia extends Model
         'localizacao',
         'usuario_id',
         'nome_usuario',
+        'foto_path', // Adicione esta linha
     ];
 
     protected $casts = [
@@ -27,5 +28,10 @@ class Denuncia extends Model
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'usuario_id');
+    }
+
+    public function getFotoUrlAttribute()
+    {
+        return $this->foto_path ? asset('storage/' . $this->foto_path) : null;
     }
 }

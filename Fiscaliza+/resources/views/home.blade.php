@@ -86,6 +86,16 @@
       {{ $denuncia->descricao }}
     </p>
 
+    @if($denuncia->foto_path)
+      <div style="text-align:center; margin-bottom: 10px;">
+        <img 
+          src="{{ asset('storage/' . $denuncia->foto_path) }}" 
+          alt="Imagem da denúncia" 
+          style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px #0001;"
+        >
+      </div>
+    @endif
+
     <div class="complaint-actions">
       <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
       <button class="reaction-btn like" onclick="curtirDenuncia(this)">

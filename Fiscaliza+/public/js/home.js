@@ -146,3 +146,29 @@ document.getElementById('formDenuncia').addEventListener('submit', function(e) {
     console.error(error);
   });
 });
+
+// Supondo que você recebe um array de denúncias do backend
+function renderDenuncias(denuncias) {
+    const lista = document.getElementById('listaDenuncias');
+    lista.innerHTML = '';
+
+    denuncias.forEach(denuncia => {
+        const card = document.createElement('div');
+        card.className = 'complaint-card';
+
+        // Adiciona a imagem se existir
+        let imgHtml = '';
+        if (denuncia.foto_path) {
+            imgHtml = `<img src="/storage/${denuncia.foto_path}" alt="Imagem da denúncia" class="complaint-image" style="max-width:100%;margin-bottom:8px;">`;
+        }
+
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="complaint-title">${denuncia.titulo}</div>
+            <div class="complaint-text">${denuncia.descricao}</div>
+            <!-- outros campos -->
+        `;
+
+        lista.appendChild(card);
+    });
+}

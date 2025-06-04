@@ -49,6 +49,17 @@ class DenunciaController extends Controller
 
             $denuncia->save();
 
+            if ($request->hasFile('foto')) {
+                $path = $request->file('foto')->store('fotos', 'public');
+                \DB::table('imagens_denuncias')->insert([
+                    'denuncia_id' => $denuncia->id,
+                    'caminho_imagem' => $path,
+                    'principal' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
             return response()->json(['success' => true, 'message' => 'Denúncia enviada com sucesso!']);
         } catch (\Exception $e) {
             \Log::error('Erro ao salvar denúncia: ' . $e->getMessage());
