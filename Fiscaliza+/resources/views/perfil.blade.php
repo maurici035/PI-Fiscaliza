@@ -6,14 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fiscaliza+ | Perfil do Usuário</title>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="../../public/js/sidebar-loader.js"></script>
-  <link rel="icon" href="../assets/logo-menor.png" type="image/png">
-  <link rel="stylesheet" href="../../public/css/perfil.css">
+  <script src="{{ asset('js/sidebar-loader.js') }}"></script>
+  <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
 </head>
 
 <body>
   
-
   <div id="sidebar-container"></div>
 
   <div class="main">
@@ -33,11 +32,10 @@
 
   <script>
     document.getElementById('btn-alterar').addEventListener('click', function () {
-      // Altere o caminho abaixo para a página desejada
-      window.location.href = 'alterar-perfil-usuario.html';
+      // Altere o caminho para usar a função de rota do Laravel
+      window.location.href = '{{ route("alterar-perfil-usuario") }}';
     });
   </script>
-</body>
 </body>
 
 </html>
