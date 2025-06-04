@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const feedback = document.getElementById('feedbackMessage');
   // Novo: elemento para mensagem de sucesso de upload
   const uploadSuccessMessage = document.getElementById('uploadSuccessMessage');
+  const tituloInput = document.getElementById('tituloInput');
 
   function showFeedback(message, isError = true) {
     feedback.textContent = message;
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const formData = new FormData();
     formData.append('descricao', mensagem);
-    formData.append('titulo', mensagem.substring(0, 50)); // Usa primeiras 50 chars como título
+    formData.append('titulo', tituloInput.value.trim()); // Usa o valor do campo título
     if (fotoFile) formData.append('foto', fotoFile);
     if (videoFile) formData.append('video', videoFile);
     if (localizacao) formData.append('localizacao', localizacao);

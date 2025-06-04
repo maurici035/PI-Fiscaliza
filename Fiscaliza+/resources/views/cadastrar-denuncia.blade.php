@@ -29,6 +29,10 @@
 
   <div class="main-content">
     <div class="chat-container">
+      <!-- Campo para o título da denúncia -->
+      <input type="text" id="tituloInput" class="form-control" placeholder="Título da denúncia"
+        style="margin-bottom: 10px;">
+
       <textarea id="textMessage" class="chat-input" placeholder="Sobre o que você quer falar?"
         style="min-height: 80px; padding: 10px;"></textarea>
       <div id="feedbackMessage" style="color: red; margin-top: 8px; min-height: 20px;"></div>
@@ -63,8 +67,6 @@
       <input type="file" id="videoInput" accept="video/*" style="display: none;" />
       <div id="uploadSuccessMessage" style="color: green; margin-top: 10px; min-height: 10px;"></div>
       <input type="hidden" id="locationInput" />
-
-      
     </div>
   </div>
 

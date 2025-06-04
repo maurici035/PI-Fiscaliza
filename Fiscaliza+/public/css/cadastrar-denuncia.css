@@ -176,3 +176,22 @@ body {
   position: relative !important;
   z-index: 9999 !important;
 }
+
+#tituloInput {
+  width: 769px;
+  margin: 20px 0 0 20px;
+  padding: 10px 18px;
+  font-size: 20px;
+  font-weight: medium;
+  border: 1px solid #808080;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  color: #222;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#tituloInput:focus {
+  border-color: #696969;
+}
