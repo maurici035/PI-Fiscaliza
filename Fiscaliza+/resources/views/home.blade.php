@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -66,7 +65,7 @@
 
     <!-- Denúncias Dinâmicas -->
     @foreach ($denuncias as $denuncia)
-      <div class="complaint-card">
+      <div class="complaint-card" data-denuncia-id="{{ $denuncia->id }}">
         <div class="complaint-header">
           <div class="complaint-avatar">
             <img src="{{ asset('assets/foto_usuario.png') }}" alt="User avatar" />

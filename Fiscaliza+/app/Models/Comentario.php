@@ -21,8 +21,7 @@ class Comentario extends Model
     }
 
     // Relacionamento com Usuario (opcional, ajuste o nome do model se necessário)
-    public function usuario()
-    {
-        return $this->belongsTo(User::class, 'usuario_id');
+    public function usuario() {
+        return $this->belongsTo(\App\Models\User::class, 'usuario_id');
     }
 }

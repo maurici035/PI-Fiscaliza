@@ -35,17 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função global para compartilhar denúncia
     window.compartilharDenuncia = function(button) {
         const card = button.closest('.complaint-card');
-        const title = card.querySelector('.complaint-title').innerText;
+        const denunciaId = card.getAttribute('data-denuncia-id'); // Adicione esse atributo no HTML do card
 
-        document.getElementById('modalCompartilharLabel').innerText = `🔗 Compartilhar: "${title}"`;
-        document.getElementById('modalCompartilharBody').innerText = '(Link simulado copiado para a área de transferência!)';
+        const url = `${window.location.origin}/denuncia/${denunciaId}`;
+
+        document.getElementById('modalCompartilharLabel').innerText = `🔗 Compartilhar denúncia`;
+        document.getElementById('modalCompartilharBody').innerHTML = `
+            <input type="text" class="form-control" value="${url}" readonly style="margin-bottom:10px;">
+            <button class="btn btn-success" onclick="navigator.clipboard.writeText('${url}')">Copiar link</button>
+            <a href="${url}" target="_blank" class="btn btn-primary" style="margin-left:10px;">Abrir denúncia</a>
+        `;
 
         modalCompartilhar.show();
-
-        // Tenta copiar para a área de transferência
-        navigator.clipboard.writeText(`https://fiscaliza.com/denuncia/${encodeURIComponent(title)}`).catch(() => {
-            // fallback opcional
-        });
     };
 
     // Envio do comentário
@@ -101,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .then(response => response.json())
-            .then(data => {
+            .then (data => {
                 alert('Denúncia enviada com sucesso!');
                 // opcional: limpar o form ou fechar modal
             })

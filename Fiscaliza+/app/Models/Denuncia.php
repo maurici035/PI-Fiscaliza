@@ -40,4 +40,9 @@ class Denuncia extends Model
     {
         return $this->video_path ? asset('storage/' . $this->video_path) : null;
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(\App\Models\Comentario::class, 'denuncia_id');
+    }
 }

@@ -40,9 +40,9 @@ Route::get('/perfil', function () {
     return view('perfil');
 })->name('perfil');
 
-Route::get('/visualiza-denuncia', function () {
-    return view('visualiza-denuncia');
-})->name('visualiza-denuncia');
+// Route::get('/visualiza-denuncia', function () {
+//     return view('visualiza-denuncia');
+// })->name('visualiza-denuncia');
 
 Route::get('/recuperar', function () {
     return view('recuperar');
@@ -95,6 +95,9 @@ Route::get('/alterar-perfil-usuario', function () {
 Route::get('/alter-perfil-adm', function () {
     return view('alter-perfil-adm');
 })->name('alter-perfil-adm');
+
+// Visualizar denúncia individual
+Route::get('/denuncia/{id}', [DenunciaController::class, 'show'])->name('denuncia.show');
 
 
 

@@ -66,4 +66,10 @@ class DenunciaController extends Controller
             return response()->json(['success' => false, 'message' => 'Erro ao enviar denúncia: ' . $e->getMessage()], 500);
         }
     }
+
+    public function show($id)
+    {
+        $denuncia = \App\Models\Denuncia::findOrFail($id);
+        return view('visualizar-denuncia', compact('denuncia'));
+    }
 }
