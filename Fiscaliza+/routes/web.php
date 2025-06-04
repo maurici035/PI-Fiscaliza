@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ComentarioController;
 
 // Rota principal
 Route::get('/', function () {
@@ -23,6 +24,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+    Route::post('/comentario', [ComentarioController::class, 'store'])->name('comentario.store');
 });
 
 // Rotas das páginas
