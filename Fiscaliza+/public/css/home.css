@@ -270,3 +270,18 @@ body {
 .reaction-btn.share {
     color: #ff9800;
 }
+@media (max-width: 900px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .message-container-wrapper {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .profile-info {
+                align-items: center;
+            }
+        }

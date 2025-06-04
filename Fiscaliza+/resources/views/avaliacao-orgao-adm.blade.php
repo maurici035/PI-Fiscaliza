@@ -135,6 +135,21 @@
             background-color: #f9f9f9;
             border-radius: 6px;
         }
+        @media (max-width: 900px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .message-container-wrapper {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .profile-info {
+                align-items: center;
+            }
+        }
     </style>
     <script src="{{ asset('js/sidebar-loader.js') }}"></script>
     <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">

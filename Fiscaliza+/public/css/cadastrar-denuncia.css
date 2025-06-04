@@ -161,3 +161,18 @@ body {
   object-fit: cover;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Opcional: adiciona uma sombra sutil */
 }
+@media (max-width: 900px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .message-container-wrapper {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .profile-info {
+                align-items: center;
+            }
+        }

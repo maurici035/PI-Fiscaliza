@@ -158,6 +158,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            
+        }
+        
+        @media (max-width: 900px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .message-container-wrapper {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .profile-info {
+                align-items: center;
+            }
         }
     </style>
     <script src="{{ asset('js/sidebar-loader.js') }}"></script>
