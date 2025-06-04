@@ -96,16 +96,25 @@
       </div>
     @endif
 
+    @if($denuncia->video_path)
+      <div style="text-align:center; margin-bottom: 10px;">
+        <video controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px #0001;">
+          <source src="{{ asset('storage/' . $denuncia->video_path) }}" type="video/mp4">
+          Seu navegador não suporta o elemento de vídeo.
+        </video>
+      </div>
+    @endif
+
     <div class="complaint-actions">
       <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
       <button class="reaction-btn like" onclick="curtirDenuncia(this)">
-      <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">{{ $denuncia->likes }}</span>
+        <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">{{ $denuncia->likes }}</span>
       </button>
       <button class="reaction-btn comment" onclick="comentarDenuncia(this)">
-      <i class="bi bi-chat-dots"></i>
+        <i class="bi bi-chat-dots"></i>
       </button>
       <button class="reaction-btn share" onclick="compartilharDenuncia(this)">
-      <i class="bi bi-share"></i>
+        <i class="bi bi-share"></i>
       </button>
     </div>
     </div>

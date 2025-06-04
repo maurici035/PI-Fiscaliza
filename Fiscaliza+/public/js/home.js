@@ -162,8 +162,20 @@ function renderDenuncias(denuncias) {
             imgHtml = `<img src="/storage/${denuncia.foto_path}" alt="Imagem da denúncia" class="complaint-image" style="max-width:100%;margin-bottom:8px;">`;
         }
 
+        // Adiciona o vídeo se existir
+        let videoHtml = '';
+        if (denuncia.video_path) {
+            videoHtml = `
+                <video controls style="max-width:100%;margin-bottom:8px;">
+                    <source src="/storage/${denuncia.video_path}" type="video/mp4">
+                    Seu navegador não suporta o elemento de vídeo.
+                </video>
+            `;
+        }
+
         card.innerHTML = `
             ${imgHtml}
+            ${videoHtml}
             <div class="complaint-title">${denuncia.titulo}</div>
             <div class="complaint-text">${denuncia.descricao}</div>
             <!-- outros campos -->

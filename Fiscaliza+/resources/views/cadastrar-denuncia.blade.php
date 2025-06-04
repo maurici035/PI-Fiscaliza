@@ -61,9 +61,13 @@
       <!-- Inputs escondidos para arquivos e localização -->
       <input type="file" id="photoInput" accept="image/*" style="display: none;" />
       <input type="file" id="videoInput" accept="video/*" style="display: none;" />
+      <div id="uploadSuccessMessage" style="color: green; margin-top: 10px; min-height: 10px;"></div>
       <input type="hidden" id="locationInput" />
+
+      
     </div>
   </div>
+
 </body>
 
 </html>

@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const locationInput = document.getElementById('locationInput');
   const textMessage = document.getElementById('textMessage');
   const feedback = document.getElementById('feedbackMessage');
+  // Novo: elemento para mensagem de sucesso de upload
+  const uploadSuccessMessage = document.getElementById('uploadSuccessMessage');
 
   function showFeedback(message, isError = true) {
     feedback.textContent = message;
@@ -26,6 +28,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   videoButton.addEventListener('click', () => {
     videoInput.click();
+  });
+
+  // Mensagem de sucesso ao adicionar imagem
+  photoInput.addEventListener('change', function () {
+    console.log('photoInput change', photoInput.files);
+    if (photoInput.files.length > 0) {
+      uploadSuccessMessage.textContent = 'Imagem enviada com sucesso';
+      uploadSuccessMessage.style.color = 'green';
+    } else {
+      uploadSuccessMessage.textContent = '';
+    }
+  });
+
+  // Mensagem de sucesso ao adicionar vídeo
+  videoInput.addEventListener('change', function () {
+    console.log('videoInput change', videoInput.files);
+    if (videoInput.files.length > 0) {
+      uploadSuccessMessage.textContent = 'Vídeo enviado com sucesso';
+      uploadSuccessMessage.style.color = 'green';
+    } else {
+      uploadSuccessMessage.textContent = '';
+    }
   });
 
   locationButton.addEventListener('click', () => {
@@ -87,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
       photoInput.value = '';
       videoInput.value = '';
       locationInput.value = '';
+      uploadSuccessMessage.textContent = ''; // Limpa mensagem de upload após envio
     })
     .catch(error => {
       console.error('Erro:', error);

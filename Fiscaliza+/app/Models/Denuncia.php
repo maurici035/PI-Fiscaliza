@@ -14,7 +14,8 @@ class Denuncia extends Model
         'localizacao',
         'usuario_id',
         'nome_usuario',
-        'foto_path', // Adicione esta linha
+        'foto_path',
+        'video_path', // Adicionado para permitir salvar o vídeo
     ];
 
     protected $casts = [
@@ -33,5 +34,10 @@ class Denuncia extends Model
     public function getFotoUrlAttribute()
     {
         return $this->foto_path ? asset('storage/' . $this->foto_path) : null;
+    }
+
+    public function getVideoUrlAttribute()
+    {
+        return $this->video_path ? asset('storage/' . $this->video_path) : null;
     }
 }
