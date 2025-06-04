@@ -114,6 +114,21 @@
     .btn-alterar:hover {
       background-color: #17E979;
     }
+    @media (max-width: 900px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .message-container-wrapper {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .profile-info {
+                align-items: center;
+            }
+        }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="{{ asset('js/sidebar-loader.js') }}"></script>
