@@ -187,4 +187,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Função global para confirmar deleção de denúncia
+    window.confirmarDelete = function(denunciaId) {
+        const form = document.getElementById('formDeleteDenuncia');
+        form.action = '/denuncia/' + denunciaId;
+        const modal = new bootstrap.Modal(document.getElementById('modalDeleteDenuncia'));
+        modal.show();
+    }
 });

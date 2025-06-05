@@ -64,4 +64,16 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/login')->with('success', 'Logout realizado com sucesso!');
     }
+    public function destroy($id)
+    {
+        $usuario = \App\Models\Usuario::findOrFail($id);
+
+        // Opcional: impede que o admin delete a si mesmo
+        if (auth()->id() == $usuario->id) {
+            return redirect()->back()->withErrors(['error' => 'Você não pode apagar seu próprio usuário!']);
+        }
+
+        $usuario->delete();
+        return redirect()->back()->with('success', 'Usuário apagado com sucesso!');
+    }
 }

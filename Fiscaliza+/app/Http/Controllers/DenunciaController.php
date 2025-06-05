@@ -70,4 +70,11 @@ class DenunciaController extends Controller
         $denuncia = \App\Models\Denuncia::findOrFail($id);
         return view('visualizar-denuncia', compact('denuncia'));
     }
+
+    public function destroy($id)
+    {
+        $denuncia = \App\Models\Denuncia::findOrFail($id);
+        $denuncia->delete();
+        return redirect()->back()->with('success', 'Denúncia apagada com sucesso!');
+    }
 }

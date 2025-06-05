@@ -98,6 +98,11 @@ Route::get('/alter-perfil-adm', function () {
 // Visualizar denúncia individual
 Route::get('/denuncia/{id}', [DenunciaController::class, 'show'])->name('denuncia.show');
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::delete('/denuncia/{id}', [DenunciaController::class, 'destroy'])->name('denuncia.destroy');
+    // ...outras rotas de admin
+});
+
 
 
 

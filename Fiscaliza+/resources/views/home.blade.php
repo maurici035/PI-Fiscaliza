@@ -112,6 +112,14 @@
         <i class="bi bi-share"></i>
       </button>
       </div>
+
+      @auth
+        @if(auth()->user()->is_admin)
+          <button class="btn btn-danger btn-sm float-end ms-2" onclick="confirmarDelete({{ $denuncia->id }})">
+            Deletar
+          </button>
+        @endif
+      @endauth
     </div>
   @endforeach
 
@@ -167,6 +175,34 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal de confirmação de deleção -->
+    <div class="modal fade" id="modalDeleteDenuncia" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDeleteLabel">Confirmar exclusão</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza que deseja deletar esta denúncia?
+          </div>
+          <div class="modal-footer">
+            <form id="formDeleteDenuncia" method="POST" style="width:100%;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger w-100">Confirmar Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @auth
+    @if(auth()->user()->is_admin)
+        <!-- Botões de apagar denúncia, usuário, etc -->
+    @endif
+    @endauth
   </div> <!-- Fim da div.main-content -->
 
   <!-- Scripts -->
