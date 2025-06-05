@@ -6,6 +6,7 @@ body {
   color: white;
   height: 100vh;
   overflow: hidden;
+  
 
 }
 
@@ -28,7 +29,7 @@ body {
   box-sizing: border-box;
   padding-top: 200px;
   display: flex;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .top-header {
@@ -37,6 +38,7 @@ body {
     color: white;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
@@ -78,7 +80,8 @@ body {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   display: flex;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
+  flex-direction: row;
   
 }
 
@@ -95,7 +98,8 @@ body {
   margin-top: 20px;
   border-radius: 10px; /* Borda arredondada */
   display: flex;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
+  flex-direction: row;
   
 }
 
@@ -142,7 +146,8 @@ body {
   cursor: pointer;
   font-weight: bold;
   display: flex;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .location-icon {
@@ -204,3 +209,105 @@ body {
                 align-items: center;
             }
         }
+
+@media (max-width: 1024px) {
+  .chat-container {
+    width: 90%;
+    height: auto;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .chat-input {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .chat-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .action-buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .send-button {
+    align-self: flex-end;
+  }
+
+  .main-content {
+    padding-left: 100px;
+    padding-top: 140px;
+  }
+
+  .top-header {
+    padding-left: 100px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    position: relative;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .main-content {
+    padding: 130px 10px 10px 10px;
+  }
+
+  .top-header {
+    .top-header {
+  height: 70px;
+  background-color: #ececec;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: space-between;
+  padding: 0 50px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+  }
+
+  .chat-container {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .chat-input {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .action-buttons {
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .send-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .top-right-image {
+    top: 10px;
+    right: 10px;
+  }
+
+  .brand-logo {
+    margin-left: 10px;
+  }
+}
