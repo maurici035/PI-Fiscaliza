@@ -69,7 +69,7 @@
     <div class="complaint-card" data-denuncia-id="{{ $denuncia->id }}">
       <div class="complaint-header">
       <div class="complaint-avatar">
-        <img src="{{ Auth::user()->foto_perfil_url }}" alt="User avatar" />
+        <img src="{{ $denuncia->usuario->foto_perfil_url ?? asset('assets/foto_usuario.png') }}" alt="User avatar" />
       </div>
       <div>
         <h2 class="complaint-title">{{ $denuncia->titulo }}</h2>
@@ -79,7 +79,7 @@
       </div>
 
       <p class="complaint-text">
-        {{ \Illuminate\Support\Str::limit($denuncia->descricao, 60, '...') }}
+      {{ \Illuminate\Support\Str::limit($denuncia->descricao, 60, '...') }}
       </p>
 
       @if($denuncia->foto_path)
@@ -99,9 +99,10 @@
     @endif
 
       <div class="complaint-actions">
-      <a href="{{ route('denuncia.show', $denuncia->id) }}" class="action-btn primary-btn" style="text-decoration:none;">
-  Abrir conteúdo
-</a>
+      <a href="{{ route('denuncia.show', $denuncia->id) }}" class="action-btn primary-btn"
+        style="text-decoration:none;">
+        Abrir conteúdo
+      </a>
       <button class="reaction-btn like" onclick="curtirDenuncia(this)">
         <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">{{ $denuncia->likes }}</span>
       </button>
@@ -111,15 +112,15 @@
       <button class="reaction-btn share" onclick="compartilharDenuncia(this)">
         <i class="bi bi-share"></i>
       </button>
-      </div>
 
       @auth
-        @if(auth()->user()->is_admin)
-          <button class="btn btn-danger btn-sm float-end ms-2" onclick="confirmarDelete({{ $denuncia->id }})">
-            Deletar
-          </button>
-        @endif
-      @endauth
+      @if(auth()->user()->is_admin)
+      <button class="btn btn-danger btn-sm ms-2" onclick="confirmarDelete({{ $denuncia->id }})">
+      Deletar
+      </button>
+      @endif
+    @endauth
+      </div>
     </div>
   @endforeach
 
@@ -177,7 +178,8 @@
     </div>
 
     <!-- Modal de confirmação de deleção -->
-    <div class="modal fade" id="modalDeleteDenuncia" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    <div class="modal fade" id="modalDeleteDenuncia" tabindex="-1" aria-labelledby="modalDeleteLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -199,10 +201,10 @@
     </div>
 
     @auth
-    @if(auth()->user()->is_admin)
-        <!-- Botões de apagar denúncia, usuário, etc -->
-    @endif
-    @endauth
+      @if(auth()->user()->is_admin)
+      <!-- Botões de apagar denúncia, usuário, etc -->
+      @endif
+  @endauth
   </div> <!-- Fim da div.main-content -->
 
   <!-- Scripts -->

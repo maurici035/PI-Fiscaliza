@@ -213,7 +213,7 @@
     <div class="complaint-card" data-denuncia-id="{{ $denuncia->id }}">
       <div class="complaint-header">
         <div class="complaint-avatar">
-          <img src="{{ Auth::user()->foto_perfil_url }}" alt="User avatar" />
+          <img src="{{ $denuncia->usuario->foto_perfil_url ?? asset('assets/foto_usuario.png') }}" alt="User avatar" />
         </div>
         <div>
           <h2 class="complaint-title">{{ $denuncia->titulo }}</h2>

@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
@@ -47,9 +52,51 @@ Route::post('/perfil/alterar-senha', [PerfilController::class, 'alterarSenha'])-
 //     return view('visualiza-denuncia');
 // })->name('visualiza-denuncia');
 
+// Rotas de recuperação de senha
 Route::get('/recuperar', function () {
     return view('recuperar');
 })->name('recuperar');
+
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+        ? back()->with(['status' => 'Link de recuperação enviado para seu e-mail!'])
+        : back()->withErrors(['email' => 'Não foi possível enviar o link de recuperação.']);
+})->name('password.email');
+
+Route::get('/reset-password/{token}', function ($token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->name('password.reset');
+
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function ($user, $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+
+            $user->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+        ? redirect()->route('login')->with('status', 'Senha redefinida com sucesso!')
+        : back()->withErrors(['email' => 'Erro ao redefinir senha.']);
+})->name('password.update');
 
 Route::get('/perfil-adm', function () {
     return view('perfil-adm');

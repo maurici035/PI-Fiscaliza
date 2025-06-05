@@ -4,22 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiscaliza+ | Recuperar Senha</title>
+    <title>Fiscaliza+ | Redefinir Senha</title>
     <link rel="stylesheet" href="{{ asset('css/recuperar-senha.css') }}">
     <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
 </head>
 
 <body>
     <div class="container">
-        <h2>Esqueceu sua senha?</h2>
-        <p>Enviaremos um e-mail com instruções de como redefinir.</p>
-
-        @if (session('status'))
-            <div class="alert alert-success"
-                style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">
-                {{ session('status') }}
-            </div>
-        @endif
+        <h2>Redefinir Senha</h2>
+        <p>Digite sua nova senha abaixo.</p>
 
         @if ($errors->any())
             <div class="alert alert-danger"
@@ -30,11 +23,15 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('password.update') }}">
             @csrf
-            <input type="email" name="email" placeholder="Digite seu e-mail" value="{{ old('email') }}" required>
+            <input type="hidden" name="token" value="{{ $token }}">
+            <input type="email" name="email" placeholder="Digite seu e-mail"
+                value="{{ old('email', request()->email) }}" required>
+            <input type="password" name="password" placeholder="Nova senha (mín. 8 caracteres)" required>
+            <input type="password" name="password_confirmation" placeholder="Confirme a nova senha" required>
             <br>
-            <button type="submit" class="btn">➡</button>
+            <button type="submit" class="btn">Redefinir Senha</button>
         </form>
 
         <a href="{{ route('login') }}"
