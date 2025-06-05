@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiscaliza+ | Home</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
   <link rel="icon" href="{{ asset('assets/logo-menor.png') }}" type="image/png">
@@ -21,7 +22,7 @@
         <i class="bi bi-bell"></i>
       </button>
       <div class="user-avatar">
-        <img src="{{ asset('assets/foto_usuario.png') }}" alt="User profile" />
+        <img src="{{ Auth::user()->foto_perfil_url }}" alt="User profile" />
       </div>
     </div>
   </header>
@@ -37,7 +38,7 @@
       <div class="report-card">
         <div class="report-input">
           <div class="input-avatar">
-            <img src="{{ asset('assets/foto_usuario.png') }}" alt="User avatar" />
+            <img src="{{ Auth::user()->foto_perfil_url }}" alt="User avatar" />
           </div>
           <input type="text" class="input-field" placeholder="Comece uma denúncia" />
         </div>
@@ -65,55 +66,52 @@
 
     <!-- Denúncias Dinâmicas -->
     @foreach ($denuncias as $denuncia)
-      <div class="complaint-card" data-denuncia-id="{{ $denuncia->id }}">
-        <div class="complaint-header">
-          <div class="complaint-avatar">
-            <img src="{{ asset('assets/foto_usuario.png') }}" alt="User avatar" />
-          </div>
-          <div>
-            <h2 class="complaint-title">{{ $denuncia->titulo }}</h2>
-            <p class="complaint-user">{{ $denuncia->usuario->nome ?? 'Usuário desconhecido' }}</p>
-            <p class="complaint-location">{{ $denuncia->localizacao }}</p>
-          </div>
-        </div>
-
-        <p class="complaint-text">
-          {{ $denuncia->descricao }}
-        </p>
-
-        @if($denuncia->foto_path)
-          <div style="text-align:center; margin-bottom: 10px;">
-            <img 
-              src="{{ asset('storage/' . $denuncia->foto_path) }}" 
-              alt="Imagem da denúncia" 
-              style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px #0001;"
-            >
-          </div>
-        @endif
-
-        @if($denuncia->video_path)
-          <div style="text-align:center; margin-bottom: 10px;">
-            <video controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px #0001;">
-              <source src="{{ asset('storage/' . $denuncia->video_path) }}" type="video/mp4">
-              Seu navegador não suporta o elemento de vídeo.
-            </video>
-          </div>
-        @endif
-
-        <div class="complaint-actions">
-          <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
-          <button class="reaction-btn like" onclick="curtirDenuncia(this)">
-            <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">{{ $denuncia->likes }}</span>
-          </button>
-          <button onclick="comentarDenuncia(this, {{ $denuncia->id }})" class="btn btn-link" title="Comentar">
-            <i class="bi bi-chat-dots"></i>
-          </button>
-          <button class="reaction-btn share" onclick="compartilharDenuncia(this)">
-            <i class="bi bi-share"></i>
-          </button>
-        </div>
+    <div class="complaint-card" data-denuncia-id="{{ $denuncia->id }}">
+      <div class="complaint-header">
+      <div class="complaint-avatar">
+        <img src="{{ Auth::user()->foto_perfil_url }}" alt="User avatar" />
       </div>
-    @endforeach
+      <div>
+        <h2 class="complaint-title">{{ $denuncia->titulo }}</h2>
+        <p class="complaint-user">{{ $denuncia->usuario->nome ?? 'Usuário desconhecido' }}</p>
+        <p class="complaint-location">{{ $denuncia->localizacao }}</p>
+      </div>
+      </div>
+
+      <p class="complaint-text">
+      {{ $denuncia->descricao }}
+      </p>
+
+      @if($denuncia->foto_path)
+      <div style="text-align:center; margin-bottom: 10px;">
+      <img src="{{ asset('storage/' . $denuncia->foto_path) }}" alt="Imagem da denúncia"
+      style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px #0001;">
+      </div>
+    @endif
+
+      @if($denuncia->video_path)
+      <div style="text-align:center; margin-bottom: 10px;">
+      <video controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px #0001;">
+      <source src="{{ asset('storage/' . $denuncia->video_path) }}" type="video/mp4">
+      Seu navegador não suporta o elemento de vídeo.
+      </video>
+      </div>
+    @endif
+
+      <div class="complaint-actions">
+      <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
+      <button class="reaction-btn like" onclick="curtirDenuncia(this)">
+        <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">{{ $denuncia->likes }}</span>
+      </button>
+      <button onclick="comentarDenuncia(this, {{ $denuncia->id }})" class="btn btn-link" title="Comentar">
+        <i class="bi bi-chat-dots"></i>
+      </button>
+      <button class="reaction-btn share" onclick="compartilharDenuncia(this)">
+        <i class="bi bi-share"></i>
+      </button>
+      </div>
+    </div>
+  @endforeach
 
     <!-- Modal Conteúdo -->
     <div class="modal fade" id="modalConteudo" tabindex="-1" aria-labelledby="modalConteudoLabel" aria-hidden="true">
@@ -132,7 +130,8 @@
     </div>
 
     <!-- Modal Comentário -->
-    <div class="modal fade" id="modalComentario" tabindex="-1" aria-labelledby="modalComentarioLabel" aria-hidden="true">
+    <div class="modal fade" id="modalComentario" tabindex="-1" aria-labelledby="modalComentarioLabel"
+      aria-hidden="true">
       <div class="modal-dialog">
         <form id="formComentario" class="modal-content">
           <div class="modal-header">
@@ -173,4 +172,5 @@
   <script src="{{ asset('js/sidebar-loader.js') }}"></script>
   <script src="{{ asset('js/home.js') }}"></script>
 </body>
+
 </html>

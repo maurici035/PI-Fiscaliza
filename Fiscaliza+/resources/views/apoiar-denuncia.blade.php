@@ -21,13 +21,13 @@
 
   <!-- Perfil canto superior direito -->
   <div class="profile-top-right">
-    <img src="{{ asset('assets/foto_usuario.png') }}" alt="Perfil">
+    <img src="{{ Auth::user()->foto_perfil_url }}" alt="Perfil">
   </div>
 
   <!-- Conteúdo principal - quadro branco incluindo logos e ícones -->
   <div class="post-container">
     <div class="post-header">
-      <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto de perfil" class="profile-pic"
+      <img src="{{ Auth::user()->foto_perfil_url }}" alt="Foto de perfil" class="profile-pic"
         style="border: 2px solid white; box-shadow: 0 0 0 2px #e4e6eb;">
     </div>
     <div class="post-content">

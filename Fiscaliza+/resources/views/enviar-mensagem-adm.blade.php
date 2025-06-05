@@ -279,13 +279,13 @@
                 <img class="logo-image" src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+">
             </div>
             <div class="user-avatar">
-                <img src="{{ asset('assets/foto_usuario.png') }}" alt="Admin avatar">
+                <img src="{{ Auth::user()->foto_perfil_url }}" alt="Admin avatar">
             </div>
         </div>
 
         <div class="profile-section">
             <div class="profile-pic">
-                <img src="{{ asset('assets/foto_usuario.png') }}" alt="User profile picture">
+                <img src="{{ Auth::user()->foto_perfil_url }}" alt="User profile picture">
             </div>
 
             <div class="profile-info">

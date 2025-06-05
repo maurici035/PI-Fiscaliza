@@ -19,7 +19,7 @@
     </div>
     <div class="header-right">
       <div class="user-avatar">
-        <img src="{{ asset('assets/foto_usuario.png') }}" alt="User profile">
+        <img src="{{ Auth::user()->foto_perfil_url }}" alt="User profile">
       </div>
     </div>
   </header>

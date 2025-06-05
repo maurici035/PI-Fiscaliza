@@ -126,7 +126,7 @@
   <div class="main">
     <h1 class="title">Fiscaliza<span>+</span></h1>
 
-    <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto do Administrador" class="profile-img">
+    <img src="{{ Auth::user()->foto_perfil_url }}" alt="Foto do Administrador" class="profile-img">
     <div class="profile-name">Perfil Do Administrador</div>
 
     <div class="profile-box">

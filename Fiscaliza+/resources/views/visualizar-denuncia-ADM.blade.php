@@ -18,7 +18,7 @@
         <div class="header">
             <h1 class="title">Fiscaliza+</h1>
             <div class="user-avatar">
-                <img src="{{ asset('assets/foto_usuario.png') }}" alt="Admin Avatar">
+                <img src="{{ Auth::user()->foto_perfil_url }}" alt="Admin Avatar">
             </div>
         </div>
 
@@ -26,7 +26,7 @@
             <!-- User Complaint -->
             <div class="message">
                 <div class="user-profile">
-                    <img class="img-user" src="{{ asset('assets/foto_usuario.png') }}" alt="Maria Rita">
+                    <img class="img-user" src="{{ Auth::user()->foto_perfil_url }}" alt="Maria Rita">
                     <div class="user-name">Maria Rita</div>
                 </div>
 

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #d1dce8;
+  background-color: #ececec;
   color: #000;
   display: flex;
   justify-content: center;
@@ -11,15 +11,14 @@ body {
 }
 
 .page-header {
-  width: 100%;
   display: flex;
   align-items: center;
-  padding: 20px 40px;
-  background-color: #d1dce8;
+  padding: 0px 40px;
+  background-color: #ececec;
   box-sizing: border-box;
-  position: relative;
-  top: 0;
-  left: 0;
+  position: absolute;
+  top: 30px;
+  left: 10px;
 }
 
 .logo {
@@ -33,7 +32,6 @@ body {
   justify-content: center;
   align-items: center;
   padding: 40px;
-  width: 100%;
   margin-top: 20px; /* Espaço abaixo do header */
 }
 

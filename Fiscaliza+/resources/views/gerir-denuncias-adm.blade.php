@@ -171,11 +171,11 @@
     <div class="main-content">
         <div class="header">
             <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="" class="logo">
-            <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto de perfil" class="profile-pic">
+            <img src="{{ Auth::user()->foto_perfil_url }}" alt="Foto de perfil" class="profile-pic">
         </div>
 
         <div class="profile-section">
-            <img src="{{ asset('assets/foto_usuario.png') }}" alt="Profile" class="profile-img">
+            <img src="{{ Auth::user()->foto_perfil_url }}" alt="Profile" class="profile-img">
             <div class="profile-name">Maria Rita</div>
         </div>
 

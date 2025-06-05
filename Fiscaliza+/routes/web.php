@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ComentarioController;
 
 // Rota principal
@@ -36,9 +37,11 @@ Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
 
-Route::get('/perfil', function () {
-    return view('perfil');
-})->name('perfil');
+Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil')->middleware('auth');
+
+Route::get('/alterar-perfil-usuario', [PerfilController::class, 'edit'])->name('alterar-perfil-usuario')->middleware('auth');
+Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update')->middleware('auth');
+Route::post('/perfil/alterar-senha', [PerfilController::class, 'alterarSenha'])->name('perfil.alterarSenha')->middleware('auth');
 
 // Route::get('/visualiza-denuncia', function () {
 //     return view('visualiza-denuncia');
@@ -87,10 +90,6 @@ Route::get('/avaliacao-orgao-adm', function () {
 Route::get('/apoiar-denuncia', function () {
     return view('apoiar-denuncia');
 })->name('apoiar-denuncia');
-
-Route::get('/alterar-perfil-usuario', function () {
-    return view('alterar-perfil-usuario');
-})->name('alterar-perfil-usuario');
 
 Route::get('/alter-perfil-adm', function () {
     return view('alter-perfil-adm');

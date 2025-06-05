@@ -149,7 +149,7 @@
                 <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="logo-fiscaliza+">
             </div>
             <div class="profile-pic">
-                <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto de perfil">
+                <img src="{{ Auth::user()->foto_perfil_url }}" alt="Foto de perfil">
             </div>
         </div>
 

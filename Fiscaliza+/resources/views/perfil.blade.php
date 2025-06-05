@@ -41,7 +41,7 @@
     }
 
     .profile-img {
-      width: 200px;
+      width: 150px;
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
@@ -81,7 +81,7 @@
     .btn-alterar {
       margin-top: 15px;
       padding: 14px 24px;
-      background-color: #17E979;
+      background-color:rgb(3, 192, 91);
       border: none;
       color: #fff;
       font-weight: bold;
@@ -89,12 +89,33 @@
       cursor: pointer;
       transition: background 0.3s ease;
       font-size: 16px;
-      width: 130px;
       align-self: flex-start;
     }
 
     .btn-alterar:hover {
       background-color: #0b7dda;
+    }
+
+    .message {
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
     }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -108,17 +129,42 @@
   <div class="main">
     <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Logo Fiscaliza+" class="title">
 
-    <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto do Usuário" class="profile-img">
+    <img src="{{ $usuario->foto_perfil_url }}" alt="Foto do Usuário" class="profile-img">
     <div class="profile-name">Perfil Do Usuário</div>
 
+    @if(session('success'))
+    <div class="message success">
+      {{ session('success') }}
+    </div>
+  @endif
+
+    @if(session('error'))
+    <div class="message error">
+      {{ session('error') }}
+    </div>
+  @endif
+
+    @auth
     <div class="profile-box">
-      <div class="info">Nome: Maria Rita De Souza</div>
-      <div class="info">E-mail: Mariarita123@gmail.com</div>
-      <div class="info">Data De Nascimento: 14/09/1984</div>
+      <div class="info">Nome: {{ $usuario->nome ?? 'Não informado' }}</div>
+      <div class="info">E-mail: {{ $usuario->email ?? 'Não informado' }}</div>
+      <div class="info">Data De Nascimento:
+      @if($usuario->data_nascimento)
+      {{ \Carbon\Carbon::parse($usuario->data_nascimento)->format('d/m/Y') }}
+    @else
+      Não informada
+    @endif
+      </div>
       <div class="info">Notificações: Ativadas</div>
       <div class="info">Acompanhar denúncias</div>
-      <button class="btn-alterar">Alterar</button>
+      <a href="{{ route('alterar-perfil-usuario') }}" class="btn-alterar">Alterar</a>
     </div>
+  @else
+    <div class="profile-box">
+      <div class="info">Você precisa estar logado para ver seu perfil</div>
+      <a href="{{ route('login') }}" class="btn-alterar">Fazer Login</a>
+    </div>
+  @endauth
   </div>
 </body>
 

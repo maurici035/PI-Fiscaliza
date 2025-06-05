@@ -20,7 +20,7 @@
       </div>
       <h1>Acompanhar Denúncia</h1>
       <div class="header-right">
-        <img src="{{ asset('assets/foto_usuario.png') }}" alt="Foto de perfil" class="profile-pic">
+        <img src="{{ Auth::user()->foto_perfil_url }}" alt="Foto de perfil" class="profile-pic">
       </div>
     </div>
 
