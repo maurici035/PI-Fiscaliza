@@ -59,12 +59,37 @@ document.addEventListener('DOMContentLoaded', function () {
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          locationInput.value = `${latitude},${longitude}`;
-          showFeedback('Localização capturada com sucesso!', false);
+
+          if (position.coords.accuracy > 50) {
+            showFeedback('Atenção: a precisão da localização está baixa. Confira o endereço!', true);
+          }
+
+          // Chama a API do Google para converter para endereço
+          fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAgyRuSTvi4-rx2LFLNnIszwMPOFn9rfuI`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === "OK" && data.results.length > 0) {
+                // Procura o resultado mais detalhado
+                const detalhado = data.results.find(r =>
+                  r.types.includes("street_address") || r.types.includes("premise")
+                );
+                const endereco = detalhado ? detalhado.formatted_address : data.results[0].formatted_address;
+                locationInput.value = endereco;
+                showFeedback('Localização capturada com sucesso!', false);
+              } else {
+                locationInput.value = `${latitude},${longitude}`;
+                showFeedback('Localização capturada, mas não foi possível obter o endereço completo.', false);
+              }
+            })
+            .catch(() => {
+              locationInput.value = `${latitude},${longitude}`;
+              showFeedback('Localização capturada, mas não foi possível obter o endereço completo.', false);
+            });
         },
         (error) => {
           showFeedback('Erro ao capturar a localização: ' + error.message);
-        }
+        },
+        { enableHighAccuracy: true }
       );
     } else {
       showFeedback('Geolocalização não suportada pelo navegador.');

@@ -79,7 +79,7 @@
       </div>
 
       <p class="complaint-text">
-      {{ $denuncia->descricao }}
+        {{ \Illuminate\Support\Str::limit($denuncia->descricao, 60, '...') }}
       </p>
 
       @if($denuncia->foto_path)
@@ -99,7 +99,9 @@
     @endif
 
       <div class="complaint-actions">
-      <button class="action-btn primary-btn" onclick="abrirConteudo(this)">Abrir conteúdo</button>
+      <a href="{{ route('denuncia.show', $denuncia->id) }}" class="action-btn primary-btn" style="text-decoration:none;">
+  Abrir conteúdo
+</a>
       <button class="reaction-btn like" onclick="curtirDenuncia(this)">
         <i class="bi bi-hand-thumbs-up"></i> <span class="like-count">{{ $denuncia->likes }}</span>
       </button>

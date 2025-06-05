@@ -23,9 +23,7 @@ class DenunciaController extends Controller
             $denuncia->descricao = $request->descricao;
 
             if ($request->filled('localizacao')) {
-                [$lat, $lng] = explode(',', $request->localizacao);
-                $denuncia->latitude = floatval($lat);
-                $denuncia->longitude = floatval($lng);
+                $denuncia->localizacao = $request->localizacao;
             }
 
             // Sempre pega do usuário autenticado
