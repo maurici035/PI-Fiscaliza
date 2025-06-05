@@ -161,7 +161,7 @@ body {
   object-fit: cover;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Opcional: adiciona uma sombra sutil */
 }
-@media (max-width: 900px) {
+@media (max-width: 420px) {
             .profile-section {
                 flex-direction: column;
                 align-items: center;

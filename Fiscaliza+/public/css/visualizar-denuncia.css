@@ -176,6 +176,7 @@ body {
   right: 0px;
   padding-right: 10px;  /* Espaço entre a imagem e a borda */
   z-index: 100;
+
 }
 
 .profile-image {
@@ -188,7 +189,7 @@ body {
 .logo-item img {
   filter: none !important; /* Remove o filtro para este item específico */
 }
-@media (max-width: 900px) {
+@media (max-width: 420px) {
             .profile-section {
                 flex-direction: column;
                 align-items: center;

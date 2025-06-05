@@ -135,7 +135,7 @@
             background-color: #f9f9f9;
             border-radius: 6px;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 420px) {
             .profile-section {
                 flex-direction: column;
                 align-items: center;

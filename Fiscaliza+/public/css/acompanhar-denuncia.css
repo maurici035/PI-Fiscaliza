@@ -10,6 +10,8 @@
     background-color: #D1DCE8;
     color: black;
     height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
   }
   
  
@@ -20,6 +22,8 @@
     justify-content: center;
     margin-top: 30px;
     cursor: default;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .main-content {
@@ -27,6 +31,8 @@
     flex: 1;
     padding: 20px;
     width: calc(100% - 100px);
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .header {
@@ -35,6 +41,8 @@
     align-items: center;
     margin-bottom: 30px;
     padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .header h1 {
@@ -48,6 +56,8 @@
     font-size: 24px;
     font-weight: bold;
     color: #1898F9;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .header-right {
@@ -55,6 +65,8 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .profile-pic {
@@ -63,6 +75,8 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .filter-button {
@@ -88,6 +102,7 @@
   .filter-button img {
     width: 15px;
     height: 8.5px;
+    
   }
   
   .section-title {
@@ -179,7 +194,7 @@
   font-size: 14px;
   cursor: pointer;
 }
-@media (max-width: 900px) {
+@media (max-width: 420px) {
             .profile-section {
                 flex-direction: column;
                 align-items: center;

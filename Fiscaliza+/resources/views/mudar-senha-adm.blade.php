@@ -95,7 +95,7 @@
       cursor: pointer;
       margin-top: 10px;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 420px) {
             .profile-section {
                 flex-direction: column;
                 align-items: center;
