@@ -6,6 +6,7 @@ body {
   color: white;
   height: 100vh;
   overflow: hidden;
+
 }
 
 .menu-item img {
@@ -13,6 +14,7 @@ body {
   height: 50px;
   object-fit: contain;
   filter: brightness(0) invert(1);
+  
 }
 
 .logo-item img {
@@ -25,6 +27,8 @@ body {
   height: 100vh;
   box-sizing: border-box;
   padding-top: 200px;
+  display: flex;
+    flex-wrap: wrap;
 }
 
 .top-header {
@@ -40,6 +44,7 @@ body {
     position: fixed;
     top: 0;
     z-index: 1000;
+    
   }
 
   .brand-logo {
@@ -52,12 +57,16 @@ body {
     border-radius: 50%;
     overflow: hidden;
     background-color: #555;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .user-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .chat-container {
@@ -68,6 +77,9 @@ body {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+    flex-wrap: wrap;
+  
 }
 
 
@@ -82,6 +94,9 @@ body {
   margin-left: 20px;  /* Já estava para mover para a direita */
   margin-top: 20px;
   border-radius: 10px; /* Borda arredondada */
+  display: flex;
+    flex-wrap: wrap;
+  
 }
 
 .chat-actions {
@@ -90,6 +105,8 @@ body {
   align-items: center;
   padding: 30px 20px 15px 20px; /* aumentei o padding-top */
   background-color: white;
+  
+
 }
 
 
@@ -105,6 +122,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  display: flex;
+    flex-wrap: wrap;
+
 }
 
 .action-button img {
@@ -121,6 +141,8 @@ body {
   font-size: 16px;
   cursor: pointer;
   font-weight: bold;
+  display: flex;
+    flex-wrap: wrap;
 }
 
 .location-icon {
@@ -143,6 +165,8 @@ body {
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
+  display: flex;
+    flex-wrap: wrap;
 }
 
 
@@ -152,6 +176,8 @@ body {
   right: -20px;
   padding-right: 10px;
   z-index: 100;
+  display: flex;
+    flex-wrap: wrap;
 }
 
 .fixed-profile img {
@@ -160,6 +186,8 @@ body {
   border-radius: 45%;
   object-fit: cover;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Opcional: adiciona uma sombra sutil */
+  display: flex;
+    flex-wrap: wrap;
 }
 @media (max-width: 420px) {
             .profile-section {

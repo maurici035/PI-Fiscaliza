@@ -114,11 +114,13 @@ body {
 }
 
 .card {
-    flex: 1;
+    
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
     max-width: 450px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .card-header {
