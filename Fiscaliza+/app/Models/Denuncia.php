@@ -2,22 +2,27 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Denuncia extends Model
 {
     protected $table = 'denuncias';
 
+    use HasFactory;
+
     protected $fillable = [
-        'titulo',
         'descricao',
-        'localizacao',
-        'usuario_id',
-        'nome_usuario', // Adicione aqui
+        'foto',
+        'video',
+        'localizacao_texto',
+        'latitude',
+        'longitude',
+        'user_id',
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    public function user()
+    {
+        return $this->belongsTo(Usuario::class, 'user_id');
+    }
 }

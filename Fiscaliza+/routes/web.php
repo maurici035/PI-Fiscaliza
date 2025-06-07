@@ -35,6 +35,8 @@ Route::get('/cadastrar-denuncia', function () {
     return view('denuncias.cadastrar-denuncia');
 })->name('denuncias.cadastrar-denuncia');
 
+Route::post('/denuncias', [DenunciaController::class, 'store'])->name('denuncias.store');
+
 Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
