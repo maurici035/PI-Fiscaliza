@@ -1,13 +1,27 @@
-<div>
-    <header class="top-header">
-        <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+" class="brand-logo" />
-        <div class="header-right">
-            <button class="notification-btn">
-                <i class="bi bi-bell"></i>
-            </button>
-            <div class="user-avatar">
-                <img src="{{ asset('assets/foto_usuario.png') }}" alt="User profile" />
-            </div>
+@php
+    use Illuminate\Support\Facades\Auth;
+    $usuario = Auth::user();
+@endphp
+
+<div class="w-full bg-white shadow-md py-4 flex justify-between items-center">
+    <div class="ml-[100px] flex items-center"> <!-- margem esquerda maior para não sobrepor a sidebar -->
+        <!-- Logo Fiscaliza+ -->
+        <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+" class="h-10">
+    </div>
+
+    <div class="flex items-center space-x-6 mr-8"> <!-- margem direita para afastar do fim da tela -->
+        <p class="text-gray-700 font-medium">Usuário: {{ $usuario->nome }}</p>
+
+        <button class="relative text-gray-600 hover:text-indigo-600 focus:outline-none">
+            <i class="bi bi-bell text-2xl"></i>
+        </button>
+
+        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-400">
+            <img 
+                src="{{ asset('imgs/profile/' . $usuario->imagem) }}" 
+                alt="Foto do Usuário" 
+                class="w-full h-full object-cover"
+            >
         </div>
-    </header>
+    </div>
 </div>

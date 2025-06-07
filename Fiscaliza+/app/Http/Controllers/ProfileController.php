@@ -11,9 +11,9 @@ class ProfileController extends Controller
 
     public function page(){
 
-        $user = Auth::user();
+        $usuario = Auth::user();
 
-        return view('profile.perfil', compact('user'));
+        return view('profile.perfil', compact('usuario'));
     }
     /**
      * Display a listing of the resource.
@@ -58,10 +58,26 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+
+        $usuario->nome = $request->nome;
+        $usuario->email = $request->email;
+        $usuario->data_nascimento = $request->data_nascimento;
+
+        if ($request->hasFile('imagem')) {
+            $imagem = $request->file('imagem');
+            $nomeImagem = uniqid() . '.' . $imagem->getClientOriginalExtension();
+            $imagem->move(public_path('imgs/profile'), $nomeImagem);
+            $usuario->imagem = $nomeImagem;
+        }
+
+        $usuario->save();
+
+        return redirect()->back()->with('success', 'Perfil atualizado com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.

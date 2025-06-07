@@ -38,9 +38,7 @@ Route::get('/acompanhar-denuncia', function () {
 Route::get('/perfil', [ProfileController::class, 'page'])
     ->name('profile.perfil')
     ->middleware('auth');
-
-
-
+Route::put('perfil/{id}/update', [ProfileController::class, 'update'])->name('usuario.update');
 
 
 

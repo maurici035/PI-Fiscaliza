@@ -20,7 +20,11 @@
     <div class="report-card">
       <div class="report-input">
         <div class="input-avatar">
-          <img src="{{ asset('assets/foto_usuario.png') }}" alt="User avatar" />
+            <img 
+                src="{{ asset('imgs/profile/' . $usuario->imagem) }}" 
+                alt="Foto do Usuário" 
+                class="w-full h-full object-cover"
+            >
         </div>
         <input type="text" class="input-field" placeholder="Comece uma denúncia" />
       </div>
@@ -138,8 +142,6 @@
 </div> <!-- Fim da div.main-content -->
 
 <!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/sidebar-loader.js') }}"></script>
 <script src="{{ asset('js/home.js') }}"></script>
 
 @endsection

@@ -12,13 +12,13 @@ class AuthController extends Controller
     // Exibe a página de login
     public function showLogin()
     {
-        return view('login');
+        return view('auth.login');
     }
 
     // Exibe a página de cadastro
     public function showRegister()
     {
-        return view('cadastro');
+        return view('auth.cadastro');
     }
 
     public function register(Request $request)
@@ -27,6 +27,7 @@ class AuthController extends Controller
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|string|min:6',
+            'data_nascimento' => 'required',
             'repitaSenha' => 'required|string|same:senha',
             'dataNascimento' => 'required|date',
         ]);
