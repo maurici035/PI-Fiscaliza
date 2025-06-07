@@ -27,8 +27,8 @@ Route::middleware('auth')->group(function () {
 
 // Rotas das páginas
 Route::get('/cadastrar-denuncia', function () {
-    return view('cadastrar-denuncia');
-})->name('cadastrar-denuncia');
+    return view('denuncias.cadastrar-denuncia');
+})->name('denuncias.cadastrar-denuncia');
 
 Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
