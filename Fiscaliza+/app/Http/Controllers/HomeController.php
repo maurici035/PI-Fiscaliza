@@ -14,6 +14,7 @@ class HomeController extends Controller
         $denuncias = Denuncia::all();
         $usuario = FacadesAuth::user();
 
+
         // Passar para a view
         return view('home', compact('denuncias', 'usuario'));
     }

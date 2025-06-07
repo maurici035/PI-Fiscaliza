@@ -29,8 +29,14 @@
 
     <!-- Logout -->
     <div class="mt-auto mb-7">
-        <a href="#" class="text-white text-2xl w-10 h-10 flex justify-center items-center hover:text-[#00ff1e] border-l-2 border-transparent hover:border-[#00ff1e]">
+        <a href="#" 
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+        class="text-white text-2xl w-10 h-10 flex justify-center items-center hover:text-[#00ff1e] border-l-2 border-transparent hover:border-[#00ff1e]">
             <i class="bi bi-box-arrow-right"></i>
         </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+            @csrf
+        </form>
     </div>
 </div>

@@ -23,36 +23,93 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
+        $mensagens = [
+            // Validação do nome
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.string' => 'O nome deve ser um texto.',
+            'nome.min' => 'O nome deve ter no mínimo :min caracteres.',
+            'nome.max' => 'O nome deve ter no máximo :max caracteres.',
+            
+            // Validação do email
+            'email.required' => 'O campo email é obrigatório.',
+            'email.email' => 'Digite um email válido.',
+            'email.unique' => 'Este email já está cadastrado.',
+            
+            // Validação da senha
+            'senha.required' => 'O campo senha é obrigatório.',
+            'senha.string' => 'A senha deve ser um texto.',
+            'senha.min' => 'A senha deve ter no mínimo :min caracteres.',
+            
+            // Validação da confirmação de senha
+            'repitaSenha.required' => 'Confirme sua senha.',
+            'repitaSenha.string' => 'A confirmação de senha deve ser um texto.',
+            'repitaSenha.same' => 'As senhas não coincidem.',
+            
+            // Validação da data de nascimento
+            'dataNascimento.required' => 'O campo data de nascimento é obrigatório.',
+            'dataNascimento.date' => 'Digite uma data válida.',
+        ];
+        
         $request->validate([
-            'nome' => 'required|string|max:255',
+            'nome' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|string|min:6',
-            'data_nascimento' => 'required',
             'repitaSenha' => 'required|string|same:senha',
             'dataNascimento' => 'required|date',
-        ]);
+        ], $mensagens);
 
+        // Cálculo da idade
+        $dataNascimento = \Carbon\Carbon::parse($request->dataNascimento);
+        $idade = $dataNascimento->age;
+
+        if ($idade < 16) {
+            return back()->withErrors(['idade' => 'Você deve ter pelo menos 16 anos para se cadastrar.'])->withInput();
+        }
+
+        if ($idade > 90) {
+            return back()->withErrors(['idade' => 'Idade superior ao permitido (90 anos).'])->withInput();
+        }
+
+        if ($dataNascimento->isFuture()) {
+            return back()->withErrors(['idade' => 'Data de nascimento inválida.'])->withInput();
+        }
+
+        // Criação do usuário
         $usuario = Usuario::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
-            'data_nascimento' => $request->dataNascimento,
+            'data_nascimento' => $dataNascimento,
         ]);
 
-        return redirect('/login')->with('success', 'Cadastro realizado com sucesso!');
+        Auth::login($usuario);
+
+        // Redireciona para a home
+        return redirect()->route('home')->with('success', 'Cadastro realizado com sucesso!');
     }
+
 
     public function login(Request $request)
     {
+        $mensagens = [
+            'email.required' => 'O campo email é obrigatório.',
+            'email.email' => 'Digite um endereço de email válido.',
+            'senha.required' => 'O campo senha é obrigatório.',
+            'senha.string' => 'A senha deve ser um texto.',
+        ];
         $request->validate([
             'email' => 'required|email',
             'senha' => 'required|string',
-        ]);
+        ], $mensagens);
 
         $usuario = Usuario::where('email', $request->email)->first();
 
         if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
-            return back()->withErrors(['login' => 'Usuário ou senha incorretos'])->withInput();
+            return back()
+                ->withErrors(['credenciais' => 'Credenciais inválidas. 
+                Verifique seu email e senha.'])
+                ->withInput();
         }
 
         // Login OK: autentica e redireciona
@@ -63,6 +120,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login')->with('success', 'Logout realizado com sucesso!');
+        return redirect()->route('index')->with('success', 'Logout realizado com sucesso!');
     }
 }

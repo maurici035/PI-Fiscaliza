@@ -12,6 +12,13 @@
 
 @section('content')
 
+{{-- ALERTA DINÂMICO --}}
+  <div 
+    id="alertSuccess" 
+    class="hidden fixed top-0 left-0 w-full bg-green-500 text-white text-center py-3 shadow-md transition-opacity duration-500"
+  >
+    {{ session('success') }}
+  </div>
 <!-- Main Content Area -->
 <div class="main-content">
   <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data">
@@ -143,6 +150,21 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/home.js') }}"></script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const alertSuccess = document.getElementById('alertSuccess');
+    if (alertSuccess.textContent.trim() !== '') {
+      alertSuccess.classList.remove('hidden');
+      alertSuccess.classList.add('opacity-100');
+
+      setTimeout(() => {
+        alertSuccess.classList.add('opacity-0');
+        setTimeout(() => alertSuccess.classList.add('hidden'), 500);
+      }, 3000);
+    }
+  });
+</script>
 
 @endsection
 

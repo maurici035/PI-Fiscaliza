@@ -20,6 +20,10 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+Route::get('termos', function() {
+    return view(('terms'));
+})->name('termos');
 // Rotas protegidas (precisam de autenticação)
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');

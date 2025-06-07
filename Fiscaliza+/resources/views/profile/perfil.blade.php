@@ -3,6 +3,7 @@
 @section('title', 'Fiscaliza+ | Perfil do Usuário')
 
 @section('head')
+
 @endsection
 
 @section('content')
@@ -62,9 +63,9 @@
           type="date" 
           id="data_nascimento" 
           name="data_nascimento" 
-          value="{{ $usuario->data_nascimento }}" 
+          value="{{ $usuario->data_nascimento ? $usuario->data_nascimento->format('Y-m-d') : '' }}"
           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
+        />
       </div>
 
       <div>
@@ -81,7 +82,7 @@
         <button 
           type="button" 
           id="btnSave" 
-          class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition"
+          class="w-full bg-[#0489ca] text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition"
         >
           Salvar
         </button>
