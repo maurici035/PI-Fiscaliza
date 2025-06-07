@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 
 // Rota principal
 Route::get('/', function () {
@@ -34,9 +35,10 @@ Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
 
-Route::get('/perfil', function () {
-    return view('perfil');
-})->name('perfil');
+Route::get('/perfil', [ProfileController::class, 'page'])
+    ->name('profile.perfil')
+    ->middleware('auth');
+
 
 
 

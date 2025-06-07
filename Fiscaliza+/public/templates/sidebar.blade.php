@@ -133,7 +133,7 @@
 
             <!-- User/Profile Icon -->
             <div class="nav-item">
-                <a href="perfil.html" class="nav-link">
+                <a  href="{{ route('profile.perfil') }}" class="nav-link">
                     <i
                         class="bi bi-person sidebar-icon"
                         style="height: 40px; width: 40px"
