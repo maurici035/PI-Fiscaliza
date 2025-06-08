@@ -68,6 +68,10 @@
                             <span class="mx-1">&middot;</span>
                             <span>{{ $denuncia->created_at->diffForHumans() }}</span>
                         </p>
+                        <a href="{{ route('denuncias.editar-denuncias', $denuncia->id) }}" class="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1">
+                            <i class="bi bi-pencil"></i>
+                            Editar
+                        </a>
                     </div>
                 </div>
 

@@ -9,7 +9,20 @@ use App\Helpers\GeolocationHelper;
 
 class DenunciaController extends Controller
 {
- public function store(Request $request)
+
+    public function edit($id)
+    {
+        $denuncia = Denuncia::findOrFail($id);
+
+        // Garante que o usuário só edite suas denúncias
+        if ($denuncia->user_id !== auth()->id()) {
+            return redirect()->back()->with('error', 'Acesso não autorizado.');
+        }
+
+        return view('denuncias.editar-denuncias', compact('denuncia'));
+    }
+
+    public function store(Request $request)
     {
         // Validação
         $request->validate([
@@ -73,4 +86,82 @@ class DenunciaController extends Controller
             return redirect()->back()->with('error', 'Erro ao salvar: ' . $e->getMessage());
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        $denuncia = Denuncia::findOrFail($id);
+
+        if ($denuncia->user_id !== auth()->id()) {
+            return redirect()->back()->with('error', 'Acesso não autorizado.');
+        }
+
+        $request->validate([
+            'descricao' => 'required|string',
+            'foto' => 'nullable|image|max:5120',
+            'video' => 'nullable|mimes:mp4,mov,avi|max:102400',
+        ]);
+
+        $denuncia->descricao = $request->descricao;
+        $denuncia->localizacao_texto = $request->localizacao_texto;
+        $denuncia->latitude = $request->latitude;
+        $denuncia->longitude = $request->longitude;
+
+        // Atualização de foto
+        if ($request->hasFile('foto')) {
+            if ($denuncia->foto_path && File::exists(public_path($denuncia->foto_path))) {
+                File::delete(public_path($denuncia->foto_path));
+            }
+
+            $foto = $request->file('foto');
+            $nomeFoto = uniqid() . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('assets/denuncias/pictures'), $nomeFoto);
+            $denuncia->foto_path = 'assets/denuncias/pictures/' . $nomeFoto;
+        }
+
+        // Atualização de vídeo
+        if ($request->hasFile('video')) {
+            if ($denuncia->video_path && File::exists(public_path($denuncia->video_path))) {
+                File::delete(public_path($denuncia->video_path));
+            }
+
+            $video = $request->file('video');
+            $nomeVideo = uniqid() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('assets/denuncias/videos'), $nomeVideo);
+            $denuncia->video_path = 'assets/denuncias/videos/' . $nomeVideo;
+        }
+
+        if (!empty($denuncia->latitude) && !empty($denuncia->longitude)) {
+            $denuncia->endereco = GeolocationHelper::obterEnderecoPorCoordenadas(
+                $denuncia->latitude,
+                $denuncia->longitude
+            );
+        }
+
+        $denuncia->save();
+
+        return redirect()->route('profile.showPerfil')->with('success', 'Denúncia atualizada com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $denuncia = Denuncia::findOrFail($id);
+
+        if ($denuncia->user_id !== auth()->id()) {
+            return redirect()->back()->with('error', 'Acesso não autorizado.');
+        }
+
+        // Apaga arquivos
+        if ($denuncia->foto_path && File::exists(public_path($denuncia->foto_path))) {
+            File::delete(public_path($denuncia->foto_path));
+        }
+
+        if ($denuncia->video_path && File::exists(public_path($denuncia->video_path))) {
+            File::delete(public_path($denuncia->video_path));
+        }
+
+        $denuncia->delete();
+
+        return redirect()->route('profile.showPerfil')->with('success', 'Denúncia excluída com sucesso!');
+    }
+
 }

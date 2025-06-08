@@ -24,23 +24,29 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('termos', function() {
     return view(('terms'));
 })->name('termos');
+
 // Rotas protegidas (precisam de autenticação)
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
 });
 
-// Rotas das páginas
+// Rdenuncias
 Route::get('/cadastrar-denuncia', function () {
     return view('denuncias.cadastrar-denuncia');
 })->name('denuncias.cadastrar-denuncia');
 
 Route::post('/denuncias', [DenunciaController::class, 'store'])->name('denuncias.store');
+Route::get('/denuncias/{id}/edit', [DenunciaController::class, 'edit'])->name('denuncias.editar-denuncias');
+Route::put('/denuncias/{id}', [DenunciaController::class, 'update'])->name('denuncias.update');
+Route::delete('/denuncias/{id}', [DenunciaController::class, 'destroy'])->name('denuncias.destroy');
 
 Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
 
+
+// Perfil
 Route::get('/perfil/edit', [ProfileController::class, 'page'])
     ->name('profile.perfil')
     ->middleware('auth');
