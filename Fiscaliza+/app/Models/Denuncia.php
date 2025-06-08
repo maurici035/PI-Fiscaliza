@@ -13,12 +13,13 @@ class Denuncia extends Model
 
     protected $fillable = [
         'descricao',
-        'foto',
-        'video',
         'localizacao_texto',
         'latitude',
         'longitude',
-        'user_id',
+        'endereco',
+        'foto_path',
+        'video_path',
+        'user_id'
     ];
 
     public function user()
