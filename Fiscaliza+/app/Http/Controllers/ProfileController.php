@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
 
+    public function showPerfil()
+    {
+        $user = auth()->user()->load('denuncias');
+
+        return view('profile.showPerfil', compact('user'));
+    }
+
     public function page(){
 
         $usuario = Auth::user();
@@ -62,21 +69,31 @@ class ProfileController extends Controller
     {
         $usuario = Usuario::findOrFail($id);
 
+        // Validação (se necessário)
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email',
+            'data_nascimento' => 'nullable|date',
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Atualiza os dados
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
         $usuario->data_nascimento = $request->data_nascimento;
 
         if ($request->hasFile('imagem')) {
             $imagem = $request->file('imagem');
-            $nomeImagem = uniqid() . '.' . $imagem->getClientOriginalExtension();
+            $nomeImagem = time() . '.' . $imagem->getClientOriginalExtension();
             $imagem->move(public_path('imgs/profile'), $nomeImagem);
             $usuario->imagem = $nomeImagem;
         }
 
         $usuario->save();
 
-        return redirect()->back()->with('success', 'Perfil atualizado com sucesso!');
+        return redirect()->route('profile.showPerfil')->with('success', 'Perfil atualizado com sucesso!');
     }
+
 
 
     /**

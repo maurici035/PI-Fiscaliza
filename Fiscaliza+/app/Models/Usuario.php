@@ -20,4 +20,10 @@ class Usuario extends Authenticatable
     {
         return $this->senha;
     }
+
+    public function denuncias()
+    {
+        return $this->hasMany(Denuncia::class, 'user_id');
+    }
+
 }

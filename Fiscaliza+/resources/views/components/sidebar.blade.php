@@ -22,7 +22,7 @@
             <i class="bi bi-file-earmark-text"></i>
         </a>
 
-        <a href="{{ route('profile.perfil') }}" class="text-white text-2xl w-10 h-10 flex justify-center items-center hover:text-[#00ff1e] border-l-2 border-transparent hover:border-[#00ff1e] {{ request()->is('profile/perfil') ? 'active-icon' : '' }}">
+        <a href="{{ route('profile.showPerfil') }}" class="text-white text-2xl w-10 h-10 flex justify-center items-center hover:text-[#00ff1e] border-l-2 border-transparent hover:border-[#00ff1e] {{ request()->is('profile/perfil') ? 'active-icon' : '' }}">
             <i class="bi bi-person"></i>
         </a>
     </div>

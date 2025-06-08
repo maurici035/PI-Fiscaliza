@@ -22,15 +22,6 @@
     <div class="text-2xl font-semibold">Perfil do Usuário</div>
   </div>
 
-  {{-- ALERTA DINÂMICO --}}
-  <div 
-    id="alertSuccess" 
-    class="hidden fixed top-0 left-0 w-full bg-green-500 text-white text-center py-3 shadow-md transition-opacity duration-500"
-  >
-    {{ session('success') }}
-  </div>
-
-
   <div class="bg-white shadow-md rounded-lg p-6">
     <form id="profileForm" method="POST" action="{{ route('usuario.update', $usuario->id) }}" enctype="multipart/form-data" class="space-y-6">
       @csrf
@@ -87,6 +78,15 @@
           Salvar
         </button>
       </div>
+      <div>
+        <a 
+          href="{{ route('profile.showPerfil') }}"
+          role="button"
+          class="block w-full bg-gray-300 text-gray-800 font-semibold py-3 rounded-md hover:bg-gray-400 transition text-center"
+        >
+          Cancelar
+        </a>
+      </div>
     </form>
   </div>
 </div>
@@ -120,21 +120,6 @@
   document.getElementById('confirmYes').addEventListener('click', () => {
     modal.classList.add('hidden');
     form.submit();
-  });
-
-  // Mostrar alerta de sucesso dinâmico com fade out
-  window.addEventListener('DOMContentLoaded', () => {
-    const alertSuccess = document.getElementById('alertSuccess');
-    if (alertSuccess.textContent.trim() !== '') {
-      alertSuccess.classList.remove('hidden');
-      alertSuccess.classList.add('opacity-100');
-
-      // Apaga o alerta após 3 segundos com fade out
-      setTimeout(() => {
-        alertSuccess.classList.add('opacity-0');
-        setTimeout(() => alertSuccess.classList.add('hidden'), 500);
-      }, 3000);
-    }
   });
 </script>
 

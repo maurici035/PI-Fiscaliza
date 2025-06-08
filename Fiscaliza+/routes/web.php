@@ -41,11 +41,27 @@ Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
 
-Route::get('/perfil', [ProfileController::class, 'page'])
+Route::get('/perfil/edit', [ProfileController::class, 'page'])
     ->name('profile.perfil')
     ->middleware('auth');
 Route::put('perfil/{id}/update', [ProfileController::class, 'update'])->name('usuario.update');
+Route::get('/perfil/user', [ProfileController::class, 'showPerfil'])->name('profile.showPerfil');
 
+// Avaliação
+Route::view('/avaliacao/avaliacao-orgao-adm', 'avaliacao.avaliacao-orgao-adm');
+Route::view('/avaliacao/avaliacao-orgao', 'avaliacao.avaliacao-orgao');
+
+// Denúncias
+Route::view('/denuncias/acompanhar-denuncia', 'denuncias.acompanhar-denuncia');
+Route::view('/denuncias/apoiar-denuncia', 'denuncias.apoiar-denuncia'); //não necessaria
+Route::view('/denuncias/denuncia-ad', 'denuncias.denunciaAD');
+Route::view('/denuncias/enviar-mensagem-adm', 'denuncias.enviar-mensagem-adm');
+Route::view('/denuncias/gerir-denuncias-adm', 'denuncias.gerir-denuncias-adm');
+Route::view('/denuncias/visualizar-denuncia', 'denuncias.visualizar-denuncia');
+
+// Feedback
+Route::view('/feedback/feedback-orgao-adm', 'feedback.feedback-orgao-adm');
+Route::view('/feedback/feedback-orgao', 'feedback.feedback-orgao');
 
 
 

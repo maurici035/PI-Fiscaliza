@@ -3,8 +3,12 @@
 /public/build
 /public/hot
 /public/storage
-touch public/assets/denuncias/pictures/.gitkeep
-touch public/assets/denuncias/videos/.gitkeep
+/public/assets/denuncias/pictures/*
+!/public/assets/denuncias/pictures/.gitkeep
+/public/assets/denuncias/videos/*
+!/public/assets/denuncias/videos/.gitkeep
+/public/imgs/profile/*
+!/public/imgs/profile/.gitkeep
 /storage/*.key
 /storage/pail
 /vendor
