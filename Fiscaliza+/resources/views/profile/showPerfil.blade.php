@@ -19,7 +19,6 @@
     }
   });
 </script>
-
     {{-- Alpine.js para interatividade --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -137,19 +136,49 @@
                 {{-- BOTÕES DE AÇÃO --}}
                 <div class="border-t border-slate-200 pt-3 flex justify-between items-center text-sm text-gray-600">
                     <div class="flex gap-5">
-                        <button onclick="curtirDenuncia(this)" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors duration-300 group">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                        <button onclick="curtirDenuncia(this, {{ $denuncia->id }})"
+                            class="flex items-center gap-2 text-slate-600 {{ $denuncia->curtidas->contains('user_id', auth()->id()) ? 'text-blue-600' : '' }} hover:text-blue-600 transition-colors duration-300 group">
                             <i class="bi bi-hand-thumbs-up text-xl group-hover:scale-110 transition-transform"></i> 
-                            <span class="like-count font-semibold">{{ $denuncia->likes_count ?? 0 }}</span>
+                            <span class="like-count font-semibold">{{ $denuncia->curtidas->count() }}</span>
                         </button>
                         {{-- O botão de comentar agora usa Alpine.js --}}
                         <button @click="commentsOpen = !commentsOpen" class="flex items-center gap-2 text-slate-600 hover:text-green-600 transition-colors duration-300 group">
                             <i class="bi bi-chat-dots text-xl group-hover:scale-110 transition-transform"></i> 
                             <span class="font-semibold">Comentarios {{ $denuncia->comentarios_count }}</span>
                         </button>
-                        <button onclick="abrirModal('modalCompartilhar')" class="flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-colors duration-300 group">
+                        <button onclick="abrirModal('modalCompartilhar-{{ $denuncia->id }}')" class="flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-colors duration-300 group">
                             <i class="bi bi-share text-xl group-hover:scale-110 transition-transform"></i>
                             <span class="font-semibold">Compartilhar</span>
                         </button>
+
+                        <a href="{{ route('denuncias.show-denuncia', $denuncia->id) }}"
+                        class="flex items-center gap-2 text-slate-600 hover:text-yellow-600 transition-colors duration-300 group">
+                            <i class="bi bi-eye text-xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold">Ver mais</span>
+                        </a>
+
+                    </div>
+                </div>
+
+                {{-- Modal de Compartilhamento --}}
+                <div id="modalCompartilhar-{{ $denuncia->id }}" class="modal hidden fixed inset-0 bg-black/60 items-center justify-center z-50 p-4">
+                    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md space-y-4 text-center">
+                        <div class="p-6 flex justify-between items-center border-b border-slate-200">
+                            <h2 class="text-xl font-bold text-slate-800">Compartilhar Denúncia</h2>
+                            <button onclick="fecharModal('modalCompartilhar-{{ $denuncia->id }}')" class="text-slate-400 hover:text-slate-600 text-3xl">&times;</button>
+                        </div>
+                        <div id="modalCompartilharBody" class="p-8 flex flex-col items-center gap-4">
+                            <p class="text-slate-600">Copie o link para compartilhar esta denúncia:</p>
+                            <div class="w-full bg-slate-100 border rounded-lg p-2 flex items-center">
+                                <input type="text" id="share-link-{{ $denuncia->id }}" value="{{ route('denuncias.show-denuncia', $denuncia->id) }}" readonly class="bg-transparent flex-1 text-sm text-slate-700 focus:outline-none">
+                                <button onclick="copiarLink({{ $denuncia->id }})" class="bg-green-500 text-white px-3 py-1 rounded text-sm font-semibold hover:bg-green-600">Copiar</button>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 text-right rounded-b-xl">
+                            <button onclick="fecharModal('modalCompartilhar-{{ $denuncia->id }}')" class="bg-slate-500 text-white px-5 py-2 rounded-lg hover:bg-slate-600 transition-colors duration-300 font-semibold">Fechar</button>
+                        </div>
                     </div>
                 </div>
 
@@ -305,5 +334,61 @@
             el.style.transition = 'opacity 150ms ease-in-out';
         });
     });
+</script>
+<script>
+    function curtirDenuncia(btn, denunciaId) {
+        fetch(`/denuncias/${denunciaId}/curtir`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const countEl = btn.querySelector('.like-count');
+            countEl.innerText = data.likes_count;
+
+            if (data.liked) {
+                btn.classList.add('text-blue-600');
+            } else {
+                btn.classList.remove('text-blue-600');
+            }
+        })
+        .catch(err => console.error('Erro ao curtir:', err));
+    }
+</script>
+<script>
+// --- Funções dos Modais ---
+    function abrirModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.add('open');
+            void modal.offsetWidth; 
+        }
+    }
+
+    function fecharModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.remove('open');
+        }
+    }
+
+    function copiarLink() {
+        const linkInput = document.getElementById('share-link');
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(linkInput.value);
+        alert('Link copiado para a área de transferência!');
+    }
+
+    // Fechar modais com a tecla ESC
+    document.addEventListener('keydown', function (event) {
+        if (event.key === "Escape") {
+            document.querySelectorAll('.modal.open').forEach(modal => fecharModal(modal.id));
+        }
+    });
+
 </script>
 @endsection

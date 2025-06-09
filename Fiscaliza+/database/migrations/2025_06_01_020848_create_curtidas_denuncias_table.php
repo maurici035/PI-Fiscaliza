@@ -13,9 +13,18 @@ return new class extends Migration
     {
         Schema::create('curtidas_denuncias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('denuncia_id')->constrained('denuncias')->onDelete('cascade');
-            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
-            $table->unique(['denuncia_id', 'usuario_id']);
+
+            // FK para 'denuncias.id'
+            $table->foreignId('denuncia_id')
+                ->constrained('denuncias')
+                ->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->constrained('usuarios')
+                ->onDelete('cascade');
+
+            $table->unique(['denuncia_id', 'user_id']);
+
             $table->timestamps();
         });
     }

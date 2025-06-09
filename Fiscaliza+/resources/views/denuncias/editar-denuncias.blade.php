@@ -112,7 +112,7 @@
 
                 {{-- Botões de Ação --}}
                 <div class="mt-10 flex items-center justify-end space-x-4">
-                    <a href="{{ route('profile.showPerfil') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <a href="{{ route('profile.showPerfil', $denuncia->user_id) }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300">
                         Cancelar
                     </a>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md hover:shadow-lg">

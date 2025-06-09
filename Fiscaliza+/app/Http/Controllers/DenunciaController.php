@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Denuncia;
 use Illuminate\Support\Facades\File;
 use App\Helpers\GeolocationHelper;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class DenunciaController extends Controller
 {
+    public function show($id)
+    {
+        $usuario = FacadesAuth::user();
+        $denuncia = Denuncia::with(['user', 'comentarios.user', 'curtidas'])
+        ->withCount('comentarios')
+        ->findOrFail($id);
+
+        return view('denuncias.show-denuncia', compact('denuncia', 'usuario'));
+    }
 
     public function edit($id)
     {
@@ -139,7 +150,7 @@ class DenunciaController extends Controller
 
         $denuncia->save();
 
-        return redirect()->route('profile.showPerfil')->with('success', 'Denúncia atualizada com sucesso!');
+        return redirect()->route('profile.showPerfil', $denuncia->user_id)->with('success', 'Denúncia atualizada com sucesso!');
     }
 
     public function destroy($id)
@@ -161,7 +172,7 @@ class DenunciaController extends Controller
 
         $denuncia->delete();
 
-        return redirect()->route('profile.showPerfil')->with('success', 'Denúncia excluída com sucesso!');
+        return redirect()->route('profile.showPerfil', $denuncia->user_id)->with('success', 'Denúncia excluída com sucesso!');
     }
 
 }

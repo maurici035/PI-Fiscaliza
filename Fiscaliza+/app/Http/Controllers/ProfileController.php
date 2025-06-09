@@ -52,6 +52,14 @@ class ProfileController extends Controller
         $usuario->data_nascimento = $request->data_nascimento;
 
         if ($request->hasFile('imagem')) {
+            // Deletar imagem antiga (exceto a padrão)
+            if ($usuario->imagem && $usuario->imagem !== 'default.jpg') {
+                $caminho = public_path('imgs/profile/' . $usuario->imagem);
+                if (file_exists($caminho)) {
+                    unlink($caminho);
+                }
+            }
+
             $imagem = $request->file('imagem');
             $nomeImagem = time() . '.' . $imagem->getClientOriginalExtension();
             $imagem->move(public_path('imgs/profile'), $nomeImagem);

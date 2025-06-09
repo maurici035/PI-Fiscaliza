@@ -31,4 +31,9 @@ class Denuncia extends Model
     {
         return $this->hasMany(ComentariosDenuncias::class, 'denuncia_id');
     }
+
+    public function curtidas()
+    {
+        return $this->hasMany(CurtidasDenuncias::class, 'denuncia_id');
+    }
 }

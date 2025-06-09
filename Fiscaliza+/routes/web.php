@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComentariosDenunciasController;
+use App\Http\Controllers\CurtidasDenunciasController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -35,7 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/comentarios/{id}', [ComentariosDenunciasController::class, 'destroy'])->name('comentarios.destroy');
 
 });
-
+Route::post('/denuncias/{id}/curtir', [CurtidasDenunciasController::class, 'toggleCurtir'])
+    ->middleware('auth')
+    ->name('denuncias.curtir');
 
 // Rdenuncias
 Route::get('/cadastrar-denuncia', function () {
@@ -51,6 +54,7 @@ Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
 
+Route::get('/denuncias/{id}', [DenunciaController::class, 'show'])->name('denuncias.show-denuncia');
 
 // Perfil
 Route::get('/perfil/edit', [ProfileController::class, 'page'])
