@@ -54,7 +54,7 @@ Route::get('/perfil/edit', [ProfileController::class, 'page'])
     ->name('profile.perfil')
     ->middleware('auth');
 Route::put('perfil/{id}/update', [ProfileController::class, 'update'])->name('usuario.update');
-Route::get('/perfil/user', [ProfileController::class, 'showPerfil'])->name('profile.showPerfil');
+Route::get('/perfil/user/{id}', [ProfileController::class, 'showPerfil'])->name('profile.showPerfil');
 
 // Avaliação
 Route::view('/avaliacao/avaliacao-orgao-adm', 'avaliacao.avaliacao-orgao-adm');

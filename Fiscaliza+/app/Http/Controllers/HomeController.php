@@ -13,6 +13,10 @@ class HomeController extends Controller
     {
         // Buscar denúncias do banco (exemplo)
         $denuncias = Denuncia::all();
+        $denuncias = Denuncia::with('comentarios.user')
+                     ->withCount('comentarios')
+                     ->latest()
+                     ->get();
         $usuario = FacadesAuth::user();
 
         // Passar para a view

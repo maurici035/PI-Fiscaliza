@@ -99,9 +99,13 @@
                 
                 {{-- CABEÇALHO DA DENÚNCIA --}}
                 <div class="flex items-center gap-4">
-                    <img src="{{ asset('imgs/profile/' . $denuncia->user->imagem) }}" alt="User" class="w-12 h-12 rounded-full object-cover border-2 border-slate-100">
+                    <a href="{{ route('profile.showPerfil', $denuncia->user_id )}}">
+                        <img src="{{ asset('imgs/profile/' . $denuncia->user->imagem) }}" alt="User" class="w-12 h-12 rounded-full object-cover border-2 border-slate-100">
+                    </a>
                     <div>
-                        <h2 class="font-bold text-gray-800">{{ $denuncia->user->nome }}</h2>
+                        <a href="{{ route('profile.showPerfil', $denuncia->user_id) }}">
+                            <h2 class="font-bold text-gray-800">{{ $denuncia->user->nome }}</h2>
+                        </a>
                         <p class="text-xs text-gray-500 flex items-center gap-1 flex-wrap">
                             <i class="bi bi-geo-alt"></i> 
                             <span>
@@ -116,7 +120,7 @@
                             <span class="mx-1">&middot;</span>
                             <span>{{ $denuncia->created_at->diffForHumans() }}</span>
                         </p>
-                        @if ($denuncia->user_id == $usuario->id)
+                        @if ($denuncia->user_id == auth()->id())
                             <a href="{{ route('denuncias.editar-denuncias', $denuncia->id) }}" class="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1">
                                 <i class="bi bi-pencil"></i>
                                 Editar
@@ -148,7 +152,7 @@
                         {{-- O botão de comentar agora usa Alpine.js --}}
                         <button @click="commentsOpen = !commentsOpen" class="flex items-center gap-2 text-slate-600 hover:text-green-600 transition-colors duration-300 group">
                             <i class="bi bi-chat-dots text-xl group-hover:scale-110 transition-transform"></i> 
-                            <span class="font-semibold">Comentar</span>
+                            <span class="font-semibold">Comentarios {{ $denuncia->comentarios_count }}</span>
                         </button>
                         <button onclick="abrirModal('modalCompartilhar')" class="flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-colors duration-300 group">
                             <i class="bi bi-share text-xl group-hover:scale-110 transition-transform"></i>
@@ -156,26 +160,24 @@
                         </button>
                     </div>
                 </div>
-                
-                {{-- ======================================================= --}}
-                {{-- NOVA ÁREA DE COMENTÁRIOS DINÂMICA (Estilo Facebook)      --}}
-                {{-- ======================================================= --}}
+
                 <div x-show="commentsOpen" x-cloak x-transition.opacity.duration.300ms class="pt-4 mt-4 border-t border-slate-200 space-y-5">
                     
                     {{-- Lista de Comentários Existentes --}}
-                    {{-- ATENÇÃO: Assumindo que você tem a relação 'comentarios' no seu model Denuncia --}}
                     <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
                         @forelse ($denuncia->comentarios as $comentario)
                             <div class="flex items-start gap-3">
-                                <img src="{{ asset('imgs/profile/' . ($comentario->user->imagem ?? 'default.jpg')) }}"
-                                    class="w-9 h-9 rounded-full object-cover border border-slate-200"
-                                    alt="Foto">
+                                <a href="{{ route('profile.showPerfil', $denuncia->user_id )}}">
+                                    <img src="{{ asset('imgs/profile/' . ($comentario->user->imagem ?? 'default.jpg')) }}"
+                                        class="w-9 h-9 rounded-full object-cover border border-slate-200"
+                                        alt="Foto">
+                                </a>
 
                                 <div class="flex-1">
                                     <div class="bg-slate-100 rounded-xl p-3">
-                                        <p class="font-semibold text-sm text-slate-800">
+                                        <a href="{{ route('profile.showPerfil', $denuncia->user_id )}}" class="font-semibold text-sm text-slate-800">
                                             {{ $comentario->user->nome ?? 'Usuário removido' }}
-                                        </p>
+                                        </a>
                                         <p class="text-sm text-slate-700 whitespace-pre-line">
                                             {{ $comentario->conteudo }}
                                         </p>

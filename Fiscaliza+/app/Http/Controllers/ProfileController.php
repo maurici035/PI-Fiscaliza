@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Denuncia;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,12 +10,19 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
 
-    public function showPerfil()
+    public function showPerfil($id)
     {
-        $user = auth()->user()->load('denuncias');
+        $usuario = Usuario::findOrFail($id); 
 
-        return view('profile.showPerfil', compact('user'));
+        $denuncias = Denuncia::with('comentarios.user')
+            ->withCount('comentarios')
+            ->where('user_id', $usuario->id)
+            ->latest()
+            ->get();
+
+        return view('profile.showPerfil', compact('usuario', 'denuncias'));
     }
+
 
     public function page(){
 

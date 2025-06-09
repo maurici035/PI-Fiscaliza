@@ -1,3 +1,7 @@
+@php
+    $usuario = auth()->user();
+@endphp
+
 <div class="fixed top-0 left-0 h-screen w-20 bg-[#0489ca] flex flex-col items-center py-4 z-[1100]">
     <!-- Logo -->
     <div class="mb-2 mt-2">
@@ -22,7 +26,7 @@
             <i class="bi bi-file-earmark-text"></i>
         </a>
 
-        <a href="{{ route('profile.showPerfil') }}" class="text-white text-2xl w-10 h-10 flex justify-center items-center hover:text-[#00ff1e] border-l-2 border-transparent hover:border-[#00ff1e] {{ request()->is('profile/perfil') ? 'active-icon' : '' }}">
+        <a href="{{ route('profile.showPerfil', $usuario->id) }}" class="text-white text-2xl w-10 h-10 flex justify-center items-center hover:text-[#00ff1e] border-l-2 border-transparent hover:border-[#00ff1e] {{ request()->is('profile/perfil') ? 'active-icon' : '' }}">
             <i class="bi bi-person"></i>
         </a>
     </div>
