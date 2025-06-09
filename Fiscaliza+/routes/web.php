@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComentariosDenunciasController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -29,7 +30,9 @@ Route::get('termos', function() {
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+    Route::post('/comentarios', [ComentariosDenunciasController::class, 'store'])->name('comentarios.store');
 });
+
 
 // Rdenuncias
 Route::get('/cadastrar-denuncia', function () {

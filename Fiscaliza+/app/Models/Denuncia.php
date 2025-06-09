@@ -26,4 +26,9 @@ class Denuncia extends Model
     {
         return $this->belongsTo(Usuario::class, 'user_id');
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(ComentariosDenuncias::class, 'denuncia_id');
+    }
 }
