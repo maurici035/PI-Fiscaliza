@@ -38,6 +38,21 @@
         /* Melhora a transição do Alpine.js, escondendo o elemento antes de animar */
         [x-cloak] { display: none !important; }
     </style>
+        <style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9; /* slate-100 */
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #94a3b8; /* slate-400 */
+        border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #64748b; /* slate-500 */
+    }
+</style>
 @endsection
 
 @section('content')
@@ -140,34 +155,78 @@
 
                 <div x-show="commentsOpen" x-cloak x-transition.opacity.duration.300ms class="pt-4 mt-4 border-t border-slate-200 space-y-5">
                     
-                    {{-- Lista de Comentários Existentes --}}
-                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
-                        @forelse ($denuncia->comentarios as $comentario)
-                            <div class="flex items-start gap-3">
-                                <a href="{{ route('profile.showPerfil', $usuario->id )}}">
-                                    <img src="{{ asset('imgs/profile/' . ($comentario->user->imagem ?? 'default.jpg')) }}"
-                                        class="w-9 h-9 rounded-full object-cover border border-slate-200"
-                                        alt="Foto">
-                                </a>
+                {{-- Lista de Comentários Existentes --}}
+                <div class="space-y-5 max-h-[450px] overflow-y-auto pr-3 custom-scrollbar">
+                    @forelse ($denuncia->comentarios as $comentario)
+                        <div class="flex items-start gap-4 group">
+                            <a href="{{ route('profile.showPerfil', $comentario->user->id ?? $denuncia->user_id ) }}">
+                                <img
+                                    src="{{ asset('imgs/profile/' . ($comentario->user->imagem ?? 'default.jpg')) }}"
+                                    alt="Foto de perfil"
+                                    class="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow"
+                                >
+                            </a>
 
-                                <div class="flex-1">
-                                    <div class="bg-slate-100 rounded-xl p-3">
-                                        <a href="{{ route('profile.showPerfil', $usuario->id )}}" class="font-semibold text-sm text-slate-800">
-                                            {{ $comentario->user->nome ?? 'Usuário removido' }}
-                                        </a>
-                                        <p class="text-sm text-slate-700 whitespace-pre-line">
-                                            {{ $comentario->conteudo }}
-                                        </p>
-                                        <div class="text-xs text-slate-500 mt-1 pl-1">
-                                            <span>{{ $comentario->created_at->diffForHumans() }}</span>
+                            <div class="flex-1">
+                                <div class="bg-white rounded-xl rounded-tl-none p-4 ring-1 ring-gray-100 shadow-sm relative">
+
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <a href="{{ route('profile.showPerfil', $comentario->user->id ?? '') }}" class="font-semibold text-sm text-gray-800 hover:underline">
+                                                {{ $comentario->user->nome ?? 'Usuário removido' }}
+                                            </a>
+                                            <span class="text-xs text-gray-400">&bull;</span>
+                                            <span class="text-xs text-gray-500">{{ $comentario->created_at->diffForHumans() }}</span>
                                         </div>
+
+                                        @if (Auth::id() === $comentario->user_id)
+                                            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <button onclick="toggleEdit({{ $comentario->id }})" class="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-blue-600" title="Editar comentário">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536L16.732 3.732z" /></svg>
+                                                </button>
+                                                <form action="{{ route('comentarios.destroy', $comentario->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja apagar este comentário? A ação não pode ser desfeita.')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-red-600" title="Excluir comentário">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
                                     </div>
+
+                                    <div id="comentario-view-{{ $comentario->id }}" class="text-sm text-gray-700 whitespace-pre-line transition-opacity duration-300">
+                                        {{ $comentario->conteudo }}
+                                    </div>
+
+                                    @if (Auth::id() === $comentario->user_id)
+                                        <form id="comentario-edit-form-{{ $comentario->id }}" action="{{ route('comentarios.update', $comentario->id) }}" method="POST" class="hidden">
+                                            @csrf
+                                            @method('PUT')
+                                            <textarea
+                                                name="conteudo"
+                                                rows="3"
+                                                class="w-full bg-gray-50 border border-gray-200 rounded-md p-2 text-sm text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                            >{{ $comentario->conteudo }}</textarea>
+                                            <div class="flex items-center justify-end gap-3 mt-2">
+                                                <button type="button" onclick="toggleEdit({{ $comentario->id }})" class="text-sm font-medium text-gray-600 hover:text-gray-900">Cancelar</button>
+                                                <button type="submit" class="px-4 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar</button>
+                                            </div>
+                                        </form>
+                                    @endif
                                 </div>
                             </div>
-                        @empty
-                            <p class="text-sm text-slate-500 text-center py-4">Nenhum comentário ainda.</p>
-                        @endforelse
-                    </div>
+                        </div>
+                    @empty
+                        <div class="text-center py-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z" />
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-800">Seja o primeiro a comentar!</h3>
+                            <p class="mt-1 text-sm text-gray-500">Ainda não há comentários nesta publicação.</p>
+                        </div>
+                    @endforelse
+                </div>
 
                     {{-- Formulário para Novo Comentário --}}
                     <div class="flex items-start gap-3 pt-2">
@@ -197,4 +256,54 @@
         @endforelse
     </div>
 </div>
+
+<script>
+    function toggleEdit(id) {
+        const view = document.getElementById('comentario-view-' + id);
+        const form = document.getElementById('comentario-edit-form-' + id);
+        const actions = view.closest('.group').querySelector('.flex.items-center.gap-1'); // Seleciona o menu de ações
+
+        // Esconde o menu de ações para não atrapalhar a edição
+        if (actions) {
+            actions.classList.add('opacity-0');
+        }
+
+        if (form.classList.contains('hidden')) {
+            // Prepara para a transição
+            view.style.opacity = '0';
+            setTimeout(() => {
+                view.classList.add('hidden');
+                form.classList.remove('hidden');
+                form.style.opacity = '0';
+                // Força o navegador a aplicar o estilo antes de mudar a opacidade
+                void form.offsetWidth;
+                setTimeout(() => {
+                    form.style.opacity = '1';
+                    form.querySelector('textarea').focus(); // Foca no textarea
+                }, 20);
+            }, 150); // Tempo para a opacidade de saída
+        } else {
+            form.style.opacity = '0';
+            setTimeout(() => {
+                form.classList.add('hidden');
+                view.classList.remove('hidden');
+                view.style.opacity = '0';
+                void view.offsetWidth;
+                setTimeout(() => {
+                    view.style.opacity = '1';
+                    if (actions) {
+                       actions.classList.remove('opacity-0'); // Mostra o menu de novo
+                    }
+                }, 20);
+            }, 150);
+        }
+    }
+
+    // Adiciona transições de opacidade aos elementos
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('[id^="comentario-view-"], [id^="comentario-edit-form-"]').forEach(el => {
+            el.style.transition = 'opacity 150ms ease-in-out';
+        });
+    });
+</script>
 @endsection

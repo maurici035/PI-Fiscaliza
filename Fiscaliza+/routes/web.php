@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
     Route::post('/comentarios', [ComentariosDenunciasController::class, 'store'])->name('comentarios.store');
+    Route::put('/comentarios/{id}', [ComentariosDenunciasController::class, 'update'])->name('comentarios.update');
+    Route::delete('/comentarios/{id}', [ComentariosDenunciasController::class, 'destroy'])->name('comentarios.destroy');
+
 });
 
 

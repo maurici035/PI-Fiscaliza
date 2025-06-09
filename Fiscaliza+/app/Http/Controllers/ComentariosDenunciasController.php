@@ -35,4 +35,38 @@ class ComentariosDenunciasController extends Controller
 
         return redirect()->back()->with('success', 'Comentário enviado com sucesso!');
     }
+
+    public function update(Request $request, $id)
+    {
+        $comentario = ComentariosDenuncias::findOrFail($id);
+
+        // Verifica se o usuário é o dono do comentário
+        if ($comentario->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Você não tem permissão para editar este comentário.');
+        }
+
+        $request->validate([
+            'conteudo' => 'required|string|max:1000',
+        ]);
+
+        $comentario->conteudo = $request->conteudo;
+        $comentario->save();
+
+        return redirect()->back()->with('success', 'Comentário atualizado com sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $comentario = ComentariosDenuncias::findOrFail($id);
+
+        // Verifica se o usuário é o dono do comentário
+        if ($comentario->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Você não tem permissão para excluir este comentário.');
+        }
+
+        $comentario->delete();
+
+        return redirect()->back()->with('success', 'Comentário excluído com sucesso!');
+    }
+
 }
