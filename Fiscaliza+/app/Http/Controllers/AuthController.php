@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
@@ -89,37 +90,40 @@ class AuthController extends Controller
         return redirect()->route('home')->with('success', 'Cadastro realizado com sucesso!');
     }
 
-
     public function login(Request $request)
     {
-        $mensagens = [
-            'email.required' => 'O campo email é obrigatório.',
-            'email.email' => 'Digite um endereço de email válido.',
-            'senha.required' => 'O campo senha é obrigatório.',
-            'senha.string' => 'A senha deve ser um texto.',
-        ];
         $request->validate([
             'email' => 'required|email',
             'senha' => 'required|string',
-        ], $mensagens);
+        ]);
 
         $usuario = Usuario::where('email', $request->email)->first();
 
-        if (!$usuario || !Hash::check($request->senha, $usuario->senha)) {
-            return back()
-                ->withErrors(['credenciais' => 'Credenciais inválidas. 
-                Verifique seu email e senha.'])
-                ->withInput();
+        if (!$usuario) {
+            return back()->withErrors([
+                'credenciais' => 'Apenas usuários podem acessar por aqui.',
+            ])->withInput();
         }
 
-        // Login OK: autentica e redireciona
-        Auth::login($usuario);
-        return redirect()->route('home')->with('success', 'Login realizado com sucesso!');
+        if (Hash::check($request->senha, $usuario->senha)) {
+            Auth::guard('web')->login($usuario);
+            return redirect()->route('home')->with('success', 'Login de usuário realizado com sucesso!');
+        }
+
+        return back()->withErrors([
+            'credenciais' => 'Email ou senha incorretos.',
+        ])->withInput();
     }
 
     public function logout()
     {
-        Auth::logout();
+        if (Auth::guard('empresa')->check()) {
+            Auth::guard('empresa')->logout();
+        } elseif (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();
+        }
+
         return redirect()->route('index')->with('success', 'Logout realizado com sucesso!');
     }
+
 }

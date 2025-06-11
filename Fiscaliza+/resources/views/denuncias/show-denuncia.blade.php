@@ -61,7 +61,10 @@
         {{-- CABEÇALHO DA DENÚNCIA --}}
         <div class="flex items-center gap-4">
             <a href="{{ route('profile.showPerfil', $denuncia->user_id )}}">
-                <img src="{{ asset('imgs/profile/' . $denuncia->user->imagem) }}" alt="User" class="w-12 h-12 rounded-full object-cover border-2 border-slate-100">
+                <img 
+                    src="{{ asset('imgs/profile/' . ($usuario->imagem ?? 'default.jpg')) }}" 
+                    alt="Sua foto de perfil" 
+                    class="w-9 h-9 rounded-full object-cover border border-slate-200">
             </a>
             <div>
                 <a href="{{ route('profile.showPerfil', $denuncia->user_id) }}">
@@ -103,6 +106,7 @@
             </video>
         @endif
 
+        @auth('web')            
         {{-- BOTÕES DE AÇÃO --}}
         <div class="border-t border-slate-200 pt-3 flex justify-between items-center text-sm text-gray-600">
             <div class="flex gap-5">
@@ -143,6 +147,7 @@
                 </div>
             </div>
         </div>
+        @endauth
 
         <div x-show="commentsOpen" x-cloak x-transition.opacity.duration.300ms class="pt-4 mt-4 border-t border-slate-200 space-y-5">
             
@@ -218,9 +223,14 @@
                 </div>
             @endforelse
         </div>
+        @auth('web')            
             {{-- Formulário para Novo Comentário --}}
             <div class="flex items-start gap-3 pt-2">
-                <img src="{{ asset('imgs/profile/' . $usuario->imagem) }}" alt="Sua foto de perfil" class="w-9 h-9 rounded-full object-cover border border-slate-200">
+                <img 
+                    src="{{ asset('imgs/profile/' . ($usuario->imagem ?? 'default.jpg')) }}" 
+                    alt="Sua foto de perfil" 
+                    class="w-9 h-9 rounded-full object-cover border border-slate-200">
+
                 {{-- ATENÇÃO: A action precisa apontar para a rota de salvar comentários --}}
                 <form action="{{ route('comentarios.store')}}" method="POST" class="flex-1">
                     @csrf
@@ -239,7 +249,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        @endauth
     </div>
 </div>
 

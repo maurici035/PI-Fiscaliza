@@ -28,6 +28,10 @@ return new class extends Migration {
             $table->decimal('longitude', 10, 7)->nullable();
 
             $table->text('endereco')->nullable();
+
+            $table->string('categoria');
+
+            $table->boolean('concluida')->default(false);
             
             $table->timestamps();
         });

@@ -12,15 +12,28 @@ class ProfileController extends Controller
 
     public function showPerfil($id)
     {
-        $usuario = Usuario::findOrFail($id); 
+        $usuario = Usuario::findOrFail($id);
 
-        $denuncias = Denuncia::with('comentarios.user')
-            ->withCount('comentarios')
-            ->where('user_id', $usuario->id)
-            ->latest()
-            ->get();
+        // Pega as denúncias NÃO CONCLUÍDAS (em aberto)
+        $denuncias = Denuncia::where('user_id', $usuario->id)
+                            ->where('concluida', false)
+                            ->withCount('comentarios') 
+                            ->latest()
+                            ->get();
 
-        return view('profile.showPerfil', compact('usuario', 'denuncias'));
+        // Pega as denúncias CONCLUÍDAS
+        $denunciasConcluidas = Denuncia::where('user_id', $usuario->id)
+                                      ->where('concluida', true) // A condição principal
+                                      ->withCount('comentarios')
+                                      ->latest()
+                                      ->get();
+
+        // Passa AMBAS as coleções para a view
+        return view('profile.showPerfil', [ // ou o nome da sua view
+            'usuario' => $usuario,
+            'denuncias' => $denuncias,
+            'denunciasConcluidas' => $denunciasConcluidas,
+        ]);
     }
 
 

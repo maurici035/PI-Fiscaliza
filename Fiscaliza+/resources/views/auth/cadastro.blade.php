@@ -68,7 +68,11 @@
           <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+ Logo" class="h-16">
         </div>
 
-        <h2 class="text-2xl font-bold text-center text-dark mb-6">Cadastre-se</h2>
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-semibold text-gray-800 mb-2">Pessoa</h2>
+        <h2 class="text-2xl font-bold text-dark">Cadastre-se</h2>
+      </div>
+
 
         <form action="/register" method="POST">
           @csrf

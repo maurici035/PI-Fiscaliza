@@ -77,6 +77,16 @@
                         </div>
                     </div>
 
+                    {{-- Categoria da denuncia --}}
+                    <div class="space-y-4 rounded-lg bg-slate-50 border border-slate-200 p-4">
+                        <label for="">Qual orgão é responsavel por essa denuncia denuncia?</label>
+                        <select name="categoria" id="tipo_servico" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition">
+                            <option value="">Selecione</option>
+                            <option value="Água">Água</option>
+                            <option value="Energia">Energia</option>
+                            <option value="Iluminação pública">Iluminação pública</option>
+                        </select>
+                    </div>
                     {{-- Localização --}}
                     <div class="space-y-4 rounded-lg bg-slate-50 border border-slate-200 p-4">
                         <div>
@@ -106,7 +116,7 @@
 
                     {{-- Ações --}}
                     <div class="mt-10 flex items-center justify-end space-x-4">
-                        <a href="{{ route('profile.showPerfil') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition">
+                        <a href="{{ route('home') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition">
                             Cancelar
                         </a>
                         <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition hover:shadow-lg">

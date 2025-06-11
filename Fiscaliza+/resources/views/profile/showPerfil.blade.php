@@ -75,7 +75,7 @@
         </div>
 
         @if (auth()->id() == $usuario->id)
-            <a href="{{ route('profile.perfil') }}" class="bg-[#0489ca] text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            <a href="{{ route('profile.perfil'), $usuario->id}}" class="bg-[#0489ca] text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Editar Perfil
             </a>
         @endif
@@ -284,8 +284,179 @@
             <p class="text-gray-500">Nenhuma denúncia encontrada.</p>
         @endforelse
     </div>
-</div>
+    {{-- =================================================================== --}}
+    {{-- ============ SEÇÃO DE DENÚNCIAS CONCLUÍDAS ====================== --}}
+    {{-- =================================================================== --}}
+    
+    {{-- Divisor visual entre as seções --}}
+    <hr class="my-10 border-t-2 border-slate-200">
+    
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-slate-700">Denúncias Concluídas</h2>
+        <p class="text-sm text-slate-500">Histórico de denúncias que já foram resolvidas.</p>
+    </div>
+    
+    <div class="space-y-6">
+        @forelse ($denunciasConcluidas as $denuncia)
+            {{-- 
+              Card da denúncia concluída. 
+              Adicionamos 'opacity-75 hover:opacity-100' para dar um aspecto de "arquivada".
+            --}}
+            <div x-data="{ commentsOpen: false }" class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 space-y-4 transition-all duration-300 hover:shadow-xl opacity-75 hover:opacity-100">
+                
+                {{-- CABEÇALHO DA DENÚNCIA --}}
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('profile.showPerfil', $denuncia->user->id )}}">
+                        <img src="{{ asset('imgs/profile/' . $denuncia->user->imagem) }}" alt="User" class="w-12 h-12 rounded-full object-cover border-2 border-slate-100">
+                    </a>
+                    <div>
+                        <a href="{{ route('profile.showPerfil', $denuncia->user->id )}}">
+                            <h2 class="font-bold text-gray-800">{{ $denuncia->user->nome }}</h2>
+                        </a>
+                        <p class="text-xs text-gray-500 flex items-center gap-1 flex-wrap">
+                            <i class="bi bi-geo-alt"></i> 
+                            <span>
+                                @if ($denuncia->endereco)
+                                    {{ $denuncia->endereco }}
+                                @elseif ($denuncia->localizacao_texto)
+                                    {{ $denuncia->localizacao_texto }} <span class="italic text-gray-400">(informado)</span>
+                                @else
+                                    Localização não informada
+                                @endif
+                            </span>
+                            <span class="mx-1">&middot;</span>
+                            <span>{{ $denuncia->created_at->diffForHumans() }}</span>
+    
+                            {{-- BADGE DE "CONCLUÍDA" --}}
+                            <span class="mx-1">&middot;</span>
+                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                <i class="bi bi-check-circle-fill"></i>
+                                Concluída
+                            </span>
+                        </p>
+                    </div>
+                </div>
+    
+                {{-- CONTEÚDO DA DENÚNCIA --}}
+                <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $denuncia->descricao }}</p>
+    
+                @if ($denuncia->foto_path)
+                    <img src="{{ asset($denuncia->foto_path) }}" alt="Foto da denúncia" class="w-full max-h-[500px] object-cover rounded-lg border border-slate-200">
+                @endif
+                @if ($denuncia->video_path)
+                    <video controls class="w-full rounded-lg border border-slate-200">
+                        <source src="{{ asset($denuncia->video_path) }}" type="video/mp4">
+                        Seu navegador não suporta o formato do vídeo.
+                    </video>
+                @endif
+    
+                {{-- BOTÕES DE AÇÃO (geralmente desabilitados ou com menos destaque para concluídas) --}}
+                 <div class="border-t border-slate-200 pt-3 flex justify-between items-center text-sm text-gray-600">
+                    <div class="flex gap-5">
+                        {{-- Ações como curtir, comentar e compartilhar podem ser mantidas se desejado --}}
+                        <span class="flex items-center gap-2 text-slate-500">
+                            <i class="bi bi-hand-thumbs-up-fill text-xl"></i> 
+                            <span class="font-semibold">{{ $denuncia->curtidas->count() }}</span>
+                        </span>
+                        <button @click="commentsOpen = !commentsOpen" class="flex items-center gap-2 text-slate-600 hover:text-green-600 transition-colors duration-300 group">
+                            <i class="bi bi-chat-dots text-xl group-hover:scale-110 transition-transform"></i> 
+                            <span class="font-semibold">Comentarios {{ $denuncia->comentarios_count }}</span>
+                        </button>
+                        <a href="{{ route('denuncias.show-denuncia', $denuncia->id) }}"
+                        class="flex items-center gap-2 text-slate-600 hover:text-yellow-600 transition-colors duration-300 group">
+                            <i class="bi bi-eye text-xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold">Ver detalhes</span>
+                        </a>
+                    </div>
+                </div>
+    
+                {{-- Seção de Comentários (idêntica à anterior, pois a lógica é a mesma) --}}
+                <div x-show="commentsOpen" x-cloak x-transition.opacity.duration.300ms class="pt-4 mt-4 border-t border-slate-200 space-y-5">
+                {{-- Lista de Comentários Existentes --}}
+                <div class="space-y-5 max-h-[450px] overflow-y-auto pr-3 custom-scrollbar">
+                    @forelse ($denuncia->comentarios as $comentario)
+                        <div class="flex items-start gap-4 group">
+                            <a href="{{ route('profile.showPerfil', $comentario->user->id ?? $denuncia->user_id ) }}">
+                                <img
+                                    src="{{ asset('imgs/profile/' . ($comentario->user->imagem ?? 'default.jpg')) }}"
+                                    alt="Foto de perfil"
+                                    class="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow"
+                                >
+                            </a>
 
+                            <div class="flex-1">
+                                <div class="bg-white rounded-xl rounded-tl-none p-4 ring-1 ring-gray-100 shadow-sm relative">
+
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <a href="{{ route('profile.showPerfil', $comentario->user->id ?? '') }}" class="font-semibold text-sm text-gray-800 hover:underline">
+                                                {{ $comentario->user->nome ?? 'Usuário removido' }}
+                                            </a>
+                                            <span class="text-xs text-gray-400">&bull;</span>
+                                            <span class="text-xs text-gray-500">{{ $comentario->created_at->diffForHumans() }}</span>
+                                        </div>
+
+                                        @if (Auth::id() === $comentario->user_id)
+                                            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <button onclick="toggleEdit({{ $comentario->id }})" class="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-blue-600" title="Editar comentário">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536L16.732 3.732z" /></svg>
+                                                </button>
+                                                <form action="{{ route('comentarios.destroy', $comentario->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja apagar este comentário? A ação não pode ser desfeita.')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-red-600" title="Excluir comentário">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div id="comentario-view-{{ $comentario->id }}" class="text-sm text-gray-700 whitespace-pre-line transition-opacity duration-300">
+                                        {{ $comentario->conteudo }}
+                                    </div>
+
+                                    @if (Auth::id() === $comentario->user_id)
+                                        <form id="comentario-edit-form-{{ $comentario->id }}" action="{{ route('comentarios.update', $comentario->id) }}" method="POST" class="hidden">
+                                            @csrf
+                                            @method('PUT')
+                                            <textarea
+                                                name="conteudo"
+                                                rows="3"
+                                                class="w-full bg-gray-50 border border-gray-200 rounded-md p-2 text-sm text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                            >{{ $comentario->conteudo }}</textarea>
+                                            <div class="flex items-center justify-end gap-3 mt-2">
+                                                <button type="button" onclick="toggleEdit({{ $comentario->id }})" class="text-sm font-medium text-gray-600 hover:text-gray-900">Cancelar</button>
+                                                <button type="submit" class="px-4 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar</button>
+                                            </div>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center py-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z" />
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-800">Seja o primeiro a comentar!</h3>
+                            <p class="mt-1 text-sm text-gray-500">Ainda não há comentários nesta publicação.</p>
+                        </div>
+                    @endforelse
+                </div>
+    
+            </div>
+        @empty
+            <div class="text-center py-10 bg-slate-50 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-slate-800">Nenhuma denúncia concluída</h3>
+                <p class="mt-1 text-sm text-slate-500">Este usuário ainda não possui um histórico de denúncias concluídas.</p>
+            </div>
+        @endforelse
+    </div>
+</div>
 <script>
     function toggleEdit(id) {
         const view = document.getElementById('comentario-view-' + id);

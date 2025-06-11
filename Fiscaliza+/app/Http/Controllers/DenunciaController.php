@@ -40,6 +40,7 @@ class DenunciaController extends Controller
             'descricao' => 'required|string',
             'foto' => 'nullable|image|max:5120',
             'video' => 'nullable|mimes:mp4,mov,avi|max:102400',
+            'categoria' => 'required|string|in:Água,Energia,Iluminação pública',
         ]);
 
         // Dados iniciais
@@ -48,6 +49,7 @@ class DenunciaController extends Controller
             'localizacao_texto',
             'latitude',
             'longitude',
+            'categoria'
         ]);
 
         $data['user_id'] = auth()->id();
@@ -110,10 +112,12 @@ class DenunciaController extends Controller
             'descricao' => 'required|string',
             'foto' => 'nullable|image|max:5120',
             'video' => 'nullable|mimes:mp4,mov,avi|max:102400',
+            'categoria' => 'required|string|in:Água,Energia,Iluminação pública',
         ]);
 
         $denuncia->descricao = $request->descricao;
         $denuncia->localizacao_texto = $request->localizacao_texto;
+        $denuncia->categotia = $request->categoria;
         $denuncia->latitude = $request->latitude;
         $denuncia->longitude = $request->longitude;
 
@@ -174,5 +178,27 @@ class DenunciaController extends Controller
 
         return redirect()->route('profile.showPerfil', $denuncia->user_id)->with('success', 'Denúncia excluída com sucesso!');
     }
+
+    public function concluir($id)
+    {
+        $denuncia = Denuncia::findOrFail($id);
+
+        // Aqui você pode colocar uma verificação de permissão da empresa, se quiser
+
+        $denuncia->concluida = true;
+        $denuncia->save();
+
+        return redirect()->back()->with('success', 'Denúncia marcada como concluída.');
+    }
+    public function desconcluir($id)
+    {
+        $denuncia = Denuncia::findOrFail($id);
+        $denuncia->concluida = false;
+        $denuncia->save();
+
+        return redirect()->back()->with('success', 'Denúncia marcada como não concluída.');
+    }
+
+
 
 }

@@ -19,6 +19,7 @@ class Denuncia extends Model
         'endereco',
         'foto_path',
         'video_path',
+        'categoria',
         'user_id'
     ];
 

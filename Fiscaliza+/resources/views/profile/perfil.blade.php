@@ -80,7 +80,7 @@
       </div>
       <div>
         <a 
-          href="{{ route('profile.showPerfil') }}"
+          href="{{ route('profile.showPerfil', ['id' => $usuario->id]) }}"
           role="button"
           class="block w-full bg-gray-300 text-gray-800 font-semibold py-3 rounded-md hover:bg-gray-400 transition text-center"
         >

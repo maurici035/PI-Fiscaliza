@@ -91,6 +91,15 @@
                     <i class="bi bi-geo-alt-fill text-slate-400 text-xl"></i> 
                     <input type="text" name="localizacao_texto" placeholder="Endereço (opcional)" class="border-b-2 border-slate-200 focus:border-green-500 focus:outline-none p-2 w-full sm:w-64 text-sm transition-colors duration-300">
                 </div>
+                <div>
+                    <label for="">Qual orgão é responsavel por essa denuncia denuncia?</label>
+                    <select name="categoria" id="tipo_servico" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary transition">
+                        <option value="">Selecione</option>
+                        <option value="Água">Água</option>
+                        <option value="Energia">Energia</option>
+                        <option value="Iluminação pública">Iluminação pública</option>
+                    </select>
+                </div>
             </div>
             <div class="border-t border-slate-200 pt-4 flex items-center justify-between">
                 <div class="flex items-center gap-4">
@@ -109,6 +118,7 @@
 
         {{-- Feed de denúncias --}}
         @foreach ($denuncias as $denuncia)
+         @if (!$denuncia->concluida)
             {{-- Cada denúncia é um componente Alpine para controlar seus próprios comentários --}}
             <div x-data="{ commentsOpen: false }" class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 space-y-4 transition-shadow duration-300 hover:shadow-xl">
                 
@@ -301,8 +311,8 @@
                         </form>
                     </div>
                 </div>
-
-            </div>
+             </div>
+            @endif
         @endforeach
     </div>
 </div>

@@ -15,8 +15,12 @@
             <img src="{{ asset('assets/fiscaliza-logo.png') }}" alt="Fiscaliza+ Logo">
         </div>
         <div class="buttons">
-            <button class="btn-create" onclick="irParaCadastro()">CADASTRAR</button>
-            <button class="btn-login" onclick="irParaLogin()">ENTRAR</button>
+            <a href="{{route('typeuser')}}">
+                <button class="btn-create">Cadastrar</button>
+            </a>
+            <a href="{{route('typeuserlogin')}}">
+                <button class="btn-login">Entrar</button>
+            </a>
         </div>
     </div>
     <div class="container">
@@ -32,15 +36,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function irParaLogin() {
-            window.location.href = "{{ route('login') }}";
-        }
-
-        function irParaCadastro() {
-            window.location.href = "{{ url('/cadastro') }}";
-        }
-    </script>
 </body>
 
 </html>

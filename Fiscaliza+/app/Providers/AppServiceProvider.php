@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
+        // Gate para usuários comuns
+        Gate::define('acesso-usuario', function () {
+            return Auth::guard('web')->check();
+        });
+
+        // Gate para empresas
+        Gate::define('acesso-empresa', function () {
+            return Auth::guard('empresa')->check();
+        });
     }
 }
