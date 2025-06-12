@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nome');
             $table->string('email')->unique();
             $table->string('senha');
-            $table->date('data_nascimento')->nullable(); // se quiser uma data opcional
+            $table->date('data_nascimento')->nullable();
+            $table->string('imagem')->default('default.jpg');
             $table->timestamps();
         });
     }

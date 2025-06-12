@@ -2,47 +2,39 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Denuncia extends Model
 {
     protected $table = 'denuncias';
 
+    use HasFactory;
+
     protected $fillable = [
-        'titulo',
         'descricao',
-        'localizacao',
-        'usuario_id',
-        'nome_usuario',
+        'localizacao_texto',
+        'latitude',
+        'longitude',
+        'endereco',
         'foto_path',
-        'video_path', // Adicionado para permitir salvar o vídeo
+        'video_path',
+        'categoria',
+        'user_id'
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
-     * Obtém o usuário que criou a denúncia.
-     */
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
-    }
-
-    public function getFotoUrlAttribute()
-    {
-        return $this->foto_path ? asset('storage/' . $this->foto_path) : null;
-    }
-
-    public function getVideoUrlAttribute()
-    {
-        return $this->video_path ? asset('storage/' . $this->video_path) : null;
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 
     public function comentarios()
     {
-        return $this->hasMany(\App\Models\Comentario::class, 'denuncia_id');
+        return $this->hasMany(ComentariosDenuncias::class, 'denuncia_id');
+    }
+
+    public function curtidas()
+    {
+        return $this->hasMany(CurtidasDenuncias::class, 'denuncia_id');
     }
 }

@@ -12,11 +12,27 @@ return new class extends Migration {
     {
         Schema::create('denuncias', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo', 255);
-            $table->text('descricao');
-            $table->string('localizacao', 255)->nullable();
-            $table->unsignedBigInteger('usuario_id')->nullable();
-            $table->string('nome_usuario', 255)->nullable(); // Nova coluna para o nome do usuário
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('usuarios')
+                ->onDelete('cascade');
+            
+            $table->text('descricao')->nullable();
+
+            $table->string('foto_path')->nullable();
+            $table->string('video_path')->nullable();
+
+            $table->string('localizacao_texto')->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+
+            $table->text('endereco')->nullable();
+
+            $table->string('categoria');
+
+            $table->boolean('concluida')->default(false);
+            
             $table->timestamps();
         });
     }

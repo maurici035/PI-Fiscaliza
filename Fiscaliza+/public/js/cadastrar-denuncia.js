@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const locationInput = document.getElementById('locationInput');
   const textMessage = document.getElementById('textMessage');
   const feedback = document.getElementById('feedbackMessage');
-  // Novo: elemento para mensagem de sucesso de upload
-  const uploadSuccessMessage = document.getElementById('uploadSuccessMessage');
-  const tituloInput = document.getElementById('tituloInput');
 
   function showFeedback(message, isError = true) {
     feedback.textContent = message;
@@ -31,65 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
     videoInput.click();
   });
 
-  // Mensagem de sucesso ao adicionar imagem
-  photoInput.addEventListener('change', function () {
-    console.log('photoInput change', photoInput.files);
-    if (photoInput.files.length > 0) {
-      uploadSuccessMessage.textContent = 'Imagem enviada com sucesso';
-      uploadSuccessMessage.style.color = 'green';
-    } else {
-      uploadSuccessMessage.textContent = '';
-    }
-  });
-
-  // Mensagem de sucesso ao adicionar vídeo
-  videoInput.addEventListener('change', function () {
-    console.log('videoInput change', videoInput.files);
-    if (videoInput.files.length > 0) {
-      uploadSuccessMessage.textContent = 'Vídeo enviado com sucesso';
-      uploadSuccessMessage.style.color = 'green';
-    } else {
-      uploadSuccessMessage.textContent = '';
-    }
-  });
-
   locationButton.addEventListener('click', () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-
-          if (position.coords.accuracy > 50) {
-            showFeedback('Atenção: a precisão da localização está baixa. Confira o endereço!', true);
-          }
-
-          // Chama a API do Google para converter para endereço
-          fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAgyRuSTvi4-rx2LFLNnIszwMPOFn9rfuI`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.status === "OK" && data.results.length > 0) {
-                // Procura o resultado mais detalhado
-                const detalhado = data.results.find(r =>
-                  r.types.includes("street_address") || r.types.includes("premise")
-                );
-                const endereco = detalhado ? detalhado.formatted_address : data.results[0].formatted_address;
-                locationInput.value = endereco;
-                showFeedback('Localização capturada com sucesso!', false);
-              } else {
-                locationInput.value = `${latitude},${longitude}`;
-                showFeedback('Localização capturada, mas não foi possível obter o endereço completo.', false);
-              }
-            })
-            .catch(() => {
-              locationInput.value = `${latitude},${longitude}`;
-              showFeedback('Localização capturada, mas não foi possível obter o endereço completo.', false);
-            });
+          locationInput.value = `${latitude},${longitude}`;
+          showFeedback('Localização capturada com sucesso!', false);
         },
         (error) => {
           showFeedback('Erro ao capturar a localização: ' + error.message);
-        },
-        { enableHighAccuracy: true }
+        }
       );
     } else {
       showFeedback('Geolocalização não suportada pelo navegador.');
@@ -109,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const formData = new FormData();
     formData.append('descricao', mensagem);
-    formData.append('titulo', tituloInput.value.trim()); // Usa o valor do campo título
+    formData.append('titulo', mensagem.substring(0, 50)); // Usa primeiras 50 chars como título
     if (fotoFile) formData.append('foto', fotoFile);
     if (videoFile) formData.append('video', videoFile);
     if (localizacao) formData.append('localizacao', localizacao);
@@ -137,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
       photoInput.value = '';
       videoInput.value = '';
       locationInput.value = '';
-      uploadSuccessMessage.textContent = ''; // Limpa mensagem de upload após envio
     })
     .catch(error => {
       console.error('Erro:', error);

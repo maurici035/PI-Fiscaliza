@@ -1,16 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComentariosDenunciasController;
+use App\Http\Controllers\CurtidasDenunciasController;
 use App\Http\Controllers\DenunciaController;
+use App\Http\Controllers\EmpresaAuthController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PerfilController;
-use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\ProfileController;
 
 // Rota principal
 Route::get('/', function () {
@@ -21,137 +19,85 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
+// Login de empresas
+Route::get('/login-empresa', [EmpresaAuthController::class, 'showLoginForm'])->name('empresa.login');
+Route::post('/login-empresa', [EmpresaAuthController::class, 'login'])->name('empresa.login.post');
+
 Route::get('/cadastro', [AuthController::class, 'showRegister'])->name('cadastro');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/cadastro/empresa', [EmpresaController::class, 'create'])->name('empresa.cadastro');
+Route::post('/cadastro/empresa', [EmpresaController::class, 'store'])->name('empresa.store');
+
+Route::get('/empresa/dashboard', [EmpresaController::class, 'page'])->name('empresa.dashboard');
+
+
+Route::patch('/denuncias/{id}/concluir', [DenunciaController::class, 'concluir'])->name('denuncias.concluir');
+Route::patch('/denuncias/{id}/desconcluir', [DenunciaController::class, 'desconcluir'])->name('denuncias.desconcluir');
+
+Route::get('/typeuser', function() {
+    return view(('auth.typeUser'));
+})->name('typeuser');
+
+Route::get('/typeuserlogin', function() {
+    return view(('auth.typeUserLogin'));
+})->name('typeuserlogin');
+
+Route::get('termos', function() {
+    return view(('terms'));
+})->name('termos');
+
 // Rotas protegidas (precisam de autenticação)
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
-    Route::post('/comentario', [ComentarioController::class, 'store'])->name('comentario.store');
-});
+    Route::post('/comentarios', [ComentariosDenunciasController::class, 'store'])->name('comentarios.store');
+    Route::put('/comentarios/{id}', [ComentariosDenunciasController::class, 'update'])->name('comentarios.update');
+    Route::delete('/comentarios/{id}', [ComentariosDenunciasController::class, 'destroy'])->name('comentarios.destroy');
 
-// Rotas das páginas
+});
+Route::post('/denuncias/{id}/curtir', [CurtidasDenunciasController::class, 'toggleCurtir'])
+    ->middleware('auth')
+    ->name('denuncias.curtir');
+
+// Rdenuncias
 Route::get('/cadastrar-denuncia', function () {
-    return view('cadastrar-denuncia');
-})->name('cadastrar-denuncia');
+    return view('denuncias.cadastrar-denuncia');
+})->name('denuncias.cadastrar-denuncia');
+
+Route::post('/denuncias', [DenunciaController::class, 'store'])->name('denuncias.store');
+Route::get('/denuncias/{id}/edit', [DenunciaController::class, 'edit'])->name('denuncias.editar-denuncias');
+Route::put('/denuncias/{id}', [DenunciaController::class, 'update'])->name('denuncias.update');
+Route::delete('/denuncias/{id}', [DenunciaController::class, 'destroy'])->name('denuncias.destroy');
 
 Route::get('/acompanhar-denuncia', function () {
     return view('acompanhar-denuncia');
 })->name('acompanhar-denuncia');
 
-Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil')->middleware('auth');
+Route::get('/denuncias/{id}', [DenunciaController::class, 'show'])->name('denuncias.show-denuncia');
 
-Route::get('/alterar-perfil-usuario', [PerfilController::class, 'edit'])->name('alterar-perfil-usuario')->middleware('auth');
-Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update')->middleware('auth');
-Route::post('/perfil/alterar-senha', [PerfilController::class, 'alterarSenha'])->name('perfil.alterarSenha')->middleware('auth');
+// Perfil
+Route::get('/perfil/edit', [ProfileController::class, 'page'])
+    ->name('profile.perfil')
+    ->middleware('auth');
+Route::put('perfil/{id}/update', [ProfileController::class, 'update'])->name('usuario.update');
+Route::get('/perfil/user/{id}', [ProfileController::class, 'showPerfil'])->name('profile.showPerfil');
 
-// Route::get('/visualiza-denuncia', function () {
-//     return view('visualiza-denuncia');
-// })->name('visualiza-denuncia');
+// rotas não ultilizada
+// Avaliação
+Route::view('/avaliacao/avaliacao-orgao-adm', 'avaliacao.avaliacao-orgao-adm');
+Route::view('/avaliacao/avaliacao-orgao', 'avaliacao.avaliacao-orgao');
 
-// Rotas de recuperação de senha
-Route::get('/recuperar', function () {
-    return view('recuperar');
-})->name('recuperar');
+// Denúncias
+Route::view('/denuncias/acompanhar-denuncia', 'denuncias.acompanhar-denuncia');
+Route::view('/denuncias/apoiar-denuncia', 'denuncias.apoiar-denuncia'); //não necessaria
+Route::view('/denuncias/denuncia-ad', 'denuncias.denunciaAD');
+Route::view('/denuncias/enviar-mensagem-adm', 'denuncias.enviar-mensagem-adm');
+Route::view('/denuncias/gerir-denuncias-adm', 'denuncias.gerir-denuncias-adm');
+Route::view('/denuncias/visualizar-denuncia', 'denuncias.visualizar-denuncia');
 
-Route::post('/forgot-password', function (Request $request) {
-    $request->validate(['email' => 'required|email']);
-
-    $status = Password::sendResetLink(
-        $request->only('email')
-    );
-
-    return $status === Password::RESET_LINK_SENT
-        ? back()->with(['status' => 'Link de recuperação enviado para seu e-mail!'])
-        : back()->withErrors(['email' => 'Não foi possível enviar o link de recuperação.']);
-})->name('password.email');
-
-Route::get('/reset-password/{token}', function ($token) {
-    return view('auth.reset-password', ['token' => $token]);
-})->name('password.reset');
-
-Route::post('/reset-password', function (Request $request) {
-    $request->validate([
-        'token' => 'required',
-        'email' => 'required|email',
-        'password' => 'required|min:8|confirmed',
-    ]);
-
-    $status = Password::reset(
-        $request->only('email', 'password', 'password_confirmation', 'token'),
-        function ($user, $password) {
-            $user->forceFill([
-                'password' => Hash::make($password)
-            ])->setRememberToken(Str::random(60));
-
-            $user->save();
-
-            event(new PasswordReset($user));
-        }
-    );
-
-    return $status === Password::PASSWORD_RESET
-        ? redirect()->route('login')->with('status', 'Senha redefinida com sucesso!')
-        : back()->withErrors(['email' => 'Erro ao redefinir senha.']);
-})->name('password.update');
-
-Route::get('/perfil-adm', function () {
-    return view('perfil-adm');
-})->name('perfil-adm');
-
-Route::get('/mudar-senha-adm', function () {
-    return view('mudar-senha-adm');
-})->name('mudar-senha-adm');
-
-Route::get('/gerir-denuncias-adm', function () {
-    return view('gerir-denuncias-adm');
-})->name('gerir-denuncias-adm');
-
-Route::get('/feedback-orgao', function () {
-    return view('feedback-orgao');
-})->name('feedback-orgao');
-
-Route::get('/feedback-orgao-adm', function () {
-    return view('feedback-orgao-adm');
-})->name('feedback-orgao-adm');
-
-Route::get('/enviar-mensagem-adm', function () {
-    return view('enviar-mensagem-adm');
-})->name('enviar-mensagem-adm');
-
-Route::get('/visualizar-denuncia-adm', function () {
-    return view('visualizar-denuncia-ADM');
-})->name('visualizar-denuncia-adm');
-
-Route::get('/avaliacao-orgao', function () {
-    return view('avaliacao-orgao');
-})->name('avaliacao-orgao');
-
-Route::get('/avaliacao-orgao-adm', function () {
-    return view('avaliacao-orgao-adm');
-})->name('avaliacao-orgao-adm');
-
-Route::get('/apoiar-denuncia', function () {
-    return view('apoiar-denuncia');
-})->name('apoiar-denuncia');
-
-Route::get('/alter-perfil-adm', function () {
-    return view('alter-perfil-adm');
-})->name('alter-perfil-adm');
-
-// Visualizar denúncia individual
-Route::get('/denuncia/{id}', [DenunciaController::class, 'show'])->name('denuncia.show');
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::delete('/denuncia/{id}', [DenunciaController::class, 'destroy'])->name('denuncia.destroy');
-    // ...outras rotas de admin
-});
-
-
-
-
-
-
+// Feedback
+Route::view('/feedback/feedback-orgao-adm', 'feedback.feedback-orgao-adm');
+Route::view('/feedback/feedback-orgao', 'feedback.feedback-orgao');
