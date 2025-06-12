@@ -1,16 +1,12 @@
-# 🧠 Fiscaliza+ 
-
-Um projeto desenvolvido com Laravel, Nginx, MySQL e Redis, utilizando Docker para facilitar a configuração e o deploy.  
+# Fiscaliza+   
 
 ## 📌 Tecnologias Utilizadas  
 
-- **Laravel** v12.7.2
-- **PHP** v8.2.27  
-- **Nginx** v1.27.4-alpine  
-- **MySQL** v8.0  
-- **Redis** latest-alpine  
-- **phpMyAdmin** v5.2.2  
-- **Docker Compose** v3.8  
+- **Laravel**
+- **PHP**  
+- **MySQL**    
+- **phpMyAdmin**
+- **Docker Compose**
 
 ## 🚀 Como Rodar o Projeto  
 
@@ -65,7 +61,7 @@ Antes de começar, instale os seguintes programas na sua máquina:
 ### 🎯 Acesse o Projeto  
 
 - **Front-end:** [http://localhost/](http://localhost/)  
-- **phpMyAdmin:** [http://localhost:8082](http://localhost:8082)
+- **phpMyAdmin:** [http://localhost:8082](http://localhost:8081)
 
 ## ➕ Comandos Úteis  
 
