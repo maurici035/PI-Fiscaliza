@@ -101,6 +101,3 @@ Route::view('/denuncias/visualizar-denuncia', 'denuncias.visualizar-denuncia');
 // Feedback
 Route::view('/feedback/feedback-orgao-adm', 'feedback.feedback-orgao-adm');
 Route::view('/feedback/feedback-orgao', 'feedback.feedback-orgao');
-
-
-
