@@ -18,15 +18,8 @@
     @yield('head')
 </head>
 <body>
-@auth('web')
-    <x-header />
-    <x-sidebar />
-@endauth
-
-@auth('empresa')
-    <x-headerEmpresa />
-    <x-sidebarEmpresa />
-@endauth
+    @include('layouts.sidebar')
+    @include('layouts.header')
 
 
     <main>

@@ -22,12 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        // Gate para usuários comuns
         Gate::define('acesso-usuario', function () {
             return Auth::guard('web')->check();
         });
 
-        // Gate para empresas
         Gate::define('acesso-empresa', function () {
             return Auth::guard('empresa')->check();
         });

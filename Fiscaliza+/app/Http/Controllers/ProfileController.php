@@ -79,9 +79,25 @@ class ProfileController extends Controller
             $usuario->imagem = $nomeImagem;
         }
 
+        if ($request->data_nascimento) {
+            $dataNascimento = \Carbon\Carbon::parse($request->data_nascimento);
+            $idade = $dataNascimento->age;
+
+            if ($idade < 16) {
+                return back()->withErrors(['idade' => 'Você deve ter pelo menos 16 anos.'])->withInput();
+            }
+
+            if ($idade > 90) {
+                return back()->withErrors(['idade' => 'Idade superior ao permitido (90 anos).'])->withInput();
+            }
+
+            $usuario->data_nascimento = $dataNascimento;
+        }
+
+
         $usuario->save();
 
-        return redirect()->route('profile.showPerfil')->with('success', 'Perfil atualizado com sucesso!');
+        return redirect()->route('profile.showPerfil', $usuario->id )->with('success', 'Perfil atualizado com sucesso!');
     }
 
     /**
