@@ -109,6 +109,10 @@ class AuthController extends Controller
             Auth::guard('web')->login($usuario);
             return redirect()->route('home')->with('success', 'Login de usuário realizado com sucesso!');
         }
+        if (Auth::guard('empresa')->attempt(['email' => $request->email, 'senha' => $request->senha])) {
+            return redirect()->route('empresa.dashboard');
+        }
+
 
         return back()->withErrors([
             'credenciais' => 'Email ou senha incorretos.',
@@ -125,5 +129,4 @@ class AuthController extends Controller
 
         return redirect()->route('index')->with('success', 'Logout realizado com sucesso!');
     }
-
 }

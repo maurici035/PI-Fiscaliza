@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Denuncia;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class EmpresaController extends Controller
@@ -24,7 +25,7 @@ class EmpresaController extends Controller
             'cidade' => 'required|string',
         ]);
 
-        Empresa::create([
+        $empresa = Empresa::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
@@ -32,8 +33,11 @@ class EmpresaController extends Controller
             'cidade' => $request->cidade,
         ]);
 
+        Auth::guard('empresa')->login($empresa);
+
         return redirect()->route('empresa.dashboard')->with('success', 'Cadastro realizado com sucesso!');
     }
+
 
     public function page() {
         $empresa = auth()->guard('empresa')->user();

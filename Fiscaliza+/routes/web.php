@@ -92,7 +92,7 @@ Route::view('/avaliacao/avaliacao-orgao', 'avaliacao.avaliacao-orgao');
 
 // Denúncias
 Route::view('/denuncias/acompanhar-denuncia', 'denuncias.acompanhar-denuncia');
-Route::view('/denuncias/apoiar-denuncia', 'denuncias.apoiar-denuncia'); //não necessaria
+Route::view('/denuncias/apoiar-denuncia', 'denuncias.apoiar-denuncia');
 Route::view('/denuncias/denuncia-ad', 'denuncias.denunciaAD');
 Route::view('/denuncias/enviar-mensagem-adm', 'denuncias.enviar-mensagem-adm');
 Route::view('/denuncias/gerir-denuncias-adm', 'denuncias.gerir-denuncias-adm');
