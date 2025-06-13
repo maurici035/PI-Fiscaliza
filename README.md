@@ -15,7 +15,7 @@
 Antes de começar, instale os seguintes programas na sua máquina:  
 
 - [Docker](https://www.docker.com/)
-- [Node.js](https://nodejs.org/) (Recomendado: LTS)
+- [Composer]([https://nodejs.org/](https://getcomposer.org/download/))
 
 ### ▶️ Rodando o Projeto  
 
